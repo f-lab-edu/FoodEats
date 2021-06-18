@@ -21,7 +21,7 @@ MySQL 8.0
 MyBatis
 Redis
 Jenkins
-Firebase
+
 
 # 프로젝트 전체 구성도
 ![image](https://user-images.githubusercontent.com/83272619/122491715-76c33400-d01f-11eb-8e15-741439787008.png)
