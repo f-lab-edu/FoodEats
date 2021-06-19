@@ -17,10 +17,11 @@
 Java 11
 Spring Boot
 JUnit
-MySQL 8.0
+MySQL
 MyBatis
 Redis
 Jenkins
+
 
 # 프로젝트 전체 구성도
 ![image](https://user-images.githubusercontent.com/83272619/122491715-76c33400-d01f-11eb-8e15-741439787008.png)
@@ -31,4 +32,3 @@ Jenkins
 
 # 기능정의
 
-# 테크니컬 이슈와 해결과정
