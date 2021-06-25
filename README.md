@@ -17,7 +17,7 @@
 Java 11
 Spring Boot
 JUnit
-MySQL 8.0
+MySQL
 MyBatis
 Redis
 Jenkins
