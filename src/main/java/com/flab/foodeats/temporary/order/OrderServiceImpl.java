@@ -1,8 +1,8 @@
-package com.flab.foodeats.order;
+package com.flab.foodeats.temporary.order;
 
 
-import com.flab.foodeats.discount.DiscountPolicy;
-import com.flab.foodeats.member.MemberRepository;
+import com.flab.foodeats.temporary.discount.DiscountPolicy;
+import com.flab.foodeats.temporary.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

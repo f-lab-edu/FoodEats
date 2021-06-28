@@ -1,9 +1,9 @@
-package com.flab.foodeats.discount;
+package com.flab.foodeats.temporary.discount;
 
 //import hello.core.member.Member;
 
 
-import com.flab.foodeats.member.Member;
+import com.flab.foodeats.temporary.member.Member;
 
 public interface DiscountPolicy {
 

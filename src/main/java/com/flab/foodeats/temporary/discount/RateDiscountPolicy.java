@@ -1,11 +1,11 @@
-package com.flab.foodeats.discount;
+package com.flab.foodeats.temporary.discount;
 
 //import hello.core.member.Grade;
 //import hello.core.member.Member;
 
 
-import com.flab.foodeats.member.Grade;
-import com.flab.foodeats.member.Member;
+import com.flab.foodeats.temporary.member.Grade;
+import com.flab.foodeats.temporary.member.Member;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.flab.foodeats.member;
+package com.flab.foodeats.temporary.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
