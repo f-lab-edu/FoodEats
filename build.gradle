@@ -4,7 +4,9 @@ plugins {
     id 'java'
 }
 
-group = 'com.Flab'
+
+group = 'com.flab'
+
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
