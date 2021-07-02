@@ -1,16 +1,16 @@
-package com.flab.foodeats;
+package com.flab.foodeats.temporary;
 
 
-import com.flab.foodeats.discount.DiscountPolicy;
-import com.flab.foodeats.discount.RateDiscountPolicy;
-import com.flab.foodeats.member.MemberRepository;
-import com.flab.foodeats.member.MemberService;
-import com.flab.foodeats.member.MemberServiceImpl;
-import com.flab.foodeats.member.MemoryMemberRepository;
-import com.flab.foodeats.order.OrderRepository;
-import com.flab.foodeats.order.OrderRepositoryImpl;
-import com.flab.foodeats.order.OrderService;
-import com.flab.foodeats.order.OrderServiceImpl;
+import com.flab.foodeats.temporary.discount.DiscountPolicy;
+import com.flab.foodeats.temporary.discount.RateDiscountPolicy;
+import com.flab.foodeats.temporary.member.MemberRepository;
+import com.flab.foodeats.temporary.member.MemberService;
+import com.flab.foodeats.temporary.member.MemberServiceImpl;
+import com.flab.foodeats.temporary.member.MemoryMemberRepository;
+import com.flab.foodeats.temporary.order.OrderRepository;
+import com.flab.foodeats.temporary.order.OrderRepositoryImpl;
+import com.flab.foodeats.temporary.order.OrderService;
+import com.flab.foodeats.temporary.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;

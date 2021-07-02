@@ -1,4 +1,4 @@
-package com.flab.foodeats.order;
+package com.flab.foodeats.temporary.order;
 
 public interface OrderService {
 

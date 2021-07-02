@@ -1,7 +1,7 @@
-package com.flab.foodeats.order;
+package com.flab.foodeats.temporary.order;
 
 
-import com.flab.foodeats.member.Member;
+import com.flab.foodeats.temporary.member.Member;
 
 public class Order {
 

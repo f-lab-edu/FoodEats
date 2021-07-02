@@ -1,7 +1,7 @@
-package com.flab.foodeats.order;
+package com.flab.foodeats.temporary.order;
 
 
-import com.flab.foodeats.member.Grade;
+import com.flab.foodeats.temporary.member.Grade;
 
 public class OrderGradeImpl implements OrderGrade{
 

@@ -1,4 +1,4 @@
-package com.flab.foodeats.order;
+package com.flab.foodeats.temporary.order;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,11 @@
-package com.flab.foodeats;
+package com.flab.foodeats.temporary;
 
 
-import com.flab.foodeats.member.Grade;
-import com.flab.foodeats.member.Member;
-import com.flab.foodeats.member.MemberService;
-import com.flab.foodeats.order.Order;
-import com.flab.foodeats.order.OrderService;
+import com.flab.foodeats.temporary.member.Grade;
+import com.flab.foodeats.temporary.member.Member;
+import com.flab.foodeats.temporary.member.MemberService;
+import com.flab.foodeats.temporary.order.Order;
+import com.flab.foodeats.temporary.order.OrderService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class OrderApp {
         MemberService memberService = appConfig.memberService();
         OrderService orderService = appConfig.orderService();*/
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(com.flab.foodeats.AppConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
         OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
         //(이름 , 반환타입)
