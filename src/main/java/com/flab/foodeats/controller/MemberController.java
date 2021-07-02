@@ -12,6 +12,11 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 
+/**
+ * 로그인 기반 코드
+ * @author yusok
+ */
+
 @RestController
 @RequestMapping("/user")
 public class MemberController {
@@ -48,12 +53,13 @@ public class MemberController {
             response.getWriter().write("error"); // HTTP의 body 부에 들어간다.
         }
         try {
-            // 입력값으로 들어온 id의 DB에 저장된 비밀번호
-            // loginForm.getMemberId()에 해당하는 값이 db에 없을 경우 NullPointerException이 발생 --> try,catch
+            // 입력값으로 넘어온 id (loginForm.getMemberId())에 해당하는 값이 db에 없을 경우 NullPointerException이 발생 --> try,catch
             // 입력값으로 넘어온 password: loginForm.getPassword()
             // 입력값으로 넘어온 id의 db에 저장된 비밀번호: memberMapper.findPassword(loginForm.getMemberId())
             if((memberMapper.findPassword(loginForm.getMemberId())).equals(loginForm.getPassword())){
                 HttpSession session = request.getSession();
+                // 세션 저장
+                // key: 회원의 ID, value: id,password
                 session.setAttribute(loginForm.getMemberId(),memberMapper.findIdPass(loginForm.getMemberId()));
                 return 0;
             }

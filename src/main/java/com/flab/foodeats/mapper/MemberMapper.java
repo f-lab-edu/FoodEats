@@ -4,6 +4,11 @@ import com.flab.foodeats.model.LoginForm;
 import com.flab.foodeats.model.Member;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * 로그인 기반 코드
+ * @author yusok
+ */
+
 @Mapper
 public interface MemberMapper {
     // 회원정보 저장
