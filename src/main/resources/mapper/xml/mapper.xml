@@ -2,18 +2,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.foodeats.mapper.MemberMapper">
+    <!-- 저장  -->
     <insert id="save" parameterType="String">
         INSERT INTO user VALUES(#{arg0},#{arg1},#{arg2});
     </insert>
+    <!-- 비밀번호 반환  -->
     <select id="findPassword" parameterType="String" resultType="String">
         SELECT password FROM user WHERE memberId = #{arg0};
     </select>
+    <!-- 특정회원의 모든 정보 반환  -->
     <select id="findAll" parameterType="String" resultType="Member">
         SELECT * FROM user WHERE memberId = #{arg0};
     </select>
-    <select id="findIdPassword" parameterType="String" resultType="LoginForm">
+    <!-- 특정회원의 id, password 반환  -->
+    <select id="findIdPass" parameterType="String" resultType="LoginForm">
         SELECT memberId,password FROM user WHERE memberId = #{arg0};
     </select>
+    <!-- 특정회원의 정보 수정  -->
     <update id="updateInfo" parameterType="String">
         UPDATE user SET password=#{arg0}, name = #{arg1} WHERE memberId = #{arg2};
     </update>

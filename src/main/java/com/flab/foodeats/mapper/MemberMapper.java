@@ -10,10 +10,11 @@ public interface MemberMapper {
     void save(String arg0, String arg1, String arg2);
     // 비밀번호 찾기
     String findPassword(String arg0);
-    // 특정회원의 모든 정보 찾아오기
-    Member findAll(String arg0);
     // 특정회원의 id, password만 받아오기
-    LoginForm findIdPassword(String arg0);
+    LoginForm findIdPass(String arg0);
     // 특정회원의 정보 수정하기
     int updateInfo(String arg0,String arg1, String arg2);
+
+    // 특정회원의 모든 정보 찾아오기 (추후 사용을 위해)
+    Member findAll(String arg0);
 }
