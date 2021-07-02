@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.foodeats.mapper.MemberMapper">
+    <insert id="save" parameterType="String">
+        INSERT INTO user VALUES(#{arg0},#{arg1},#{arg2});
+    </insert>
+    <select id="findPassword" parameterType="String" resultType="String">
+        SELECT password FROM user WHERE memberId = #{arg0};
+    </select>
+    <select id="findAll" parameterType="String" resultType="Member">
+        SELECT * FROM user WHERE memberId = #{arg0};
+    </select>
+    <update id="updateInfo" parameterType="String">
+        UPDATE user SET password=#{arg0}, name = #{arg1} WHERE memberId = #{arg2};
+    </update>
+</mapper>
