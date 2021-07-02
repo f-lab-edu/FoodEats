@@ -5,6 +5,11 @@ import com.flab.foodeats.temorary.member.grade.Grade;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+/**
+ * 자바 기반 코드 수정 (리뷰 반영)
+ * @author eunsoo
+ */
+
 // 등급할인 정책
 @Component
 @Qualifier("mainDiscountPolicy")

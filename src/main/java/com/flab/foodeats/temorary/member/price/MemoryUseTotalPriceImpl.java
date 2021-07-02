@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 자바 기반 코드 수정 (리뷰 반영)
+ * @author eunsoo
+ */
+
 @Component
 public class MemoryUseTotalPriceImpl implements MemberUseTotalPrice {
     private static Map<String, Integer> storeOrder = new HashMap<>();

@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 자바 기반 코드 수정 (리뷰 반영)
+ * @author eunsoo
+ */
+
 @Component
 public class MemoryMemberInfo implements MemberInfo {
     private static Map<String, Member> store = new HashMap<>();

@@ -1,12 +1,16 @@
 package com.flab.foodeats.temorary.order;
 
-
 import com.flab.foodeats.temorary.discount.DiscountPolicy;
 import com.flab.foodeats.temorary.member.MemberInfo;
 import com.flab.foodeats.temorary.member.price.MemberUseTotalPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+/**
+ * 자바 기반 코드 수정 (리뷰 반영)
+ * @author eunsoo
+ */
 
 @Component
 public class OrderServiceImpl implements OrderService {

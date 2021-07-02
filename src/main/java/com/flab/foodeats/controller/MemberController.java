@@ -50,7 +50,7 @@ public class MemberController {
         if(dbPassword.equals(loginForm.getPassword())){
             HttpSession session = request.getSession();
             // 후에 수정할 부분 --> 세션의 값에 꼭 필요한 값만 집어넣도록
-            session.setAttribute(loginForm.getMemberId(),memberMapper.findAll(loginForm.getMemberId()));
+            session.setAttribute(loginForm.getMemberId(),memberMapper.findIdPassword(loginForm.getMemberId()));
             return 0;
         }else {
             return 1;
@@ -68,8 +68,9 @@ public class MemberController {
         }
 
         HttpSession session = request.getSession(false);
-        Member memberSession = (Member) session.getAttribute(member.getMemberId());
-        // 현재 세션에 저장되어 있는 id값과 사용자가 입력한 id가 일치한다면
+        // 세션에 저장되어있는 값 가져오기
+        LoginForm memberSession = (LoginForm) session.getAttribute(member.getMemberId());
+        // 현재 세션에 저장되어 있는 id값과 사용자가 입력한 id가 일치한다면 입력한 정보 수정
         if((memberSession.getMemberId()).equals(member.getMemberId())){
             memberMapper.updateInfo(member.getPassword(),member.getName(),member.getMemberId());
             return 0;
@@ -81,6 +82,7 @@ public class MemberController {
     public int logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session != null){
+            // 세션종료
             session.invalidate();
             return 0;
         }

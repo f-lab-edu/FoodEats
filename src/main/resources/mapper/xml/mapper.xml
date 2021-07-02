@@ -11,6 +11,9 @@
     <select id="findAll" parameterType="String" resultType="Member">
         SELECT * FROM user WHERE memberId = #{arg0};
     </select>
+    <select id="findIdPassword" parameterType="String" resultType="LoginForm">
+        SELECT memberId,password FROM user WHERE memberId = #{arg0};
+    </select>
     <update id="updateInfo" parameterType="String">
         UPDATE user SET password=#{arg0}, name = #{arg1} WHERE memberId = #{arg2};
     </update>

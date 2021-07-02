@@ -1,6 +1,5 @@
 package com.flab.foodeats.temorary;
 
-
 import com.flab.foodeats.temorary.member.Member;
 import com.flab.foodeats.temorary.member.MemberService;
 import com.flab.foodeats.temorary.member.grade.Grade;
@@ -10,6 +9,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * 자바 기반 코드 수정 (리뷰 반영)
+ * @author eunsoo
+ */
 @Component
 public class OrderApp {
     //psvm
