@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class LoginForm {
     @NotEmpty
-    private String memberId; // 로그인 id
+    private String id; // 로그인 id
     @NotEmpty
     private String password; // 로그인 password
 }

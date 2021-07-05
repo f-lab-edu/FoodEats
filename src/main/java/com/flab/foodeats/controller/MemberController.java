@@ -1,5 +1,6 @@
 package com.flab.foodeats.controller;
 
+import com.flab.foodeats.SessionConst;
 import com.flab.foodeats.mapper.MemberMapper;
 import com.flab.foodeats.model.LoginForm;
 import com.flab.foodeats.model.Member;
@@ -37,7 +38,7 @@ public class MemberController {
             response.getWriter().write("error"); // 해당 메시지가 http body에 들어간다
             // (추후 DB에 동일한 Id 값이 있을 때 생성되는 에러 만들어주기)
         }else {
-            memberMapper.save(member.getMemberId(),member.getPassword(),member.getName());
+            memberMapper.save(member.getId(),member.getPassword(),member.getName());
             response.getWriter().write("success");
         }
     }
@@ -46,6 +47,7 @@ public class MemberController {
     @PostMapping("/login")
     public int login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult,
                      HttpServletRequest request, HttpServletResponse response) throws IOException{
+
         String dbPassword;
         response.setContentType("text/plain");
         response.setCharacterEncoding("utf-8");
@@ -56,11 +58,17 @@ public class MemberController {
             // 입력값으로 넘어온 id (loginForm.getMemberId())에 해당하는 값이 db에 없을 경우 NullPointerException이 발생 --> try,catch
             // 입력값으로 넘어온 password: loginForm.getPassword()
             // 입력값으로 넘어온 id의 db에 저장된 비밀번호: memberMapper.findPassword(loginForm.getMemberId())
-            if((memberMapper.findPassword(loginForm.getMemberId())).equals(loginForm.getPassword())){
+
+            System.out.println(memberMapper.findPassword(loginForm.getId()));
+            System.out.println(loginForm.getPassword());
+
+            if((memberMapper.findPassword(loginForm.getId())).equals(loginForm.getPassword())){
                 HttpSession session = request.getSession();
                 // 세션 저장
                 // key: 회원의 ID, value: id,password
-                session.setAttribute(loginForm.getMemberId(),memberMapper.findIdPass(loginForm.getMemberId()));
+                session.setAttribute(SessionConst.LOGIN, memberMapper.findIdPass(loginForm.getId()));
+                System.out.println(memberMapper.findIdPass(loginForm.getId()));
+                System.out.println(session.getAttribute(SessionConst.LOGIN));
                 return 0;
             }
         }catch (Exception e){
@@ -74,21 +82,25 @@ public class MemberController {
     @PutMapping("/update")
     public void update(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult,
                       HttpServletRequest request,HttpServletResponse response) throws IOException{
+
         response.setContentType("text/plain");
         response.setCharacterEncoding("utf-8");
+
         if(bindingResult.hasErrors()) { // 제대로 된 바인딩이 안 이루어졌을 때
             response.getWriter().write("error"); // HTTP의 body 부에 들어간다.
         }
 
-        HttpSession session = request.getSession(false);
         // 세션에 저장되어있는 값 가져오기
-        LoginForm memberSession = (LoginForm) session.getAttribute(member.getMemberId());
         // 현재 세션에 저장되어 있는 id값과 사용자가 입력한 id가 일치한다면 입력한 정보 수정
-        if((memberSession.getMemberId()).equals(member.getMemberId())){
-            memberMapper.updateInfo(member.getPassword(),member.getName(),member.getMemberId());
+        HttpSession session = request.getSession(false);
+        LoginForm memberSession = (LoginForm) session.getAttribute(SessionConst.LOGIN);
+
+
+        if((memberSession.getId()).equals(member.getId())){
+            memberMapper.updateInfo(member.getPassword(),member.getName(),member.getId());
             response.getWriter().write("0"); // 성공
         }
-        response.getWriter().write("1"); // 에러
+
     }
 
     @PostMapping("/logout")
