@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class Member {
     @NotEmpty
-    private String memberId;
+    private String id;
     @NotEmpty
     private String password;
     @NotEmpty
