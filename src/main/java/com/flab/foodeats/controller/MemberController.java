@@ -1,17 +1,23 @@
 package com.flab.foodeats.controller;
 
-import com.flab.foodeats.SessionConst;
+import com.flab.foodeats.aop.AopAuth;
+import com.flab.foodeats.interceptor.CustomAopIncterceptor;
 import com.flab.foodeats.mapper.MemberMapper;
 import com.flab.foodeats.model.LoginForm;
 import com.flab.foodeats.model.Member;
+import com.flab.foodeats.service.DeleteService;
+import com.flab.foodeats.service.InsertService;
+import com.flab.foodeats.service.LoginService;
+import com.flab.foodeats.service.UpdateService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * 로그인 기반 코드
@@ -22,97 +28,114 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class MemberController {
 
-    private MemberMapper memberMapper;
+  private LoginService loginService;
+  private InsertService insertService;
+  private UpdateService updateService;
+  private DeleteService deleteService;
+  private MemberMapper memberMapper;
 
-    public MemberController(MemberMapper memberMapper){
-        this.memberMapper = memberMapper;
+  public MemberController(LoginService loginService, InsertService insertService, UpdateService updateService, DeleteService deleteService, MemberMapper memberMapper) {
+    this.loginService = loginService;
+    this.insertService = insertService;
+    this.updateService = updateService;
+    this.deleteService = deleteService;
+    this.memberMapper = memberMapper;
+  }
+
+  /**
+   * 필터 / 인터셉터 적용 x
+   * 회원가입
+   * 로그인
+   * 로그아웃
+   * 전체 사용자 조회
+   */
+
+
+  // 회원가입
+  @PostMapping("/insert")
+  public ResponseEntity<?> insertUser(@Valid @RequestBody Member member, BindingResult bindingResult) {
+    inputValid(bindingResult);
+    return insertService.insert(member);
+  }
+
+
+  // 로그인
+  @PostMapping("/login")
+  public ResponseEntity<?> login (@Valid @RequestBody LoginForm loginForm, BindingResult bindingResult) {
+    inputValid(bindingResult);
+    return loginService.login(loginForm);
+  }
+
+
+  // 로그아웃
+  @PostMapping("/logout")
+  public ResponseEntity<Void> logout(HttpServletRequest request) {
+
+    HttpSession session = request.getSession(false);
+    if(session != null) {
+      session.invalidate();
+      return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 회원가입
-    @PostMapping("/insert")
-    public void insertUser(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult,
-                           HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("utf-8");
-        if(bindingResult.hasErrors()){ // 넘어온 값이 member 객체에 제대로 바인딩이 이루어지지 않는다면
-            response.getWriter().write("error"); // 해당 메시지가 http body에 들어간다
-            // (추후 DB에 동일한 Id 값이 있을 때 생성되는 에러 만들어주기)
-        }else {
-            memberMapper.save(member.getId(),member.getPassword(),member.getName());
-            response.getWriter().write("success");
-        }
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+  }
+
+  // 전체 조회
+  @GetMapping("/all")
+  public List<Member> findAll() {
+
+    return memberMapper.findAll();
+
+  }
+
+  // 단일 회원 조회 (by ID)
+  @GetMapping("/findinfo")
+  public Member findMemberById(@RequestBody Member member){
+
+    return memberMapper.findMemberById(member.getId());
+
+  }
+
+
+
+
+  /**
+   * 필터 / 입터셉터 적용 메소드
+   * 회원수정 (update)
+   * 회원탈퇴 (delete)
+   */
+
+  // 회원정보 수정
+  //@AopAuth
+  @CustomAopIncterceptor // 어노테이션 적용
+  @PutMapping("/update")
+  public ResponseEntity<?> update (@Valid @RequestBody Member member, BindingResult bindingResult) {
+
+    inputValid(bindingResult);
+    return updateService.update(member);
+
+  }
+
+  // 회원 삭제
+  //@AopAuth
+  @CustomAopIncterceptor
+  @DeleteMapping("/delete")
+  public ResponseEntity<?> deleteUser(@Valid @RequestBody Member member, BindingResult bindingResult) {
+
+    inputValid(bindingResult);
+    return deleteService.delete(member.getId());
+
+  }
+
+
+  private void inputValid(BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      throw new IllegalArgumentException("잘못된 입력 값");
     }
-
-    // 로그인
-    @PostMapping("/login")
-    public int login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult,
-                     HttpServletRequest request, HttpServletResponse response) throws IOException{
-
-        String dbPassword;
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("utf-8");
-        if(bindingResult.hasErrors()) { // 제대로 된 바인딩이 안 이루어졌을 때
-            response.getWriter().write("error"); // HTTP의 body 부에 들어간다.
-        }
-        try {
-            // 입력값으로 넘어온 id (loginForm.getMemberId())에 해당하는 값이 db에 없을 경우 NullPointerException이 발생 --> try,catch
-            // 입력값으로 넘어온 password: loginForm.getPassword()
-            // 입력값으로 넘어온 id의 db에 저장된 비밀번호: memberMapper.findPassword(loginForm.getMemberId())
-
-            System.out.println(memberMapper.findPassword(loginForm.getId()));
-            System.out.println(loginForm.getPassword());
-
-            if((memberMapper.findPassword(loginForm.getId())).equals(loginForm.getPassword())){
-                HttpSession session = request.getSession();
-                // 세션 저장
-                // key: 회원의 ID, value: id,password
-                session.setAttribute(SessionConst.LOGIN, memberMapper.findIdPass(loginForm.getId()));
-                System.out.println(memberMapper.findIdPass(loginForm.getId()));
-                System.out.println(session.getAttribute(SessionConst.LOGIN));
-                return 0;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return 2;
-        }
-        return -1;
-    }
-
-    // 후에 인터셉터 처리를 통해 로그인 한 사용자만이 해당 요청을 정상적으로 수행하게끔 수정 예정
-    @PutMapping("/update")
-    public void update(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult,
-                      HttpServletRequest request,HttpServletResponse response) throws IOException{
-
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("utf-8");
-
-        if(bindingResult.hasErrors()) { // 제대로 된 바인딩이 안 이루어졌을 때
-            response.getWriter().write("error"); // HTTP의 body 부에 들어간다.
-        }
-
-        // 세션에 저장되어있는 값 가져오기
-        // 현재 세션에 저장되어 있는 id값과 사용자가 입력한 id가 일치한다면 입력한 정보 수정
-        HttpSession session = request.getSession(false);
-        LoginForm memberSession = (LoginForm) session.getAttribute(SessionConst.LOGIN);
+  }
 
 
-        if((memberSession.getId()).equals(member.getId())){
-            memberMapper.updateInfo(member.getPassword(),member.getName(),member.getId());
-            response.getWriter().write("0"); // 성공
-        }
 
-    }
 
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response)throws IOException{
-        HttpSession session = request.getSession(false);
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("utf-8");
-        if(session != null){
-            // 세션종료
-            session.invalidate();
-            response.getWriter().write("0"); // 성공
-        }
-        response.getWriter().write("1"); // 에러
-    }
 }

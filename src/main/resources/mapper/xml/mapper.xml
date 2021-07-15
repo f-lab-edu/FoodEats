@@ -2,24 +2,59 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.foodeats.mapper.MemberMapper">
-    <!-- 저장  -->
-    <insert id="save" parameterType="String">
-        INSERT INTO Login_User_Data VALUES(#{arg0},#{arg1},#{arg2});
-    </insert>
-    <!-- 비밀번호 반환  -->
-    <select id="findPassword" parameterType="String" resultType="String">
-        SELECT password FROM Login_User_Data WHERE id = #{arg0};
-    </select>
-    <!-- 특정회원의 모든 정보 반환  -->
-    <select id="findAll" parameterType="String" resultType="Member">
-        SELECT * FROM Login_User_Data WHERE id = #{arg0};
-    </select>
-    <!-- 특정회원의 id, password 반환  -->
-    <select id="findIdPass" parameterType="String" resultType="LoginForm">
-        SELECT id,password FROM Login_User_Data WHERE id = #{arg0};
-    </select>
-    <!-- 특정회원의 정보 수정  -->
-    <update id="updateInfo" parameterType="String">
-        UPDATE Login_User_Data SET password=#{arg0}, name = #{arg1} WHERE id = #{arg2};
-    </update>
+
+
+  <!-- 회원가입  -->
+  <insert id="save" parameterType="String">
+    INSERT
+    INTO Login_User_Data
+    VALUES(#{id}, #{password}, #{name});
+  </insert>
+
+
+
+  <!-- 로그인 / 비밀번호 반환  -->
+  <select id="findPassword" parameterType="String" resultType="String">
+    SELECT password
+    FROM Login_User_Data
+    WHERE id = #{id};
+  </select>
+
+
+
+  <!-- 회원정보 수정 -->
+  <update id="updateInfo" parameterType="String">
+    UPDATE Login_User_Data
+    SET password=#{password}, name = #{name}
+    WHERE id = #{id};
+  </update>
+
+
+
+  <!-- 회원정보 탈퇴 -->
+  <delete id = "deleteUserInfo" parameterType="String">
+    DELETE
+    FROM Login_User_Data
+    WHERE id = #{id};
+  </delete>
+
+
+  <!-- 회원 전체 조회 -->
+  <select id="findAll"  resultType="Member">
+    SELECT *
+    FROM Login_User_Data;
+  </select>
+
+
+  <!-- 회원 조회 (By ID)-->
+  <select id="findMemberById" parameterType="String" resultType="Member">
+    SELECT *
+    FROM Login_User_Data
+    WHERE id = #{id};
+  </select>
+
+
+
+
+
 </mapper>

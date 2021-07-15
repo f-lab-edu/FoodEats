@@ -34,7 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/","/user/login","/user/insert","/logout"
+                        "/","/user/login","/user/insert","/user/logout","/user/all","/user/findinfo"
                 );
     }
 
@@ -48,7 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
 
     // 로그 필터
-    @Bean
+    //@Bean
     public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new
                 FilterRegistrationBean<>();
@@ -59,7 +59,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     // 로그인 인증 구현
-    @Bean
+    //@Bean
     public FilterRegistrationBean loginCheckFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new
                 FilterRegistrationBean<>();
