@@ -29,8 +29,7 @@ public class FilterAuth implements Filter {
         System.out.println("분기점 (다른 사람 정보 수정 체크 )");
         System.out.println(session);
         System.out.println(session.getAttribute(SessionConst.LOGIN));
-        if (session == null ||
-            session.getAttribute(SessionConst.LOGIN) == null) {
+        if (session == null || session.getAttribute(SessionConst.LOGIN) == null) {
           log.info("미인증 사용자 요청 {}", requestURI);
           //로그인으로 redirect
           //httpResponse.sendRedirect("/login?redirectURL=" + requestURI);
