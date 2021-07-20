@@ -1,15 +1,15 @@
-package com.flab.foodeats.service;
+package com.flab.foodeats.user.service;
 
 import java.util.List;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import com.flab.foodeats.mapper.MemberMapper;
-import com.flab.foodeats.model.DeleteFormDTO;
-import com.flab.foodeats.model.InsertFormDTO;
-import com.flab.foodeats.model.LoginFormDTO;
-import com.flab.foodeats.model.UpdateFormDTO;
+import com.flab.foodeats.user.mapper.MemberMapper;
+import com.flab.foodeats.user.model.DeleteFormDTO;
+import com.flab.foodeats.user.model.InsertFormDTO;
+import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.model.UpdateFormDTO;
 
 @Service
 public class UserServiceImpl implements UserService {

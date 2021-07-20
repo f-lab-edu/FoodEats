@@ -1,4 +1,4 @@
-package com.flab.foodeats.model;
+package com.flab.foodeats.user.model;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

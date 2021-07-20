@@ -1,4 +1,4 @@
-package com.flab.foodeats.controller;
+package com.flab.foodeats.user.controller;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.flab.foodeats.interceptor.UserLoginAuth;
-import com.flab.foodeats.model.DeleteFormDTO;
-import com.flab.foodeats.model.InsertFormDTO;
-import com.flab.foodeats.model.LoginFormDTO;
-import com.flab.foodeats.model.UpdateFormDTO;
+import com.flab.foodeats.user.interceptor.UserLoginAuth;
+import com.flab.foodeats.user.model.DeleteFormDTO;
+import com.flab.foodeats.user.model.InsertFormDTO;
+import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.model.UpdateFormDTO;
 
 public interface MemberController {
 

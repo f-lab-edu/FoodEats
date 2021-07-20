@@ -1,6 +1,6 @@
-package com.flab.foodeats.filter;
+package com.flab.foodeats.user.filter;
 
-import com.flab.foodeats.SessionConst;
+import com.flab.foodeats.user.util.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 

@@ -1,4 +1,4 @@
-package com.flab.foodeats.interceptor;
+package com.flab.foodeats.user.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
