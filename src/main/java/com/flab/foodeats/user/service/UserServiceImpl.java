@@ -22,24 +22,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Object insertUserInfo(InsertFormDTO insertFormDTO) {
-		try {
-			memberMapper.save(insertFormDTO.getId(), insertFormDTO.getPassword(), insertFormDTO.getName());
-			return "회원가입 성공";
-		} catch (DuplicateKeyException e) {
+		if (memberMapper.findMemberById(insertFormDTO.getId()) != null) {
 			throw new DuplicateKeyException("이미 가입된 id 입니다");
 		}
+		memberMapper.save(insertFormDTO.getId(), insertFormDTO.getPassword(), insertFormDTO.getName());
+		return "회원가입 성공";
 	}
 
 	@Override
 	public Object login(LoginFormDTO loginFormDTO) {
-		try {
-			if ((memberMapper.findPassword(loginFormDTO.getId())).equals(loginFormDTO.getPassword())) {
-				return "로그인 성공";
-			}
-			throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-		} catch (NullPointerException e) {
+		if (memberMapper.findMemberById(loginFormDTO.getId()) == null) {
 			throw new NullPointerException("해당 id가 존재하지 않습니다.");
+		} else if ((memberMapper.findPassword(loginFormDTO.getId())).equals(loginFormDTO.getPassword())) {
+			return "로그인 성공";
 		}
+		throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
 	}
 
 	@Override
