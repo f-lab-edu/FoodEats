@@ -21,7 +21,7 @@ public class LogInterceptor implements HandlerInterceptor {
         String uuid = UUID.randomUUID().toString();
         request.setAttribute(LOG_ID, uuid);
 
-        response.setContentType("text/plain");
+        response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
         if (handler instanceof HandlerMethod) {
