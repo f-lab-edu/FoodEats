@@ -1,11 +1,10 @@
-package com.flab.foodeats;
+package com.flab.foodeats.user.util;
 
-import com.flab.foodeats.filter.FilterAuth;
-import com.flab.foodeats.filter.LogFilter;
-import com.flab.foodeats.interceptor.LogInterceptor;
-import com.flab.foodeats.interceptor.LoginCheckInterceptor;
+import com.flab.foodeats.user.filter.FilterAuth;
+import com.flab.foodeats.user.filter.LogFilter;
+import com.flab.foodeats.user.interceptor.LogInterceptor;
+import com.flab.foodeats.user.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

@@ -1,6 +1,6 @@
-package com.flab.foodeats.mapper;
+package com.flab.foodeats.user.mapper;
 
-import com.flab.foodeats.model.InsertFormDTO;
+import com.flab.foodeats.user.model.InsertFormDTO;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

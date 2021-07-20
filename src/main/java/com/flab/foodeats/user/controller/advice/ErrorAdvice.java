@@ -1,8 +1,7 @@
-package com.flab.foodeats.controller.advice;
+package com.flab.foodeats.user.controller.advice;
 
-import static com.flab.foodeats.model.ResponseStatus.*;
-
-import com.flab.foodeats.model.ResponseResult;
+import com.flab.foodeats.user.model.ResponseResult;
+import com.flab.foodeats.user.model.ResponseStatus;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +21,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ResponseResult> illegalExHandler(IllegalArgumentException e) {
-		ResponseResult responseResult = new ResponseResult(FAIL, e.getMessage());
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
 		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
 	}
 
@@ -32,7 +31,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ResponseResult> runtimeException(DuplicateKeyException e) {
-		ResponseResult responseResult = new ResponseResult(FAIL, e.getMessage());
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
 		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
 	}
 
@@ -42,7 +41,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ResponseResult> nullPointerHandler(NullPointerException e) {
-		ResponseResult responseResult = new ResponseResult(FAIL, e.getMessage());
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
 		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
 	}
 
@@ -52,7 +51,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ResponseResult> exceptionHandler(Exception e) {
-		ResponseResult responseResult = new ResponseResult(FAIL, e.getMessage());
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
 		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
 	}
 }

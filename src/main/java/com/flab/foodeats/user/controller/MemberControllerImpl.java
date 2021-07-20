@@ -1,15 +1,14 @@
-package com.flab.foodeats.controller;
+package com.flab.foodeats.user.controller;
 
-import static com.flab.foodeats.model.ResponseStatus.*;
-
-import com.flab.foodeats.SessionConst;
-import com.flab.foodeats.interceptor.UserLoginAuth;
-import com.flab.foodeats.model.DeleteFormDTO;
-import com.flab.foodeats.model.LoginFormDTO;
-import com.flab.foodeats.model.InsertFormDTO;
-import com.flab.foodeats.model.ResponseResult;
-import com.flab.foodeats.model.UpdateFormDTO;
-import com.flab.foodeats.service.UserService;
+import com.flab.foodeats.user.util.SessionConst;
+import com.flab.foodeats.user.interceptor.UserLoginAuth;
+import com.flab.foodeats.user.model.DeleteFormDTO;
+import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.model.InsertFormDTO;
+import com.flab.foodeats.user.model.ResponseResult;
+import com.flab.foodeats.user.model.UpdateFormDTO;
+import com.flab.foodeats.user.service.UserService;
+import com.flab.foodeats.user.model.ResponseStatus;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,7 @@ public class MemberControllerImpl implements MemberController {
 
 	public ResponseEntity<?> insertUser(@Valid @RequestBody InsertFormDTO insertFormDTO, BindingResult bindingResult) {
 		inputValid(bindingResult);
-		ResponseResult responseResult = new ResponseResult(SUCCESS, userService.insertUserInfo(insertFormDTO));
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.SUCCESS, userService.insertUserInfo(insertFormDTO));
 		return new ResponseEntity<>(responseResult, HttpStatus.CREATED);
 	}
 
@@ -52,7 +51,7 @@ public class MemberControllerImpl implements MemberController {
 	public ResponseEntity<?> login(@Valid @RequestBody LoginFormDTO loginFormDTO, BindingResult bindingResult,
 		HttpSession httpSession) {
 		inputValid(bindingResult);
-		ResponseResult responseResult = new ResponseResult(SUCCESS, userService.login(loginFormDTO));
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.SUCCESS, userService.login(loginFormDTO));
 		httpSession.setAttribute(SessionConst.LOGIN, loginFormDTO);
 		return new ResponseEntity<>(responseResult, HttpStatus.OK);
 	}
@@ -65,7 +64,7 @@ public class MemberControllerImpl implements MemberController {
 
 	// 전체 조회
 	public ResponseEntity<?> findAll() {
-		ResponseResult responseResult = new ResponseResult(SUCCESS, userService.findAllUser());
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.SUCCESS, userService.findAllUser());
 		return new ResponseEntity<>(responseResult, HttpStatus.OK);
 	}
 
@@ -81,7 +80,7 @@ public class MemberControllerImpl implements MemberController {
 		HttpSession httpSession) {
 		inputValid(bindingResult);
 		LoginFormDTO sessionMember = (LoginFormDTO)httpSession.getAttribute(SessionConst.LOGIN);
-		ResponseResult responseResult = new ResponseResult(SUCCESS,
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.SUCCESS,
 			userService.updateUserInfo(sessionMember, updateFormDTO));
 		return new ResponseEntity<>(responseResult, HttpStatus.OK);
 	}
@@ -92,7 +91,7 @@ public class MemberControllerImpl implements MemberController {
 		HttpSession httpSession) {
 		inputValid(bindingResult);
 		LoginFormDTO sessionMember = (LoginFormDTO)httpSession.getAttribute(SessionConst.LOGIN);
-		ResponseResult responseResult = new ResponseResult(SUCCESS,
+		ResponseResult responseResult = new ResponseResult(ResponseStatus.SUCCESS,
 			userService.deleteUserInfo(sessionMember, deleteFormDTO));
 		httpSession.invalidate();
 		return new ResponseEntity<>(responseResult, HttpStatus.OK);

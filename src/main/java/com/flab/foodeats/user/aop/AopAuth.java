@@ -1,4 +1,4 @@
-package com.flab.foodeats.aop;
+package com.flab.foodeats.user.aop;
 
 
 import java.lang.annotation.*;

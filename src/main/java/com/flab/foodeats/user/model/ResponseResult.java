@@ -1,4 +1,4 @@
-package com.flab.foodeats.model;
+package com.flab.foodeats.user.model;
 
 public class ResponseResult {
 

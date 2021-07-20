@@ -1,5 +1,5 @@
 mybatis:
-  type-aliases-package: com.flab.foodeats.model
+  type-aliases-package: com.flab.foodeats.user.model
   mapper-locations: mapper/xml/*.xml
 
 spring:

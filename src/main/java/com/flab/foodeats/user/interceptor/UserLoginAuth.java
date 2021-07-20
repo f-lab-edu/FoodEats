@@ -1,4 +1,4 @@
-package com.flab.foodeats.interceptor;
+package com.flab.foodeats.user.interceptor;
 
 
 import java.lang.annotation.*;

@@ -1,7 +1,7 @@
 
-package com.flab.foodeats.aop;
+package com.flab.foodeats.user.aop;
 
-import com.flab.foodeats.SessionConst;
+import com.flab.foodeats.user.util.SessionConst;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
