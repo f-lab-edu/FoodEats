@@ -1,4 +1,4 @@
-package com.flab.foodeats.interceptor;
+package com.flab.foodeats.user.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
@@ -21,7 +21,8 @@ public class LogInterceptor implements HandlerInterceptor {
         String uuid = UUID.randomUUID().toString();
         request.setAttribute(LOG_ID, uuid);
 
-        response.setContentType("text/plain");
+
+        response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
         if (handler instanceof HandlerMethod) {

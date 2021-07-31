@@ -1,4 +1,4 @@
-package com.flab.foodeats.filter;
+package com.flab.foodeats.user.filter;
 
 import lombok.extern.slf4j.Slf4j;
 

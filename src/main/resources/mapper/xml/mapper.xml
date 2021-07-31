@@ -1,17 +1,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.flab.foodeats.mapper.MemberMapper">
-
-
+<mapper namespace="com.flab.foodeats.user.mapper.MemberMapper">
   <!-- 회원가입  -->
   <insert id="save" parameterType="String">
     INSERT
     INTO Login_User_Data
     VALUES(#{id}, #{password}, #{name});
   </insert>
-
-
 
   <!-- 로그인 / 비밀번호 반환  -->
   <select id="findPassword" parameterType="String" resultType="String">
@@ -20,16 +16,12 @@
     WHERE id = #{id};
   </select>
 
-
-
   <!-- 회원정보 수정 -->
   <update id="updateInfo" parameterType="String">
     UPDATE Login_User_Data
     SET password=#{password}, name = #{name}
     WHERE id = #{id};
   </update>
-
-
 
   <!-- 회원정보 탈퇴 -->
   <delete id = "deleteUserInfo" parameterType="String">
@@ -38,23 +30,16 @@
     WHERE id = #{id};
   </delete>
 
-
   <!-- 회원 전체 조회 -->
-  <select id="findAll"  resultType="Member">
+  <select id="findAll"  resultType="InsertFormDTO">
     SELECT *
     FROM Login_User_Data;
   </select>
 
-
   <!-- 회원 조회 (By ID)-->
-  <select id="findMemberById" parameterType="String" resultType="Member">
+  <select id="findMemberById" parameterType="String" resultType="InsertFormDTO">
     SELECT *
     FROM Login_User_Data
     WHERE id = #{id};
   </select>
-
-
-
-
-
 </mapper>
