@@ -1,13 +1,15 @@
 package com.flab.foodeats.user.controller.advice;
 
-import com.flab.foodeats.user.model.ResponseResult;
-import com.flab.foodeats.user.model.ResponseStatus;
+import com.flab.foodeats.user.model.ApiResponse;
+import com.flab.foodeats.user.model.code.StatusUserCode;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,9 +22,9 @@ public class ErrorAdvice {
 	 * 파라미터 오류
 	 */
 	@ExceptionHandler
-	public ResponseEntity<ResponseResult> illegalExHandler(IllegalArgumentException e) {
-		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
-		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ApiResponse> illegalExHandler(IllegalArgumentException e) {
+		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -30,28 +32,44 @@ public class ErrorAdvice {
 	 * 중복 오류
 	 */
 	@ExceptionHandler
-	public ResponseEntity<ResponseResult> runtimeException(DuplicateKeyException e) {
-		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
-		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ApiResponse> runtimeException(DuplicateKeyException e) {
+		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
-	 * DuplicateKey
-	 * 중복 오류
+	 * NullPointer
+	 * 널 포인트 오류
 	 */
 	@ExceptionHandler
-	public ResponseEntity<ResponseResult> nullPointerHandler(NullPointerException e) {
-		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
-		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ApiResponse> nullPointerHandler(NullPointerException e) {
+		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * MethodArgmentNotValid
+	 * NotBlank
+	 * 입력 파라미터 부재 오류
+	 */
+	@ExceptionHandler
+	public ResponseEntity<ApiResponse> MethodArgumentNotValidHandler(MethodArgumentNotValidException e) {
+		String errors = null;
+		for(ObjectError error : e.getBindingResult().getAllErrors()) {
+			errors=error.getDefaultMessage();
+		}
+
+		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, errors);
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
 	 * Exception
-	 * 최상위 오류 / 무조건 작동
+	 * 최상위 오류
 	 */
 	@ExceptionHandler
-	public ResponseEntity<ResponseResult> exceptionHandler(Exception e) {
-		ResponseResult responseResult = new ResponseResult(ResponseStatus.FAIL, e.getMessage());
-		return new ResponseEntity<>(responseResult, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ApiResponse> exceptionHandler(Exception e) {
+		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 }
