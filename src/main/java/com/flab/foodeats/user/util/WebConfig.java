@@ -2,8 +2,7 @@ package com.flab.foodeats.user.util;
 
 import com.flab.foodeats.user.filter.FilterAuth;
 import com.flab.foodeats.user.filter.LogFilter;
-import com.flab.foodeats.user.interceptor.LogInterceptor;
-import com.flab.foodeats.user.interceptor.LoginCheckInterceptor;
+import com.flab.foodeats.user.interceptor.AuthInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -25,16 +24,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogInterceptor())
+       /* registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error");
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .order(2)
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/","/user/login","/user/insert","/user/logout","/user/all","/user/findinfo"
-                );
+                .excludePathPatterns("/css/**", "/*.ico", "/error");*/
+        registry.addInterceptor(new AuthInterceptor())
+            .order(1)
+            .addPathPatterns("/**")
+            .excludePathPatterns(
+                "/","/user/login","/user/insert","/user/logout","/user/all","/user/findInfo"
+            );
     }
 
 
@@ -50,7 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
     //@Bean
     public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new
-                FilterRegistrationBean<>();
+            FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LogFilter());
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/*");
@@ -61,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
     //@Bean
     public FilterRegistrationBean loginCheckFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new
-                FilterRegistrationBean<>();
+            FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new FilterAuth());
         filterRegistrationBean.setOrder(2);
         filterRegistrationBean.addUrlPatterns("/*");
