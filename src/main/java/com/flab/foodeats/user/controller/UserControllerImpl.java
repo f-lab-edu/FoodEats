@@ -1,6 +1,6 @@
 package com.flab.foodeats.user.controller;
 
-import com.flab.foodeats.user.util.SessionConst;
+import com.flab.foodeats.user.interceptor.auth.Auth;
 import com.flab.foodeats.user.interceptor.auth.AuthPreHandler;
 import com.flab.foodeats.user.model.DeleteFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
@@ -45,7 +45,7 @@ public class UserControllerImpl implements UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginFormDTO loginFormDTO, HttpSession httpSession) {
 		ApiResponse apiResponse = userService.login(loginFormDTO);
-		httpSession.setAttribute(SessionConst.LOGIN, loginFormDTO.getId());
+		httpSession.setAttribute(Auth.KEY, loginFormDTO.getId());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
