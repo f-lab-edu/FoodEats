@@ -1,7 +1,9 @@
 package com.flab.foodeats.user.interceptor.auth;
 
 import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AuthErrorCheck {
 
 	public boolean sessionNullCheck(HttpSession session) {
