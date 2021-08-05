@@ -1,8 +1,6 @@
 
 package com.flab.foodeats.user.aop;
 
-import com.flab.foodeats.user.util.SessionConst;
-
 import lombok.RequiredArgsConstructor;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,6 +14,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.flab.foodeats.user.interceptor.auth.Auth;
+
 @RequiredArgsConstructor
 @Aspect     // AOP Aspect
 // @Component
@@ -26,9 +26,8 @@ public class LoginAuth {
 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession(false);
-		System.out.println(session.getAttribute(SessionConst.LOGIN));
 
-		if (session == null || session.getAttribute(SessionConst.LOGIN) == null) {
+		if (session == null || session.getAttribute(Auth.KEY) == null) {
 			System.out.println(" 오류 발생 추가 하기 ");
 		}
 		Object reval = pjp.proceed();

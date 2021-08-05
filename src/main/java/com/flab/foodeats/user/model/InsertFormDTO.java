@@ -1,20 +1,21 @@
 package com.flab.foodeats.user.model;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 public class InsertFormDTO {
 
 	/**
-	 * param id : 회원가입 시 입력할 사용자 id
-	 * param password : 회원가입 시 입력할 사용자 password
-	 * param name : 회원가입 시 입력할 사용자 닉네임
+	 * 회원가입
+	 * param id : 아이디
+	 * param password : 비밀번호
+	 * param name : 이름
 	 */
 
-	@NotEmpty
+	@NotBlank(message = "Input Your ID")
 	private String id;
-	@NotEmpty
+	@NotBlank(message = "Input Your Password")
 	private String password;
-	@NotEmpty
+	@NotBlank(message = "Input Your Name")
 	private String name;
 
 	public InsertFormDTO() {

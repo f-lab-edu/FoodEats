@@ -1,24 +1,26 @@
 package com.flab.foodeats.user.model;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 public class UpdateFormDTO {
 
 	/**
-	 * param id : 사용자가 회원가입 시 입력할 id
-	 * param password : 사용자가 회원가입 시 입력할 password
-	 * param name : 사용자가 회원가입 시 입력할 nickname
+	 * 회원수정
+	 * param password : 비밀번호
+	 * param name : 이름
 	 */
 
-	@NotEmpty
-	private String id;
-	@NotEmpty
+	@NotBlank(message = "Input Your Password")
 	private String password;
-	@NotEmpty
+	@NotBlank(message = "Input Your Message")
 	private String name;
 
-	public String getId() {
-		return id;
+	public UpdateFormDTO() {
+	}
+
+	public UpdateFormDTO(String password, String name) {
+		this.password = password;
+		this.name = name;
 	}
 
 	public String getPassword() {
@@ -29,12 +31,4 @@ public class UpdateFormDTO {
 		return name;
 	}
 
-	public UpdateFormDTO() {
-	}
-
-	public UpdateFormDTO(String id, String password, String name) {
-		this.id = id;
-		this.password = password;
-		this.name = name;
-	}
 }
