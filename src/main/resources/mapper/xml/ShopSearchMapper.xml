@@ -35,8 +35,8 @@
     <select id="findShopIsOpen" resultType="Integer">
         SELECT
             A.shopid
-        FROM shop_info AS A <!-- 샵 기본정보 -->
-        JOIN shop_convenience_info AS B <!-- 샵 편의정보. id, notice, open여부 -->
+        FROM shop_info AS A 
+        JOIN shop_convenience_info AS B 
             on A.shopid = B.shopid
         where B.shopstatus = 'OPEN';
     </select>
