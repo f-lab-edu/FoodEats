@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.flab.foodeats.user.model.DeleteFormDTO;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
-import com.flab.foodeats.user.model.ApiResponse;
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 
 @Service
