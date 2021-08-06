@@ -1,6 +1,4 @@
-package com.flab.foodeats.user.model;
-
-import com.flab.foodeats.user.model.code.StatusUserCode;
+package com.flab.foodeats.global;
 
 public class ApiResponse {
 
@@ -10,15 +8,15 @@ public class ApiResponse {
 	 * param message : 응답 데이터
 	 */
 
-	private StatusUserCode status;
+	private StatusCode status;
 	private Object message;
 
-	public ApiResponse(StatusUserCode status, Object message) {
+	public ApiResponse(StatusCode status, Object message) {
 		this.status = status;
 		this.message = message;
 	}
 
-	public StatusUserCode getStatus() {
+	public StatusCode getStatus() {
 		return status;
 	}
 
@@ -26,7 +24,7 @@ public class ApiResponse {
 		return message;
 	}
 
-	public void setStatus(StatusUserCode status) {
+	public void setStatus(StatusCode status) {
 		this.status = status;
 	}
 

@@ -1,0 +1,54 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.foodeats.shop.mapper.ShopMapper">
+
+    <!-- Shop 등록  -->
+    <insert id="registrationShop" parameterType="ShopRegistrationDTO">
+        INSERT
+        INTO Shop_info
+        VALUES(#{shopRegistrationDTO.shopId}, #{shopRegistrationDTO.category}, #{shopRegistrationDTO.brand}, #{shopRegistrationDTO.location},  #{shopRegistrationDTO.phone});
+    </insert>
+
+    <!-- 회원정보 수정 -->
+    <update id="updateShop" parameterType="ShopUpdateDTO">
+        UPDATE Shop_info
+        SET category = #{shopUpdateDTO.category}, brand = #{shopUpdateDTO.brand}, location = #{shopUpdateDTO.location}, phone = #{shopUpdateDTO.phone}
+        WHERE shopId = #{shopUpdateDTO.shopId};
+    </update>
+
+    <!-- 회원정보 탈퇴 -->
+    <delete id="deleteShop" parameterType="ShopDeleteDTO">
+        DELETE
+        FROM Shop_info
+        WHERE shopId = #{shopDeleteDTO.shopId};
+    </delete>
+
+    <!-- Shop one search  -->
+    <select id="findShopById" parameterType="int" resultType="ShopInfoListByIdDTO">
+        SELECT *
+        FROM Shop_info
+        WHERE shopId = #{shopId};
+    </select>
+
+    <!-- 회원 전체 조회 -->
+    <select id="searchShopAllInfo" resultType="ShopInfoListByIdDTO">
+        SELECT *
+        FROM Shop_info;
+    </select>
+
+    <!-- 가게 오픈  -->
+    <update id="startShop" parameterType="ShopOpenStatusDTO">
+        UPDATE shop_convenience_info
+        SET shopstatus = "OPEN"
+        WHERE shopId = #{shopOpenStatusDTO.shopId};
+    </update>
+
+    <!-- 가게 마감 (close)  -->
+    <update id="closeShop" parameterType="ShopOpenStatusDTO">
+        UPDATE shop_convenience_info
+        SET shopstatus = "CLOSE"
+        WHERE shopId = #{shopOpenStatusDTO.shopId};
+    </update>
+
+</mapper>

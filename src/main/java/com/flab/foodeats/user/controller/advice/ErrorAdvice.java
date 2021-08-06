@@ -1,7 +1,7 @@
 package com.flab.foodeats.user.controller.advice;
 
-import com.flab.foodeats.user.model.ApiResponse;
-import com.flab.foodeats.user.model.code.StatusUserCode;
+import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.global.StatusCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +23,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> illegalExHandler(IllegalArgumentException e) {
-		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
@@ -33,7 +33,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> runtimeException(DuplicateKeyException e) {
-		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
@@ -43,7 +43,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> nullPointerHandler(NullPointerException e) {
-		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
@@ -59,7 +59,7 @@ public class ErrorAdvice {
 			errors=error.getDefaultMessage();
 		}
 
-		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, errors);
+		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, errors);
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
@@ -69,7 +69,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> exceptionHandler(Exception e) {
-		ApiResponse apiResponse = new ApiResponse(StatusUserCode.FAIL, e.getMessage());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 }
