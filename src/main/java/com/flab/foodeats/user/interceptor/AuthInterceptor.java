@@ -5,9 +5,9 @@ import com.flab.foodeats.user.interceptor.auth.Auth;
 import com.flab.foodeats.user.interceptor.auth.AuthErrorCheck;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.interceptor.auth.AuthPreHandler;
-import com.flab.foodeats.user.model.ApiResponse;
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.model.code.ErrorUserCode;
-import com.flab.foodeats.user.model.code.StatusUserCode;
+import com.flab.foodeats.global.StatusCode;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -48,13 +48,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 		}
 
 		if (!authErrorCheck.sessionNullCheck(session)) {
-			ApiResponse msg = new ApiResponse(StatusUserCode.FAIL, ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
+			ApiResponse msg = new ApiResponse(StatusCode.FAIL, ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
 			response.getWriter().write(mapper.writeValueAsString(msg));
 			return false;
 		}
 
 		if (!authErrorCheck.authAnnotationNullCheck(filter)) {
-			ApiResponse msg = new ApiResponse(StatusUserCode.FAIL, ErrorUserCode.AUTH_NO_ANNOTATION.getMessage());
+			ApiResponse msg = new ApiResponse(StatusCode.FAIL, ErrorUserCode.AUTH_NO_ANNOTATION.getMessage());
 			response.getWriter().write(mapper.writeValueAsString(msg));
 			return false;
 		}
