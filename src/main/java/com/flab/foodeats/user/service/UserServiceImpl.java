@@ -2,12 +2,12 @@ package com.flab.foodeats.user.service;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.mapper.UserMapper;
 import com.flab.foodeats.user.model.DeleteFormDTO;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
-import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 import com.flab.foodeats.user.model.code.SuccessUserCode;
@@ -18,21 +18,21 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	private InsertErrorCheck insertErrorCheck;
 	private LoginErrorCheck loginErrorCheck;
-	private UserPasswordEncoder userPasswordEncoder;
+	private UserInfoEncoder userInfoEncoder;
 
 	public UserServiceImpl(UserMapper userMapper, InsertErrorCheck insertErrorCheck,
-		LoginErrorCheck loginErrorCheck, UserPasswordEncoder userPasswordEncoder) {
+		LoginErrorCheck loginErrorCheck, UserInfoEncoder userInfoEncoder) {
 		this.userMapper = userMapper;
 		this.insertErrorCheck = insertErrorCheck;
 		this.loginErrorCheck = loginErrorCheck;
-		this.userPasswordEncoder = userPasswordEncoder;
+		this.userInfoEncoder = userInfoEncoder;
 	}
 
 	// 회원가입
 	@Override
 	public ApiResponse insertUserInfo(InsertFormDTO insertFormDTO) {
 		insertErrorCheck.idAlreadyExistCheck(userMapper.findMemberById(insertFormDTO.getId()));
-		userPasswordEncoder.loginEncoder(insertFormDTO);
+		insertFormDTO.setPassword(userInfoEncoder.passwordEncoder(insertFormDTO.getPassword()));
 		userMapper.save(insertFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_INSERT_SUCCESS);
 		return apiResponse;
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
 	// 로그인
 	@Override
 	public ApiResponse login(LoginFormDTO loginFormDTO) {
-		loginErrorCheck.UserNotExist(userMapper.findPassword(loginFormDTO.getId()));
-		loginErrorCheck.PasswordUnMatch(userMapper.findPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
+		loginErrorCheck.notExistUserValid(userMapper.findPassword(loginFormDTO.getId()));
+		loginErrorCheck.validationLogin(userMapper.findPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS);
 		return apiResponse;
 	}
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 	// 회원 수정
 	@Override
 	public ApiResponse updateUserInfo(UpdateFormDTO updateFormDTO) {
-		userPasswordEncoder.updateEncoder(updateFormDTO);
+		updateFormDTO.setPassword(userInfoEncoder.passwordEncoder(updateFormDTO.getPassword()));
 		userMapper.updateInfo(AuthSessionControl.getAuthentication(), updateFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS);
 		return apiResponse;
