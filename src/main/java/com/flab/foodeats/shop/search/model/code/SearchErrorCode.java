@@ -1,7 +1,7 @@
 package com.flab.foodeats.shop.search.model.code;
 
 public enum SearchErrorCode {
-	NO_SEARCH_RESULT("No search results found.");
+	NOT_FOUND_SEARCH_RESULT("Not found search result");
 
 	private final String message;
 
