@@ -1,4 +1,4 @@
-package com.flab.foodeats.user.controller.advice;
+package com.flab.foodeats.user.advice;
 
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;

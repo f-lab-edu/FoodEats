@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.foodeats.user.interceptor.auth.Auth;
 import com.flab.foodeats.user.interceptor.auth.AuthErrorCheck;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
-import com.flab.foodeats.user.interceptor.auth.AuthPreHandler;
+import com.flab.foodeats.user.interceptor.auth.AuthRequired;
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.model.code.ErrorUserCode;
 import com.flab.foodeats.global.StatusCode;
@@ -36,12 +36,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		//Annotation
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
-		AuthPreHandler filter = handlerMethod.getMethod().getAnnotation(AuthPreHandler.class);
+		AuthRequired filter = handlerMethod.getMethod().getAnnotation(AuthRequired.class);
 
 		//Session
 		HttpSession session = request.getSession(false);
 		try {
-			String auth = (String)session.getAttribute(Auth.KEY);
+			String auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
 			AuthSessionControl.setAuthentication(auth);
 		} catch (Exception e) {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());

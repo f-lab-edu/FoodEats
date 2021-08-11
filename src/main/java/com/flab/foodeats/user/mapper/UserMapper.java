@@ -7,27 +7,22 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Mapper
 @Repository
 public interface UserMapper {
 
-	// 회원가입
-	void save(@Param("insertFormDTO") InsertFormDTO insertFormDTO);
+	// 회원가입 - 소비자
+	void registerConsumerUser(@Param("insertFormDTO") InsertFormDTO insertFormDTO);
 
-	// 로그인
-	String findPassword(String id);
+	// 로그인 - 소비자
+	String findConsumerUserPassword(String id);
 
-	// 모든 회원 조회
-	List<InsertFormDTO> findAll();
+	// 회원 수정 - 소비자
+	void updateConsumerUserInfo(@Param("id") String id, @Param("updateFormDTO") UpdateFormDTO updateFormDTO);
 
-	// 단일 회원 조회
-	InsertFormDTO findMemberById(String id);
+	// 회원 탈퇴 - 소비자
+	void deleteConsumerUserInfo(String id);
 
-	// 회원 수정
-	void updateInfo(@Param("id") String id, @Param("updateFormDTO") UpdateFormDTO updateFormDTO);
-
-	// 회원 탈퇴
-	void deleteUserInfo(String id);
+	// 단일 회원 조회 - 소비자
+	InsertFormDTO findConsumerUserById(String id);
 }
