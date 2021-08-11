@@ -18,21 +18,19 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	private InsertErrorCheck insertErrorCheck;
 	private LoginErrorCheck loginErrorCheck;
-	private UserInfoEncoder userInfoEncoder;
 
-	public UserServiceImpl(UserMapper userMapper, InsertErrorCheck insertErrorCheck,
-		LoginErrorCheck loginErrorCheck, UserInfoEncoder userInfoEncoder) {
+	public ConsumerUserServiceImpl(UserMapper userMapper, InsertErrorCheck insertErrorCheck,
+		LoginErrorCheck loginErrorCheck) {
 		this.userMapper = userMapper;
 		this.insertErrorCheck = insertErrorCheck;
 		this.loginErrorCheck = loginErrorCheck;
-		this.userInfoEncoder = userInfoEncoder;
 	}
 
 	// 회원가입
 	@Override
 	public ApiResponse insertUserInfo(InsertFormDTO insertFormDTO) {
 		insertErrorCheck.idAlreadyExistCheck(userMapper.findMemberById(insertFormDTO.getId()));
-		insertFormDTO.setPassword(userInfoEncoder.passwordEncoder(insertFormDTO.getPassword()));
+		insertFormDTO.setPassword(new UserInfoEncoder().encodePassword(insertFormDTO.getPassword()));
 		userMapper.save(insertFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_INSERT_SUCCESS);
 		return apiResponse;
@@ -71,7 +69,7 @@ public class UserServiceImpl implements UserService {
 	// 회원 수정
 	@Override
 	public ApiResponse updateUserInfo(UpdateFormDTO updateFormDTO) {
-		updateFormDTO.setPassword(userInfoEncoder.passwordEncoder(updateFormDTO.getPassword()));
+		updateFormDTO.setPassword(new UserInfoEncoder().encodePassword(updateFormDTO.getPassword()));
 		userMapper.updateInfo(AuthSessionControl.getAuthentication(), updateFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS);
 		return apiResponse;
