@@ -9,7 +9,7 @@ import com.flab.foodeats.user.model.code.ErrorUserCode;
 @Service
 public class InsertErrorCheck {
 
-	public void Insert(InsertFormDTO insertFormDTO) {
+	public void idAlreadyExistCheck(InsertFormDTO insertFormDTO) {
 		if (insertFormDTO != null) {
 			throw new DuplicateKeyException(ErrorUserCode.ID_EXIST.getMessage());
 		}

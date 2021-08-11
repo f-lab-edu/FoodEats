@@ -1,0 +1,43 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.foodeats.shop.mapper.ShopSearchMapper">
+
+    <select id="findAllShop" resultType="ShopRegistrationDTO">
+        SELECT *
+        FROM shop_info
+    </select>
+
+    <select id="findShopById" resultType="ShopRegistrationDTO">
+        SELECT *
+        FROM shop_info
+        WHERE shopid = #{shopid}
+    </select>
+
+    <select id="findShopByCategory" parameterType="String" resultType="ShopRegistrationDTO">
+        SELECT *
+        FROM shop_info
+        WHERE category = #{category};
+    </select>
+
+    <select id="findShopByBrand" parameterType="String" resultType="ShopRegistrationDTO">
+        SELECT *
+        FROM shop_info
+        WHERE brand = #{brand};
+    </select>
+
+    <select id="findShopByLocation" parameterType="String" resultType="ShopRegistrationDTO">
+        SELECT *
+        FROM shop_info
+        WHERE location = #{location};
+    </select>
+
+    <select id="findShopIsOpen" resultType="Integer">
+        SELECT
+            A.shopid
+        FROM shop_info AS A 
+        JOIN shop_convenience_info AS B 
+            on A.shopid = B.shopid
+        where B.shopstatus = 'OPEN';
+    </select>
+</mapper>
