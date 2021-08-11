@@ -11,7 +11,7 @@ import com.flab.foodeats.shop.search.model.code.SearchErrorCode;
 public class ShopSearchErrorCheck {
 	public void resultEmptyCheck (List<SearchShopResultDTO> result) {
 		if (result.isEmpty()) {
-			throw new NullPointerException(SearchErrorCode.NO_SEARCH_RESULT.getMessage());
+			throw new NullPointerException(SearchErrorCode.NOT_FOUND_SEARCH_RESULT.getMessage());
 		}
 	}
 }
