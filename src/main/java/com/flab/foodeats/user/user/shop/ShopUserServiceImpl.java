@@ -2,11 +2,12 @@ package com.flab.foodeats.user.user.shop;
 
 import org.springframework.stereotype.Service;
 
-import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.user.mapper.UserMapper;
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 import com.flab.foodeats.user.model.code.SuccessUserCode;
 import com.flab.foodeats.user.service.InsertErrorCheck;
@@ -36,26 +37,23 @@ public class ShopUserServiceImpl implements ShopUserService {
 		return apiResponse;
 	}
 
-
 	// 가맹점 - 로그인
-	@Override
-	public ApiResponse loginShopUser(LoginFormDTO loginFormDTO) {
+	public ApiResponse loginShopUser(LoginFormDTO loginFormDTO, ShopAuth shopAuth) {
 		loginErrorCheck.notExistUserValid(userMapper.findShopUserPassword(loginFormDTO.getId()));
 		loginErrorCheck.validationLogin(userMapper.findShopUserPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
+		shopAuth.setId(loginFormDTO.getId());
+		shopAuth.setShopId(userMapper.findShopIdById(loginFormDTO.getId()));
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS);
 		return apiResponse;
 	}
 
 	// 가맹점 - 로그아웃
-	@Override
 	public ApiResponse logoutShopUser() {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS);
 		return apiResponse;
 	}
 
-
 	// 가맹점 - 회원 수정
-	@Override
 	public ApiResponse updateShopUser(UpdateFormDTO updateFormDTO, String authenticationInfo) {
 		updateFormDTO.setPassword(new UserInfoEncoder().encodePassword(updateFormDTO.getPassword()));
 		userMapper.updateShopUserInfo(authenticationInfo, updateFormDTO);
@@ -64,7 +62,6 @@ public class ShopUserServiceImpl implements ShopUserService {
 	}
 
 	// 가맹점 - 회원 삭제
-	@Override
 	public ApiResponse deleteShopUser(String authenticationInfo) {
 		userMapper.deleteShopUserInfo(authenticationInfo);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_DELETE_SUCCESS);
