@@ -40,8 +40,15 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		//Session
 		HttpSession session = request.getSession(false);
+
 		try {
-			String auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
+			String auth = "";
+			if(request.getRequestURI().equals("/user/consumer/update") || request.getRequestURI().equals("/user/consumer/delete")){
+				auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
+			}
+			if(request.getRequestURI().equals("/user/shop/update") || request.getRequestURI().equals("/user/shop/delete")){
+				auth = (String)session.getAttribute(Auth.SHOP_KEY);
+			}
 			AuthSessionControl.setAuthentication(auth);
 		} catch (Exception e) {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());

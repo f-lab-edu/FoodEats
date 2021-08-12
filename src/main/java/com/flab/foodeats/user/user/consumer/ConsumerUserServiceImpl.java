@@ -55,7 +55,6 @@ public class ConsumerUserServiceImpl implements ConsumerUserService {
 	// 소비자 - 회원 수정
 	@Override
 	public ApiResponse updateConsumerUser(UpdateFormDTO updateFormDTO, String authenticationInfo) {
-		//userPasswordEncoder.updateEncoder(updateFormDTO);
 		updateFormDTO.setPassword(new UserInfoEncoder().encodePassword(updateFormDTO.getPassword()));
 		userMapper.updateConsumerUserInfo(authenticationInfo, updateFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS);
