@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 
-@Service
+//@Service
 public class UserPasswordEncoder {
 
 	private PasswordEncoder passwordEncoder;

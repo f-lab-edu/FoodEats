@@ -2,12 +2,12 @@ package com.flab.foodeats.user.user.consumer;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.mapper.UserMapper;
 import com.flab.foodeats.user.model.DeleteFormDTO;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
-import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 import com.flab.foodeats.user.model.code.SuccessUserCode;
@@ -22,14 +22,14 @@ public class ConsumerUserServiceImpl implements ConsumerUserService {
 	private UserMapper userMapper;
 	private InsertErrorCheck insertErrorCheck;
 	private LoginErrorCheck loginErrorCheck;
-	private UserPasswordEncoder userPasswordEncoder;
+	private UserInfoEncoder userInfoEncoder;
 
 	public ConsumerUserServiceImpl(UserMapper userMapper, InsertErrorCheck insertErrorCheck,
 		LoginErrorCheck loginErrorCheck, UserPasswordEncoder userPasswordEncoder) {
 		this.userMapper = userMapper;
 		this.insertErrorCheck = insertErrorCheck;
 		this.loginErrorCheck = loginErrorCheck;
-		this.userPasswordEncoder = userPasswordEncoder;
+		this.userInfoEncoder = userInfoEncoder;
 	}
 
 	// 소비자 - 회원가입
@@ -44,6 +44,7 @@ public class ConsumerUserServiceImpl implements ConsumerUserService {
 
 	// 소비자 - 로그인
 	@Override
+
 	public ApiResponse loginConsumerUser(LoginFormDTO loginFormDTO) {
 		loginErrorCheck.UserNotExist(userMapper.findConsumerUserPassword(loginFormDTO.getId()));
 		loginErrorCheck.PasswordUnMatch(userMapper.findConsumerUserPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
