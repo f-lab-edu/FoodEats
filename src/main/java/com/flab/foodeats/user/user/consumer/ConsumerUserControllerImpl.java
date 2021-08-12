@@ -27,7 +27,6 @@ public class ConsumerUserControllerImpl implements ConsumerUserController {
 	/**
 	 * 필터 / 인터셉터 적용 x (로그인 인증)
 	 */
-
 	// 소비자 - 회원가입
 	@PostMapping("/register")
 	public ResponseEntity<?> registerConsumerUser(InsertFormDTO insertFormDTO) {
@@ -56,7 +55,6 @@ public class ConsumerUserControllerImpl implements ConsumerUserController {
 	 * 필터 / 입터셉터 적용 o (로그인 인증)
 	 * @AuthPreHandler 어노테이션 기반 인터셉터
 	 */
-
 	// 소비자 - 회원 수정
 	@AuthRequired
 	@PutMapping("/update")

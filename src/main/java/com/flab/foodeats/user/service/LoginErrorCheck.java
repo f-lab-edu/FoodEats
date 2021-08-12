@@ -7,14 +7,8 @@ import com.flab.foodeats.user.model.code.ErrorUserCode;
 @Service
 public class LoginErrorCheck {
 
-	private UserInfoEncoder userInfoEncoder;
-
-	public LoginErrorCheck(UserInfoEncoder userInfoEncoder) {
-		this.userInfoEncoder = userInfoEncoder;
-	}
-
-	public void validationLogin(String SessionPassword, String InputPassword) {
-		if (!SessionPassword.equals(userInfoEncoder.passwordEncoder(InputPassword))) {
+	public void validationLogin(String getPasswordInDatabase, String getPasswordInLoginForm) {
+		if (!getPasswordInDatabase.equals(new UserInfoEncoder().encodePassword(getPasswordInLoginForm))) {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
 	}
