@@ -12,7 +12,7 @@ public class UpdateFormDTO {
 
 	@NotBlank(message = "Input Your Password")
 	private String password;
-	@NotBlank(message = "Input Your Message")
+	@NotBlank(message = "Input Your Name")
 	private String name;
 
 	public UpdateFormDTO() {
