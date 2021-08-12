@@ -1,19 +1,20 @@
-package com.flab.foodeats.user.service;
+package com.flab.foodeats.user.user.consumer;
 
 import org.springframework.stereotype.Service;
 
-import com.flab.foodeats.global.ApiResponse;
-import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.mapper.UserMapper;
-import com.flab.foodeats.user.model.DeleteFormDTO;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.user.model.UpdateFormDTO;
 import com.flab.foodeats.user.model.code.SuccessUserCode;
+import com.flab.foodeats.user.service.InsertErrorCheck;
+import com.flab.foodeats.user.service.LoginErrorCheck;
+import com.flab.foodeats.user.service.UserInfoEncoder;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class ConsumerUserServiceImpl implements ConsumerUserService {
 
 	private UserMapper userMapper;
 	private InsertErrorCheck insertErrorCheck;
@@ -26,59 +27,45 @@ public class UserServiceImpl implements UserService {
 		this.loginErrorCheck = loginErrorCheck;
 	}
 
-	// 회원가입
-	@Override
-	public ApiResponse insertUserInfo(InsertFormDTO insertFormDTO) {
-		insertErrorCheck.idAlreadyExistCheck(userMapper.findMemberById(insertFormDTO.getId()));
+	// 소비자 - 회원가입
+	public ApiResponse registerConsumerUser(InsertFormDTO insertFormDTO) {
+		insertErrorCheck.idAlreadyExistCheck(userMapper.findConsumerUserById(insertFormDTO.getId()));
 		insertFormDTO.setPassword(new UserInfoEncoder().encodePassword(insertFormDTO.getPassword()));
-		userMapper.save(insertFormDTO);
+		userMapper.registerConsumerUser(insertFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_INSERT_SUCCESS);
 		return apiResponse;
 	}
 
-	// 로그인
+	// 소비자 - 로그인
 	@Override
-	public ApiResponse login(LoginFormDTO loginFormDTO) {
-		loginErrorCheck.notExistUserValid(userMapper.findPassword(loginFormDTO.getId()));
-		loginErrorCheck.validationLogin(userMapper.findPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
+	public ApiResponse loginConsumerUser(LoginFormDTO loginFormDTO) {
+		loginErrorCheck.notExistUserValid(userMapper.findConsumerUserPassword(loginFormDTO.getId()));
+		loginErrorCheck.validationLogin(userMapper.findConsumerUserPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS);
 		return apiResponse;
 	}
 
-	// 로그아웃
+	// 소비자 - 로그아웃
 	@Override
-	public ApiResponse logout() {
+	public ApiResponse logoutConsumerUser() {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS);
 		return apiResponse;
 	}
 
-	// 전체 회원 조회
+	// 소비자 - 회원 수정
 	@Override
-	public ApiResponse findAllUser() {
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, userMapper.findAll());
-		return apiResponse;
-	}
-
-	// 단일 회원 조회
-	@Override
-	public ApiResponse findInfoById(String id) {
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, userMapper.findMemberById(id));
-		return apiResponse;
-	}
-
-	// 회원 수정
-	@Override
-	public ApiResponse updateUserInfo(UpdateFormDTO updateFormDTO) {
+	public ApiResponse updateConsumerUser(UpdateFormDTO updateFormDTO, String authenticationInfo) {
+		//userPasswordEncoder.updateEncoder(updateFormDTO);
 		updateFormDTO.setPassword(new UserInfoEncoder().encodePassword(updateFormDTO.getPassword()));
-		userMapper.updateInfo(AuthSessionControl.getAuthentication(), updateFormDTO);
+		userMapper.updateConsumerUserInfo(authenticationInfo, updateFormDTO);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS);
 		return apiResponse;
 	}
 
-	// 회원 삭제
+	// 소비자 - 회원 삭제
 	@Override
-	public ApiResponse deleteUserInfo(DeleteFormDTO deleteFormDTO) {
-		userMapper.deleteUserInfo(AuthSessionControl.getAuthentication());
+	public ApiResponse deleteConsumerUser(String authenticationInfo) {
+		userMapper.deleteConsumerUserInfo(authenticationInfo);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_DELETE_SUCCESS);
 		return apiResponse;
 	}
