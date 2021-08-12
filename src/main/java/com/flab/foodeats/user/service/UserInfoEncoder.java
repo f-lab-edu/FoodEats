@@ -4,9 +4,7 @@ import java.security.MessageDigest;
 
 public class UserInfoEncoder {
 
-
 	private String password;
-
 
 	public UserInfoEncoder() {
 
@@ -26,6 +24,7 @@ public class UserInfoEncoder {
 	}
 
 	public String encoder(String beforeEncodePassword) {
+
 		StringBuffer result = new StringBuffer();
 
 		try {
@@ -34,15 +33,17 @@ public class UserInfoEncoder {
 			byte[] salt = "Hello! This is Salt.".getBytes();
 			digest.reset();
 			digest.update(salt);
+
 			byte[] chars = digest.digest(beforeEncodePassword.getBytes("UTF-8"));
 
-			for(int i=0;i<chars.length;i++) {
+			for (int i = 0; i < chars.length; i++) {
 				String hex = Integer.toHexString(0xff & chars[i]);
-				if(hex.length()==1) result.append("0");
+				if (hex.length() == 1)
+					result.append("0");
 				result.append(hex);
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
