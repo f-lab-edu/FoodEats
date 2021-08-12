@@ -6,6 +6,8 @@ import com.flab.foodeats.user.interceptor.auth.AuthErrorCheck;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.interceptor.auth.AuthRequired;
 import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.user.interceptor.auth.ShopAuthSessionControl;
+import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 import com.flab.foodeats.user.model.code.ErrorUserCode;
 import com.flab.foodeats.global.StatusCode;
 
@@ -40,19 +42,24 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		//Session
 		HttpSession session = request.getSession(false);
-
 		try {
-			String auth = "";
-			if(request.getRequestURI().equals("/user/consumer/update") || request.getRequestURI().equals("/user/consumer/delete")){
+			if (request.getRequestURI().equals("/user/consumer/update") || request.getRequestURI()
+				.equals("/user/consumer/delete")) {
+				String auth = "";
 				auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
+				AuthSessionControl.setAuthentication(auth);
 			}
-			if(request.getRequestURI().equals("/user/shop/update") || request.getRequestURI().equals("/user/shop/delete")){
-				auth = (String)session.getAttribute(Auth.SHOP_KEY);
+
+			if (request.getRequestURI().equals("/user/shop/update") || request.getRequestURI()
+				.equals("/user/shop/delete")) {
+				ShopAuth shopAuth = (ShopAuth)session.getAttribute(ShopAuth.SHOP_KEY);
+				ShopAuthSessionControl.setAuthentication(shopAuth);
+
 			}
-			AuthSessionControl.setAuthentication(auth);
 		} catch (Exception e) {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
 		}
+
 
 		if (!authErrorCheck.sessionNullCheck(session)) {
 			ApiResponse msg = new ApiResponse(StatusCode.FAIL, ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
