@@ -13,7 +13,7 @@ public class AuthErrorCheck {
 		return true;
 	}
 
-	public boolean authAnnotationNullCheck(AuthPreHandler filter) {
+	public boolean authAnnotationNullCheck(AuthRequired filter) {
 		if (filter == null) {
 			return false;
 		}
