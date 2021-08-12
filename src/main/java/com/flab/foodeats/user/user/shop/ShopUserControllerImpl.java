@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.foodeats.global.ApiResponse;
-import com.flab.foodeats.user.interceptor.auth.Auth;
 import com.flab.foodeats.user.interceptor.auth.AuthRequired;
-import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
+import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.user.interceptor.auth.ShopAuthSessionControl;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 import com.flab.foodeats.user.model.UpdateFormDTO;
+
 
 @RestController
 @RequestMapping("/user/shop")
@@ -31,7 +32,6 @@ public class ShopUserControllerImpl implements ShopUserController {
 	/**
 	 * 필터 / 인터셉터 적용 x
 	 */
-
 	// 가맹점 - 회원가입
 	@PostMapping("/register")
 	public ResponseEntity<?> registerShopUser(InsertFormDTO insertFormDTO) {
@@ -39,12 +39,11 @@ public class ShopUserControllerImpl implements ShopUserController {
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
-
 	// 가맹점 - 로그인
 	@PostMapping("/login")
-	public ResponseEntity<?> loginShopUser(LoginFormDTO loginFormDTO, HttpSession httpSession) {
-		ApiResponse apiResponse = shopUserService.loginShopUser(loginFormDTO);
-		httpSession.setAttribute(Auth.SHOP_KEY, loginFormDTO.getId());
+	public ResponseEntity<?> loginShopUser(LoginFormDTO loginFormDTO, ShopAuth shopAuth, HttpSession httpSession) {
+		ApiResponse apiResponse = shopUserService.loginShopUser(loginFormDTO, shopAuth);
+		httpSession.setAttribute(ShopAuth.SHOP_KEY, shopAuth);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
@@ -61,12 +60,13 @@ public class ShopUserControllerImpl implements ShopUserController {
 	 * 필터 / 입터셉터 적용 o
 	 * @AuthPreHandler 어노테이션 기반 인터셉터
 	 */
-
 	// 가맹점 - 회원 수정
 	@AuthRequired
 	@PutMapping("/update")
 	public ResponseEntity<?> updateShopUser(UpdateFormDTO updateFormDTO) {
-		ApiResponse apiResponse = shopUserService.updateShopUser(updateFormDTO, AuthSessionControl.getAuthentication());
+		ApiResponse apiResponse = shopUserService.updateShopUser(updateFormDTO, ShopAuthSessionControl.getAuthentication().getId());
+		System.out.println(ShopAuthSessionControl.getAuthentication().getId());
+		System.out.println(ShopAuthSessionControl.getAuthentication().getShopId());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
@@ -74,7 +74,7 @@ public class ShopUserControllerImpl implements ShopUserController {
 	@AuthRequired
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteShopUser() {
-		ApiResponse apiResponse = shopUserService.deleteShopUser(AuthSessionControl.getAuthentication());
+		ApiResponse apiResponse = shopUserService.deleteShopUser(ShopAuthSessionControl.getAuthentication().getId());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 }
