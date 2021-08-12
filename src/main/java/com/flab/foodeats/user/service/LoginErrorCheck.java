@@ -7,9 +7,8 @@ import com.flab.foodeats.user.model.code.ErrorUserCode;
 @Service
 public class LoginErrorCheck {
 
-	public void validationLogin(String getPasswordInSession, String getPasswordInLoginForm) {
-
-		if (!getPasswordInSession.equals(new UserInfoEncoder().encodePassword(getPasswordInLoginForm))) {
+	public void validationLogin(String getPasswordInDatabase, String getPasswordInLoginForm) {
+		if (!getPasswordInDatabase.equals(new UserInfoEncoder().encodePassword(getPasswordInLoginForm))) {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
 	}
