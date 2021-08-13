@@ -79,4 +79,11 @@
     WHERE id = #{id};
   </select>
 
+  <!-- 소비자 주소 반환  -->
+  <select id="findConsumerAddress" parameterType="String" resultType="String">
+    SELECT address
+    FROM consumer_detail_info
+    WHERE consumer_id = #{id}
+  </select>
+
 </mapper>

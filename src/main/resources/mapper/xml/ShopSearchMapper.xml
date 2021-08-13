@@ -6,20 +6,20 @@
     <select id="findShopByCategory" parameterType="String" resultType="SearchShopResultDTO">
         SELECT
             A.*
-        FROM shop_info AS A
-        JOIN shop_convenience_info AS B
-            on A.shopid = B.shopid
-        WHERE category = #{category}
-        ORDER BY B.shopstatus DESC, B.grade;
+        FROM shop_essential_info AS A
+        JOIN shop_delivery_area AS B
+            on A.shop_id = B.shop_id
+        WHERE A.category = #{category}
+            AND B.delivery_location = #{address}
     </select>
 
     <select id="findShopByBrand" parameterType="String" resultType="SearchShopResultDTO">
         SELECT
             A.*
-        FROM shop_info AS A
-        JOIN shop_convenience_info AS B
+        FROM shop_essential_info AS A
+        JOIN shop_delivery_area AS B
             on A.shopid = B.shopid
-        WHERE brand LIKE CONCAT( '%', #{brand}, '%' )
-        ORDER BY B.shopstatus DESC, B.grade;
+        WHERE match(A.brand) against(#{brand})
+            AND B.delivery_location = #{address}
     </select>
 </mapper>
