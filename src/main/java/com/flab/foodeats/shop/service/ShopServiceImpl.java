@@ -1,16 +1,16 @@
 package com.flab.foodeats.shop.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.shop.mapper.ShopMapper;
-import com.flab.foodeats.shop.model.ShopDeleteDTO;
-import com.flab.foodeats.shop.model.ShopInfoListByIdDTO;
-import com.flab.foodeats.shop.model.ShopOpenStatusDTO;
-import com.flab.foodeats.shop.model.ShopRegistrationDTO;
-import com.flab.foodeats.shop.model.ShopUpdateDTO;
+import com.flab.foodeats.shop.model.EssentialShopInfo;
 import com.flab.foodeats.shop.model.code.SuccessShopCode;
 import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -23,51 +23,38 @@ public class ShopServiceImpl implements ShopService {
 		this.shopErrorCheck = shopErrorCheck;
 	}
 
-	@Override
-	public ApiResponse ShopRegistration(ShopRegistrationDTO shopRegistrationDTO) {
-		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findShopById(shopRegistrationDTO.getShopId()));
-		shopMapper.registrationShop(shopRegistrationDTO);
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_JOIN_SUCCESS);
+	// 가맹점 등록 (기본정보)
+	public ApiResponse registerEssentialShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findEssentialInfoById(shopInfoStoredInSession.getShopId()));
+		shopMapper.registerEssentialInfo(essentialShopInfo, shopInfoStoredInSession.getShopId());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
 		return apiResponse;
 	}
 
-	@Override
-	public ApiResponse ShopUpdate(ShopUpdateDTO shopUpdateDTO) {
-		shopMapper.updateShop(shopUpdateDTO);
+	// 가맹점 수정 (기본정보)
+	public ApiResponse updateBasicShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopMapper.updateEssentialInfo(essentialShopInfo, shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_UPDATE_SUCCESS);
 		return apiResponse;
 	}
 
-	@Override
-	public ApiResponse ShopDelete(ShopDeleteDTO shopDeleteDTO) {
-		shopMapper.deleteShop(shopDeleteDTO);
+	// 가맹점 삭제 (기본정보)
+	public ApiResponse deleteBasicShopInfo(ShopAuth shopInfoStoredInSession) {
+		/**
+		 * 가맹점 기본정보 삭제시 모든 테이블 삭제
+		 */
+		shopMapper.deleteEssentialInfo(shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_DELETE_SUCCESS);
 		return apiResponse;
 	}
 
-	@Override
+	/**
+	 * 추후 조회는 삭제
+	 * 유석햄 코드에 ChangeShopStatusAutomatic 적용
+	 */
+	// 가맹점 기본정보 전체 조회
 	public ApiResponse searchShopAllInfo() {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.ShopListAllInfo());
-		return apiResponse;
-	}
-
-	@Override
-	public ApiResponse searchShopOneInfoById(ShopInfoListByIdDTO shopInfoListByIdDTO) {
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.ShopListOneInfo("3"));
-		return apiResponse;
-	}
-
-	@Override
-	public ApiResponse startShop(ShopOpenStatusDTO shopOpenStatusDTO) {
-		shopMapper.startShop(shopOpenStatusDTO);
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_OPEN_SUCCESS);
-		return apiResponse;
-	}
-
-	@Override
-	public ApiResponse closeShop(ShopOpenStatusDTO shopOpenStatusDTO) {
-		shopMapper.closeShop(shopOpenStatusDTO);
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_CLOSE_SUCCESS);
 		return apiResponse;
 	}
 }
