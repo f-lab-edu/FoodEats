@@ -3,52 +3,110 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.foodeats.shop.mapper.ShopMapper">
 
-    <!-- Shop 등록  -->
-    <insert id="registrationShop" parameterType="ShopRegistrationDTO">
+
+    <!-- 가맹점 등록 (기본)  -->
+    <insert id="registerBasicInfo" parameterType="BasicShopInfo">
         INSERT
         INTO Shop_info
-        VALUES(#{shopRegistrationDTO.shopId}, #{shopRegistrationDTO.category}, #{shopRegistrationDTO.brand}, #{shopRegistrationDTO.location},  #{shopRegistrationDTO.phone});
+        VALUES(#{basicShopInfo.shopId}, #{basicShopInfo.category}, #{basicShopInfo.brand}, #{basicShopInfo.location},
+        #{basicShopInfo.phone});
     </insert>
-
-    <!-- 회원정보 수정 -->
-    <update id="updateShop" parameterType="ShopUpdateDTO">
+    <!-- 가맹점 수정 (기본) -->
+    <update id="updateBasicInfo" parameterType="BasicShopInfo">
         UPDATE Shop_info
-        SET category = #{shopUpdateDTO.category}, brand = #{shopUpdateDTO.brand}, location = #{shopUpdateDTO.location}, phone = #{shopUpdateDTO.phone}
-        WHERE shopId = #{shopUpdateDTO.shopId};
+        SET category = #{basicShopInfo.category}, brand = #{basicShopInfo.brand}, location = #{basicShopInfo.location},
+        phone = #{basicShopInfo.phone}
+        WHERE shopId = #{shopId};
     </update>
-
-    <!-- 회원정보 탈퇴 -->
-    <delete id="deleteShop" parameterType="ShopDeleteDTO">
-        DELETE
+    <!-- 가맹점 삭제 (기본) -->
+    <delete id="deleteBasicInfo" parameterType="BasicShopInfo">
+        DELETE Shop_info, shop_convenience_info, Shop_Detail_info
         FROM Shop_info
-        WHERE shopId = #{shopDeleteDTO.shopId};
+        INNER JOIN shop_convenience_info ON Shop_info.shopId = shop_convenience_info.shopId
+        INNER JOIN Shop_Detail_info ON Shop_info.shopId = Shop_Detail_info.shopId
+        WHERE Shop_info.shopId = #{shopId};
     </delete>
 
-    <!-- Shop one search  -->
-    <select id="findShopById" parameterType="int" resultType="ShopInfoListByIdDTO">
+
+
+    <!-- 가맹점 등록 (상세)  -->
+    <insert id="registerDetailInfo" parameterType="DetailShopInfo">
+        INSERT
+        INTO Shop_Detail_info
+        VALUES(#{detailShopInfo.shopId}, #{detailShopInfo.openTime}, #{detailShopInfo.closeTime},
+        #{detailShopInfo.transportMethod}, #{detailShopInfo.minOrderPrice});
+    </insert>
+    <!-- 가맹점 수정 (상세) -->
+    <update id="updateDetailInfo" parameterType="DetailShopInfo">
+        UPDATE Shop_Detail_info
+        SET openTime = #{detailShopInfo.openTime}, closeTime = #{detailShopInfo.closeTime}, transportMethod =
+        #{detailShopInfo.transportMethod}, minOrderPrice = #{detailShopInfo.minOrderPrice}
+        WHERE shopId = #{shopId};
+    </update>
+
+
+
+    <!-- 가맹점 등록 (편리)  -->
+    <insert id="registerConvenienceInfo" parameterType="ConvenienceShopInfo">
+        INSERT
+        INTO shop_convenience_info
+        VALUES(#{convenienceShopInfo.shopId}, #{convenienceShopInfo.notice}, #{convenienceShopInfo.shopStatus});
+    </insert>
+    <!-- 가맹점 수정 (편리) -->
+    <update id="updateConvenienceInfo" parameterType="ConvenienceShopInfo">
+        UPDATE shop_convenience_info
+        SET notice = #{convenienceShopInfo.notice}, shopStatus = #{convenienceShopInfo.shopStatus}
+        WHERE shopId = #{shopId};
+    </update>
+
+
+
+    <!-- 가맹점 기본정보 조회 By ShopId -->
+    <select id="findBasicInfoById" parameterType="int" resultType="Integer">
         SELECT *
         FROM Shop_info
         WHERE shopId = #{shopId};
     </select>
+    <!-- 가맹점 상세정보 조회 By ShopId -->
+    <select id="findDetailInfoById" parameterType="int" resultType="Integer">
+        SELECT *
+        FROM Shop_Detail_info
+        WHERE shopId = #{shopId};
+    </select>
+    <!-- 가맹점 편리정보 조회 By ShopId -->
+    <select id="findConvenienceInfoById" parameterType="int" resultType="Integer">
+        SELECT *
+        FROM shop_convenience_info
+        WHERE shopId = #{shopId};
+    </select>
+
+
 
     <!-- 회원 전체 조회 -->
-    <select id="searchShopAllInfo" resultType="ShopInfoListByIdDTO">
+    <select id="ShopListAllInfo" resultType="BasicShopInfo">
         SELECT *
         FROM Shop_info;
     </select>
 
-    <!-- 가게 오픈  -->
-    <update id="startShop" parameterType="ShopOpenStatusDTO">
-        UPDATE shop_convenience_info
-        SET shopstatus = "OPEN"
-        WHERE shopId = #{shopOpenStatusDTO.shopId};
-    </update>
 
-    <!-- 가게 마감 (close)  -->
-    <update id="closeShop" parameterType="ShopOpenStatusDTO">
-        UPDATE shop_convenience_info
-        SET shopstatus = "CLOSE"
-        WHERE shopId = #{shopOpenStatusDTO.shopId};
+
+    <!-- 가맹점 상태 오픈 -->
+    <update id="startShop" parameterType="ConvenienceShopInfo">
+        UPDATE Shop_Detail_info
+        SET shopOpenStatus = "OPEN", shopStatusUpdateDay = #{shopOpenStatus.shopStatusUpdateDay}
+        WHERE shopId = #{shopOpenStatus.shopId};
     </update>
+    <!-- 회원 상태 마감 -->
+    <update id="closeShop" parameterType="ConvenienceShopInfo">
+        UPDATE Shop_Detail_info
+        SET shopOpenStatus = "CLOSE", shopStatusUpdateDay = #{shopOpenStatus.shopStatusUpdateDay}
+        WHERE shopId = #{shopOpenStatus.shopId};
+    </update>
+    <!-- 모든 가맹점 상태정보 조회-->
+    <select id="ShopIdAll" resultType="ShopOpenStatus">
+        SELECT shopId, openTime, closeTime, shopStatusUpdateDay
+        FROM Shop_Detail_info
+    </select>
+
 
 </mapper>
