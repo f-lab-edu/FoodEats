@@ -42,6 +42,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		//Session
 		HttpSession session = request.getSession(false);
+
 		try {
 			if (request.getRequestURI().equals("/user/consumer/update") || request.getRequestURI()
 				.equals("/user/consumer/delete")) {
@@ -53,7 +54,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			if (request.getRequestURI().equals("/user/shop/update") || request.getRequestURI()
 				.equals("/user/shop/delete")) {
 				ShopAuth shopAuth = (ShopAuth)session.getAttribute(ShopAuth.SHOP_KEY);
-				ShopAuthSessionControl.setAuthentication(shopAuth);
+				AuthSessionControl.setShopAuthentication(shopAuth);
 
 			}
 		} catch (Exception e) {
