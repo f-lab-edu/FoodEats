@@ -25,4 +25,9 @@ public interface ShopMapper {
 
 	// 가맹점 기본정보 전체 조회
 	List<EssentialShopInfo> ShopListAllInfo();
+
+	// 가맹점 배달 가능 지역 등록
+	void registerShopDeliveryLocation(@Param("shopId") Long shopId,
+		@Param("deliveryLocation") String deliveryLocation,
+		@Param("deliveryLocationTip") int deliveryLocationTip);
 }
