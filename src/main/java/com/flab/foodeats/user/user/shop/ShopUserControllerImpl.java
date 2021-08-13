@@ -1,80 +1,76 @@
-package com.flab.foodeats.user.user.shop;
+package com.flab.foodeats.user.user.consumer;
 
-import javax.servlet.http.HttpSession;
+import com.flab.foodeats.user.interceptor.auth.Auth;
+import com.flab.foodeats.user.interceptor.auth.AuthRequired;
+import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
+import com.flab.foodeats.user.model.LoginFormDTO;
+import com.flab.foodeats.user.model.InsertFormDTO;
+import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.user.model.UpdateFormDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.flab.foodeats.user.interceptor.auth.AuthRequired;
-import com.flab.foodeats.global.ApiResponse;
-import com.flab.foodeats.user.interceptor.auth.ShopAuthSessionControl;
-import com.flab.foodeats.user.model.InsertFormDTO;
-import com.flab.foodeats.user.model.LoginFormDTO;
-import com.flab.foodeats.user.interceptor.auth.ShopAuth;
-import com.flab.foodeats.user.model.UpdateFormDTO;
-
+import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/user/shop")
-public class ShopUserControllerImpl implements ShopUserController {
+@RequestMapping("/user/consumer")
+public class ConsumerUserControllerImpl implements ConsumerUserController {
 
-	private ShopUserService shopUserService;
+	private ConsumerUserService consumerUserService;
 
-	public ShopUserControllerImpl(ShopUserService shopUserService) {
-		this.shopUserService = shopUserService;
+	public ConsumerUserControllerImpl(ConsumerUserService consumerUserService) {
+		this.consumerUserService = consumerUserService;
 	}
 
 	/**
-	 * 필터 / 인터셉터 적용 x
+	 * 필터 / 인터셉터 적용 x (로그인 인증)
 	 */
-	// 가맹점 - 회원가입
+
+	// 소비자 - 회원가입
 	@PostMapping("/register")
-	public ResponseEntity<?> registerShopUser(InsertFormDTO insertFormDTO) {
-		ApiResponse apiResponse = shopUserService.registerShopUser(insertFormDTO);
+	public ResponseEntity<?> registerConsumerUser(InsertFormDTO insertFormDTO) {
+		ApiResponse apiResponse = consumerUserService.registerConsumerUser(insertFormDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
-	// 가맹점 - 로그인
+
+	// 소비자 - 로그인
 	@PostMapping("/login")
-	public ResponseEntity<?> loginShopUser(LoginFormDTO loginFormDTO, ShopAuth shopAuth, HttpSession httpSession) {
-		ApiResponse apiResponse = shopUserService.loginShopUser(loginFormDTO, shopAuth);
-		httpSession.setAttribute(ShopAuth.SHOP_KEY, shopAuth);
+	public ResponseEntity<?> loginConsumerUser(LoginFormDTO loginFormDTO, HttpSession httpSession) {
+		ApiResponse apiResponse = consumerUserService.loginConsumerUser(loginFormDTO);
+		httpSession.setAttribute(Auth.CUNSUMER_KEY, loginFormDTO.getId());
+		System.out.println(httpSession.getAttribute(Auth.CUNSUMER_KEY));
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
-	// 가맹점 - 로그아웃
+	// 소비자 - 로그아웃
 	@PostMapping("/logout")
-	public ResponseEntity<?> logoutShopUser(HttpSession httpSession) {
-		ApiResponse apiResponse = shopUserService.logoutShopUser();
+	public ResponseEntity<?> logoutConsumerUser(HttpSession httpSession) {
+		ApiResponse apiResponse = consumerUserService.logoutConsumerUser();
 		httpSession.invalidate();
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
-
 	/**
-	 * 필터 / 입터셉터 적용 o
+	 * 필터 / 입터셉터 적용 o (로그인 인증)
 	 * @AuthPreHandler 어노테이션 기반 인터셉터
 	 */
-	// 가맹점 - 회원 수정
+
+	// 소비자 - 회원 수정
 	@AuthRequired
 	@PutMapping("/update")
-	public ResponseEntity<?> updateShopUser(UpdateFormDTO updateFormDTO) {
-		ApiResponse apiResponse = shopUserService.updateShopUser(updateFormDTO, ShopAuthSessionControl.getAuthentication().getId());
-		System.out.println(ShopAuthSessionControl.getAuthentication().getId());
-		System.out.println(ShopAuthSessionControl.getAuthentication().getShopId());
+	public ResponseEntity<?> updateConsumerUser(UpdateFormDTO updateFormDTO) {
+		ApiResponse apiResponse = consumerUserService.updateConsumerUser(updateFormDTO,AuthSessionControl.getAuthentication());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
-	// 가맹점 - 회원 삭제
+	// 소비자 - 회원 삭제
 	@AuthRequired
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteShopUser() {
-		ApiResponse apiResponse = shopUserService.deleteShopUser(ShopAuthSessionControl.getAuthentication().getId());
+	public ResponseEntity<?> deleteConsumerUser() {
+		ApiResponse apiResponse = consumerUserService.deleteConsumerUser(AuthSessionControl.getAuthentication());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 }
