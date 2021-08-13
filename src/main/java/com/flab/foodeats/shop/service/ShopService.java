@@ -11,7 +11,9 @@ public interface ShopService {
 
 	// 기본정보
 	ApiResponse registerEssentialShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession);
+	
 	ApiResponse updateBasicShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession);
+	
 	ApiResponse deleteBasicShopInfo(ShopAuth shopInfoStoredInSession);
 
 	// 전체조회
