@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchShopResultDTO {
 
+	// 후에 수정 필요 -> db의 변수명과 불일치 시 binding이 안됨.
 	@JsonProperty
-	private int shopId;
+	private int shop_id;
 	@JsonProperty
 	private String category;
 	@JsonProperty
@@ -18,8 +19,8 @@ public class SearchShopResultDTO {
 	public SearchShopResultDTO() {
 	}
 
-	public SearchShopResultDTO(int shopId, String category, String brand, String location, String phone) {
-		this.shopId = shopId;
+	public SearchShopResultDTO(int shop_id, String category, String brand, String location, String phone) {
+		this.shop_id = shop_id;
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
