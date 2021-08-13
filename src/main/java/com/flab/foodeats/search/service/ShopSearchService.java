@@ -4,7 +4,7 @@ import com.flab.foodeats.global.ApiResponse;
 
 public interface ShopSearchService {
 
-	ApiResponse findShopByCategory(String category);
+	ApiResponse findShopByCategory(String id, String category);
 
-	ApiResponse findShopByBrand(String brand);
+	ApiResponse findShopByBrand(String id, String brand);
 }
