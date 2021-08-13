@@ -8,34 +8,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.foodeats.shop.model.ShopDeleteDTO;
-import com.flab.foodeats.shop.model.ShopInfoListByIdDTO;
-import com.flab.foodeats.shop.model.ShopOpenStatusDTO;
-import com.flab.foodeats.shop.model.ShopRegistrationDTO;
-import com.flab.foodeats.shop.model.ShopUpdateDTO;
+import com.flab.foodeats.shop.model.EssentialShopInfo;
 
+@RestController
+@RequestMapping("/shop")
 public interface ShopController {
 
-	@PostMapping("/join")
-	public ResponseEntity<?> registrationShop(@Valid @RequestBody ShopRegistrationDTO shopRegistrationDTO);
+	/**
+	 * 가맹점 필수 정보
+	 */
+	@PostMapping("/essentialInfo/register")
+	public ResponseEntity<?> registerEssentialShopInfo(@Valid @RequestBody EssentialShopInfo essentialShopInfo);
+	@PutMapping("/essentialInfo/update")
+	public ResponseEntity<?> updateBasicShopInfo(@Valid @RequestBody EssentialShopInfo essentialShopInfo);
+	@DeleteMapping("/essentialInfo/delete")
+	public ResponseEntity<?> deleteBasicShopInfo(@Valid @RequestBody EssentialShopInfo essentialShopInfo);
 
-	@PutMapping("/updated")
-	public ResponseEntity<?> updateShop(@Valid @RequestBody ShopUpdateDTO shopUpdateDTO);
-
-	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteShop(@Valid @RequestBody ShopDeleteDTO shopDeleteDTO);
-
+	/**
+	 * 검색 및 조회
+	 */
 	@GetMapping("/AllInfo")
 	public ResponseEntity<?> searchShopAllInfo();
-
-	@GetMapping("/OneInfo")
-	public ResponseEntity<?> searchShopOneInfoById(@Valid @RequestBody ShopInfoListByIdDTO shopInfoListByIdDTO);
-
-	@PutMapping("/start")
-	public ResponseEntity<?> startShop(@Valid @RequestBody ShopOpenStatusDTO shopOpenStatusDTO);
-
-	@PutMapping("/close")
-	public ResponseEntity<?> closeShop(@Valid @RequestBody ShopOpenStatusDTO shopOpenStatusDTO);
-
 }
