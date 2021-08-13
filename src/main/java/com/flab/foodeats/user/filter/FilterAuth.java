@@ -30,7 +30,7 @@ public class FilterAuth implements Filter {
 				log.info("인증 체크 로직 실행 {}", requestURI);
 				HttpSession session = httpRequest.getSession(false);
 
-				if (session == null || session.getAttribute(Auth.KEY) == null) {
+				if (session == null || session.getAttribute(Auth.CUNSUMER_KEY) == null) {
 					log.info("미인증 사용자 요청 {}", requestURI);
 					System.out.println("로그인 하고 오세요");
 

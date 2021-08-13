@@ -35,4 +35,7 @@ public interface UserMapper {
 	InsertFormDTO findConsumerUserById(String id);
 	// 단일 회원 조회 - 가맹점
 	InsertFormDTO findShopUserById(String id);
+  // 회원 shopId 조회 - 가맹점
+	int findShopIdById(String id);
+
 }

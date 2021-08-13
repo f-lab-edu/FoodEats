@@ -9,6 +9,13 @@
     INTO Login_User_Data
     VALUES(#{insertFormDTO.id}, #{insertFormDTO.password}, #{insertFormDTO.name});
   </insert>
+  <!-- 회원가입  / 가맹점-->
+  <insert id="registerShopUser" parameterType="InsertFormDTO">
+    INSERT
+    INTO Login_Shop_Data(id,password,name)
+    VALUES(#{insertFormDTO.id}, #{insertFormDTO.password}, #{insertFormDTO.name});
+  </insert>
+
 
   <!-- 로그인 / 소비자  -->
   <select id="findConsumerUserPassword" parameterType="String" resultType="String">
@@ -16,6 +23,13 @@
     FROM Login_User_Data
     WHERE id = #{id};
   </select>
+  <!-- 로그인 / 가맹점 -->
+  <select id="findShopUserPassword" parameterType="String" resultType="String">
+    SELECT password
+    FROM Login_Shop_Data
+    WHERE id = #{id};
+  </select>
+
 
   <!-- 회원정보 수정 / 소비자 -->
   <update id="updateConsumerUserInfo" parameterType="UpdateFormDTO">
@@ -23,6 +37,13 @@
     SET password = #{updateFormDTO.password}, name = #{updateFormDTO.name}
     WHERE id = #{id};
   </update>
+  <!-- 회원정보 수정 / 가맹점 -->
+  <update id="updateShopUserInfo" parameterType="UpdateFormDTO">
+    UPDATE Login_Shop_Data
+    SET password = #{updateFormDTO.password}, name = #{updateFormDTO.name}
+    WHERE id = #{id};
+  </update>
+
 
   <!-- 회원정보 탈퇴 / 소비자 -->
   <delete id="deleteConsumerUserInfo" parameterType="String">
@@ -30,11 +51,31 @@
     FROM Login_User_Data
     WHERE id = #{id};
   </delete>
+  <!-- 회원정보 탈퇴 / 가맹점 -->
+  <delete id="deleteShopUserInfo" parameterType="String">
+    DELETE
+    FROM Login_Shop_Data
+    WHERE id = #{id};
+  </delete>
+
 
   <!-- 사용자 조회 (By ID) / 소비자-->
   <select id="findConsumerUserById" parameterType="String" resultType="InsertFormDTO">
     SELECT *
     FROM Login_User_Data
+    WHERE id = #{id};
+  </select>
+  <!-- 사용자 조회 (By ID) / 가맹점-->
+  <select id="findShopUserById" parameterType="String" resultType="InsertFormDTO">
+    SELECT *
+    FROM Login_Shop_Data
+    WHERE id = #{id};
+  </select>
+
+  <!-- 가맹점 ShopId 조회 / 가맹점-->
+  <select id="findShopIdById" parameterType="String" resultType="int">
+    SELECT shopId
+    FROM Login_Shop_Data
     WHERE id = #{id};
   </select>
 
