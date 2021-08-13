@@ -6,7 +6,6 @@ import com.flab.foodeats.user.interceptor.auth.AuthErrorCheck;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
 import com.flab.foodeats.user.interceptor.auth.AuthRequired;
 import com.flab.foodeats.global.ApiResponse;
-import com.flab.foodeats.user.interceptor.auth.ShopAuthSessionControl;
 import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 import com.flab.foodeats.user.model.code.ErrorUserCode;
 import com.flab.foodeats.global.StatusCode;
