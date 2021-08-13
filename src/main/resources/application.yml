@@ -1,7 +1,7 @@
 mybatis:
   type-aliases-package: com.flab.foodeats.user.model,
                         com.flab.foodeats.shop.model,
-                        com.flab.foodeats.shop.search.model
+                        com.flab.foodeats.search.model
   mapper-locations: mapper/xml/*.xml
 
 spring:

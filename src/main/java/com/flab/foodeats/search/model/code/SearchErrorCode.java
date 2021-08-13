@@ -1,4 +1,4 @@
-package com.flab.foodeats.shop.search.model.code;
+package com.flab.foodeats.search.model.code;
 
 public enum SearchErrorCode {
 	NOT_FOUND_SEARCH_RESULT("Not found search result");

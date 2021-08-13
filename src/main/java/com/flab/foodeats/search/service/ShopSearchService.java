@@ -1,4 +1,4 @@
-package com.flab.foodeats.shop.search.service;
+package com.flab.foodeats.search.service;
 
 import com.flab.foodeats.global.ApiResponse;
 

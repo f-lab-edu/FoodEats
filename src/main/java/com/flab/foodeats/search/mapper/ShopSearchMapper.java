@@ -1,9 +1,9 @@
-package com.flab.foodeats.shop.search.mapper;
+package com.flab.foodeats.search.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.flab.foodeats.shop.search.model.SearchShopResultDTO;
+import com.flab.foodeats.search.model.SearchShopResultDTO;
 
 @Mapper
 public interface ShopSearchMapper {

@@ -1,4 +1,4 @@
-package com.flab.foodeats.shop.search.model;
+package com.flab.foodeats.search.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

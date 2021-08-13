@@ -1,4 +1,4 @@
-package com.flab.foodeats.shop.search.controller.advice;
+package com.flab.foodeats.search.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

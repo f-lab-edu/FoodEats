@@ -1,4 +1,4 @@
-package com.flab.foodeats.shop.search.controller;
+package com.flab.foodeats.search.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.global.ApiResponse;
-import com.flab.foodeats.shop.search.service.ShopSearchService;
+import com.flab.foodeats.search.service.ShopSearchService;
 
 @RestController
 public class ShopSearchControllerImpl {
