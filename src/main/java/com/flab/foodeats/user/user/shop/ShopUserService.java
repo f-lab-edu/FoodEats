@@ -12,12 +12,16 @@ import com.flab.foodeats.user.model.UpdateFormDTO;
 public interface ShopUserService {
 	// 가맹점 - 회원가입
 	ApiResponse registerShopUser(InsertFormDTO insertFormDTO);
+
 	// 가맹점 - 로그인
 	ApiResponse loginShopUser(LoginFormDTO loginFormDTO, ShopAuth shopAuth);
+
 	// 가맹점 - 로그아웃
 	ApiResponse logoutShopUser();
+
 	// 가맹점 - 회원수정
 	ApiResponse updateShopUser(UpdateFormDTO updateFormDTO, String authenticationInfo);
+
 	// 가맹점 - 회원삭제
 	ApiResponse deleteShopUser(String authenticationInfo);
 }

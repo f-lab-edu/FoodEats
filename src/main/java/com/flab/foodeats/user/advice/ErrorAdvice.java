@@ -1,5 +1,8 @@
 package com.flab.foodeats.user.advice;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 
@@ -8,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -54,10 +57,13 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> MethodArgumentNotValidHandler(MethodArgumentNotValidException e) {
-		String errors = null;
-		for(ObjectError error : e.getBindingResult().getAllErrors()) {
-			errors=error.getDefaultMessage();
-		}
+
+		Map<String, String> errors = new HashMap<>();
+		e.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
 
 		ApiResponse apiResponse = new ApiResponse(StatusCode.FAIL, errors);
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);

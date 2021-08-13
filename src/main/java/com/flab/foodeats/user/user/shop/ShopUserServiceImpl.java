@@ -29,6 +29,7 @@ public class ShopUserServiceImpl implements ShopUserService {
 	}
 
 	// 가맹점 - 회원가입
+	@Override
 	public ApiResponse registerShopUser(InsertFormDTO insertFormDTO) {
 		insertErrorCheck.idAlreadyExistCheck(userMapper.findShopUserById(insertFormDTO.getId()));
 		insertFormDTO.setPassword(new UserInfoEncoder().encodePassword(insertFormDTO.getPassword()));
@@ -38,6 +39,7 @@ public class ShopUserServiceImpl implements ShopUserService {
 	}
 
 	// 가맹점 - 로그인
+	@Override
 	public ApiResponse loginShopUser(LoginFormDTO loginFormDTO, ShopAuth shopAuth) {
 		loginErrorCheck.notExistUserValid(userMapper.findShopUserPassword(loginFormDTO.getId()));
 		loginErrorCheck.validationLogin(userMapper.findShopUserPassword(loginFormDTO.getId()), loginFormDTO.getPassword());
@@ -48,12 +50,14 @@ public class ShopUserServiceImpl implements ShopUserService {
 	}
 
 	// 가맹점 - 로그아웃
+	@Override
 	public ApiResponse logoutShopUser() {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS);
 		return apiResponse;
 	}
 
 	// 가맹점 - 회원 수정
+	@Override
 	public ApiResponse updateShopUser(UpdateFormDTO updateFormDTO, String authenticationInfo) {
 		updateFormDTO.setPassword(new UserInfoEncoder().encodePassword(updateFormDTO.getPassword()));
 		userMapper.updateShopUserInfo(authenticationInfo, updateFormDTO);
@@ -62,6 +66,7 @@ public class ShopUserServiceImpl implements ShopUserService {
 	}
 
 	// 가맹점 - 회원 삭제
+	@Override
 	public ApiResponse deleteShopUser(String authenticationInfo) {
 		userMapper.deleteShopUserInfo(authenticationInfo);
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_DELETE_SUCCESS);

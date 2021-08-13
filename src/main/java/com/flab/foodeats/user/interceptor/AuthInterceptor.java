@@ -42,20 +42,17 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		//Session
 		HttpSession session = request.getSession(false);
+		String RequestURI = String.valueOf(request.getRequestURI());
 
 		try {
-			if (request.getRequestURI().equals("/user/consumer/update") || request.getRequestURI()
-				.equals("/user/consumer/delete")) {
-				String auth = "";
-				auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
+			if (RequestURI.startsWith("/user/consumer/")) {
+				String auth = (String)session.getAttribute(Auth.CUNSUMER_KEY);
 				AuthSessionControl.setAuthentication(auth);
 			}
 
-			if (request.getRequestURI().equals("/user/shop/update") || request.getRequestURI()
-				.equals("/user/shop/delete")) {
+			if (RequestURI.startsWith("/user/shop/")) {
 				ShopAuth shopAuth = (ShopAuth)session.getAttribute(ShopAuth.SHOP_KEY);
 				AuthSessionControl.setShopAuthentication(shopAuth);
-
 			}
 		} catch (Exception e) {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
