@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.ShopDeliveryLocation;
 import com.flab.foodeats.shop.service.ShopService;
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
@@ -47,6 +48,12 @@ public class ShopControllerImpl implements ShopController {
 	@GetMapping("/AllInfo")
 	public ResponseEntity<?> searchShopAllInfo() {
 		ApiResponse apiResponse = shopService.searchShopAllInfo();
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	@PostMapping("/register/deliveryLocation/{shopId}")
+	public ResponseEntity<?> registerShopDeliveryLocation(Long shopId, ShopDeliveryLocation shopDeliveryLocation) {
+		ApiResponse apiResponse = shopService.registerShopDeliveryLocation(shopId, shopDeliveryLocation);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
