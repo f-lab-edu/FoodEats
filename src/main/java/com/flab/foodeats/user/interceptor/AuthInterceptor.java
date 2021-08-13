@@ -60,13 +60,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
 		}
 
-
-		if (!authErrorCheck.sessionNullCheck(session)) {
-			ApiResponse msg = new ApiResponse(StatusCode.FAIL, ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
-			response.getWriter().write(mapper.writeValueAsString(msg));
-			return false;
-		}
-
 		if (!authErrorCheck.authAnnotationNullCheck(filter)) {
 			ApiResponse msg = new ApiResponse(StatusCode.FAIL, ErrorUserCode.AUTH_NO_ANNOTATION.getMessage());
 			response.getWriter().write(mapper.writeValueAsString(msg));
