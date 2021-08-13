@@ -11,12 +11,16 @@ import com.flab.foodeats.user.model.UpdateFormDTO;
 public interface ConsumerUserService {
 	// 소비자 - 회원가입
 	ApiResponse registerConsumerUser(InsertFormDTO insertFormDTO);
+
 	// 소비자 - 로그인
 	ApiResponse loginConsumerUser(LoginFormDTO loginFormDTO);
+
 	// 소비자 - 로그아웃
 	ApiResponse logoutConsumerUser();
+
 	// 소비자 - 회원수정
 	ApiResponse updateConsumerUser(UpdateFormDTO updateFormDTO, String authenticationInfo);
+
 	// 소비자 - 로그아웃
 	ApiResponse deleteConsumerUser(String authenticationInfo);
 }

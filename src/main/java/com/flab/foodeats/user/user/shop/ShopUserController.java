@@ -24,7 +24,7 @@ public interface ShopUserController {
 	public ResponseEntity<?> registerShopUser(@Valid @RequestBody InsertFormDTO insertFormDTO);
 
 	@PostMapping("/login")
-	public ResponseEntity<?> loginShopUser(@Valid @RequestBody LoginFormDTO loginFormDTO, ShopAuth shopAuth,HttpSession httpSession);
+	public ResponseEntity<?> loginShopUser(@Valid @RequestBody LoginFormDTO loginFormDTO, ShopAuth shopAuth, HttpSession httpSession);
 
 	@PostMapping("/logout")
 	public ResponseEntity<?> logoutShopUser(HttpSession httpSession);

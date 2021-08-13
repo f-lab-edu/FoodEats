@@ -27,7 +27,7 @@ public class LoginAuth {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession(false);
 
-		if (session == null || session.getAttribute(Auth.KEY) == null) {
+		if (session == null || session.getAttribute(Auth.CUNSUMER_KEY) == null) {
 			System.out.println(" 오류 발생 추가 하기 ");
 		}
 		Object reval = pjp.proceed();
