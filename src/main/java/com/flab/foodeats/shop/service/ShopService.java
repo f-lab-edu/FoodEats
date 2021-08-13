@@ -2,28 +2,20 @@ package com.flab.foodeats.shop.service;
 
 import org.springframework.stereotype.Service;
 
-import com.flab.foodeats.shop.model.ShopDeleteDTO;
-import com.flab.foodeats.shop.model.ShopInfoListByIdDTO;
-import com.flab.foodeats.shop.model.ShopOpenStatusDTO;
-import com.flab.foodeats.shop.model.ShopRegistrationDTO;
-import com.flab.foodeats.shop.model.ShopUpdateDTO;
 import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 
 @Service
 public interface ShopService {
 
-	ApiResponse ShopRegistration(ShopRegistrationDTO shopRegistrationDTO);
+	// 기본정보
+	ApiResponse registerEssentialShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession);
+	
+	ApiResponse updateBasicShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession);
+	
+	ApiResponse deleteBasicShopInfo(ShopAuth shopInfoStoredInSession);
 
-	ApiResponse ShopUpdate(ShopUpdateDTO shopUpdateDTO);
-
-	ApiResponse ShopDelete(ShopDeleteDTO shopDeleteDTO);
-
+	// 전체조회
 	ApiResponse searchShopAllInfo();
-
-	ApiResponse searchShopOneInfoById(ShopInfoListByIdDTO shopInfoListByIdDTO);
-
-	ApiResponse startShop(ShopOpenStatusDTO shopOpenStatusDTO);
-
-	ApiResponse closeShop(ShopOpenStatusDTO shopOpenStatusDTO);
-
 }

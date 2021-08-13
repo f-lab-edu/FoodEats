@@ -1,17 +1,14 @@
 package com.flab.foodeats.shop.model;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-public class ShopUpdateDTO {
+public class EssentialShopInfo {
 
 	/**
-	 * 가맹점 수정
+	 * 가맹점 등록
 	 * DB : shop_info
 	 */
 
-	@NotNull(message = "Input Your ShopID")
-	private int shopId;
 	@NotBlank(message = "Input Your Category ")
 	private String category;
 	@NotBlank(message = "Input Your Brand")
@@ -21,35 +18,45 @@ public class ShopUpdateDTO {
 	@NotBlank(message = "Input Your Phone")
 	private String phone;
 
-
-	public ShopUpdateDTO() {
+	public EssentialShopInfo() {
 	}
 
-	public ShopUpdateDTO(int shopId, String category, String brand, String location, String phone) {
-		this.shopId = shopId;
+	public EssentialShopInfo(String category, String brand, String location, String phone) {
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
 	}
 
-	public int getShopId() {
-		return shopId;
-	}
-
 	public String getCategory() {
 		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getBrand() {
 		return brand;
 	}
 
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
 	public String getLocation() {
 		return location;
 	}
 
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public String getPhone() {
 		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

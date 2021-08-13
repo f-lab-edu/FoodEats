@@ -6,49 +6,23 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.flab.foodeats.shop.model.ShopDeleteDTO;
-import com.flab.foodeats.shop.model.ShopInfoListByIdDTO;
-import com.flab.foodeats.shop.model.ShopOpenStatusDTO;
-import com.flab.foodeats.shop.model.ShopRegistrationDTO;
-import com.flab.foodeats.shop.model.ShopUpdateDTO;
+import com.flab.foodeats.shop.model.EssentialShopInfo;
 
 @Mapper
 @Repository
 public interface ShopMapper {
-	// 회원가입
-	void registrationShop(@Param("shopRegistrationDTO") ShopRegistrationDTO shopRegistrationDTO);
+	// 가맹점 등록 (필수)
+	void registerEssentialInfo(@Param("essentialShopInfo") EssentialShopInfo essentialShopInfo, Integer shopId);
 
-	// 회원 수정
-	void updateShop(@Param("shopUpdateDTO") ShopUpdateDTO shopUpdateDTO);
+	// 가맹점 수정 (필수)
+	void updateEssentialInfo(@Param("essentialShopInfo") EssentialShopInfo essentialShopInfo, Integer shopId);
 
-	// 회원 수정
-	void deleteShop(@Param("shopDeleteDTO") ShopDeleteDTO shopDeleteDTO);
+	// 가맹점 삭제 (필수)
+	void deleteEssentialInfo(Integer shopId);
 
-	// 단일 회원 조회
-	ShopRegistrationDTO findShopById(int shopId);
+	// 가맹점 기본정보 조회 By ShopId
+	Integer findEssentialInfoById(Integer shopId);
 
-	// 전회 조회
-	List<ShopInfoListByIdDTO> ShopListAllInfo();
-
-	List<ShopInfoListByIdDTO> ShopListOneInfo(String shopId);
-
-	void startShop(@Param("shopOpenStatusDTO") ShopOpenStatusDTO shopOpenStatusDTO);
-
-	void closeShop(@Param("shopOpenStatusDTO") ShopOpenStatusDTO shopOpenStatusDTO);
-
-
-	/*// 로그인
-	String findPassword(String id);
-
-	// 모든 회원 조회
-	List<InsertFormDTO> findAll();
-
-	// 단일 회원 조회
-	InsertFormDTO findMemberById(String id);
-
-	// 회원 수정
-	void updateInfo(@Param("id") String id, @Param("updateFormDTO") UpdateFormDTO updateFormDTO);
-
-	// 회원 탈퇴
-	void deleteUserInfo(String id);*/
+	// 가맹점 기본정보 전체 조회
+	List<EssentialShopInfo> ShopListAllInfo();
 }
