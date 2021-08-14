@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.shop.mapper.ShopMapper;
+import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
 import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.shop.model.code.SuccessShopCode;
@@ -61,6 +62,22 @@ public class ShopServiceImpl implements ShopService {
 	// 가맹점 수정 (상태정보)
 	public ApiResponse updateDetailShopInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession) {
 		shopMapper.updateStatusInfo(statusShopInfo, shopInfoStoredInSession.getShopId());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_UPDATE_SUCCESS);
+		return apiResponse;
+	}
+
+
+	// 가맹점 등록 (편리정보)
+	public ApiResponse registerConvenienceShopInfo(ConvenientShopInfo convenientShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findConvenienceInfoById(shopInfoStoredInSession.getShopId()));
+		shopMapper.registerConvenienceInfo(convenientShopInfo, shopInfoStoredInSession.getShopId());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
+		return apiResponse;
+	}
+
+	// 가맹점 수정 (편리정보)
+	public ApiResponse updateConvenienceShopInfo(ConvenientShopInfo convenientShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopMapper.updateConvenienceInfo(convenientShopInfo, shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_UPDATE_SUCCESS);
 		return apiResponse;
 	}
