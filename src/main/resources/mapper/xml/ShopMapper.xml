@@ -42,19 +42,38 @@
     </update>
 
 
+    <!-- 가맹점 등록 (편리)  -->
+    <insert id="registerConvenienceInfo" parameterType="ConvenientShopInfo">
+        INSERT
+        INTO shop_convenience_info
+        VALUES(#{shopId}, #{convenientShopInfo.grade}, #{convenientShopInfo.deliveryMethod}, #{convenientShopInfo.shopPaymentMethod});
+    </insert>
+    <!-- 가맹점 수정 (편리) -->
+    <update id="updateConvenienceInfo" parameterType="ConvenientShopInfo">
+        UPDATE shop_convenience_info
+        SET grade = #{convenientShopInfo.grade}, deliveryMethod = #{convenientShopInfo.deliveryMethod}, shopPaymentMethod = #{convenientShopInfo.shopPaymentMethod}
+        WHERE shopId = #{shopId};
+    </update>
+
+
     <!-- 가맹점 기본정보 조회 By ShopId -->
     <select id="findEssentialInfoById" parameterType="Integer" resultType="Integer">
         SELECT *
         FROM shop_essential_info
         WHERE shopId = #{shopId};
     </select>
-    <!-- 가맹점 상세정보 조회 By ShopId -->
+    <!-- 가맹점 상태정보 조회 By ShopId -->
     <select id="findStatusInfoById" parameterType="Integer" resultType="Integer">
         SELECT *
         FROM shop_status_info
         WHERE shopId = #{shopId};
     </select>
-
+    <!-- 가맹점 편리정보 조회 By ShopId -->
+    <select id="findConvenienceInfoById" parameterType="Integer" resultType="Integer">
+        SELECT *
+        FROM shop_convenience_info
+        WHERE shopId = #{shopId};
+    </select>
 
     <!-- 회원 전체 조회 -->
     <select id="ShopListAllInfo" resultType="EssentialShopInfo">
