@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
 import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.shop.service.ShopService;
@@ -55,6 +56,20 @@ public class ShopControllerImpl implements ShopController {
 	@PutMapping("/statusInfo/update")
 	public ResponseEntity<?> updateDetailShopInfo(StatusShopInfo statusShopInfo) {
 		ApiResponse apiResponse = shopService.updateDetailShopInfo(statusShopInfo, AuthSessionControl.getShopAuthentication());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+
+	// 가맹점 등록 (편리정보)
+	@PostMapping("/convenienceInfo/register")
+	public ResponseEntity<?> registerConvenienceShopInfo(ConvenientShopInfo convenientShopInfo) {
+		ApiResponse apiResponse = shopService.registerConvenienceShopInfo(convenientShopInfo,AuthSessionControl.getShopAuthentication());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+	// 가맹점 수정 (편리정보)
+	@PutMapping("/convenienceInfo/update")
+	public ResponseEntity<?> updateConvenienceShopInfo(ConvenientShopInfo convenientShopInfo) {
+		ApiResponse apiResponse = shopService.updateConvenienceShopInfo(convenientShopInfo,AuthSessionControl.getShopAuthentication());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 

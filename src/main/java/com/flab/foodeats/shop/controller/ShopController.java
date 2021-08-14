@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
 import com.flab.foodeats.shop.model.StatusShopInfo;
 
@@ -36,6 +37,13 @@ public interface ShopController {
 	@PutMapping("/statusInfo/update")
 	public ResponseEntity<?> updateDetailShopInfo(@Valid @RequestBody StatusShopInfo statusShopInfo);
 
+	/**
+	 * 가맹점 편리 정보
+	 */
+	@PostMapping("/convenienceInfo/register")
+	public ResponseEntity<?> registerConvenienceShopInfo(@Valid @RequestBody ConvenientShopInfo convenientShopInfo);
+	@PutMapping("/convenienceInfo/update")
+	public ResponseEntity<?> updateConvenienceShopInfo(@Valid @RequestBody ConvenientShopInfo convenientShopInfo);
 
 	/**
 	 * 검색 및 조회
