@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.shop.service.ShopService;
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.interceptor.auth.AuthSessionControl;
@@ -42,6 +43,21 @@ public class ShopControllerImpl implements ShopController {
 		ApiResponse apiResponse = shopService.deleteBasicShopInfo(AuthSessionControl.getShopAuthentication());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
+
+
+	// 가맹점 등록 (상태정보)
+	@PostMapping("/statusInfo/register")
+	public ResponseEntity<?> registerDetailShopInfo(StatusShopInfo statusShopInfo) {
+		ApiResponse apiResponse = shopService.registerDetailShopInfo(statusShopInfo, AuthSessionControl.getShopAuthentication());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+	// 가맹점 수정 (상태정보)
+	@PutMapping("/statusInfo/update")
+	public ResponseEntity<?> updateDetailShopInfo(StatusShopInfo statusShopInfo) {
+		ApiResponse apiResponse = shopService.updateDetailShopInfo(statusShopInfo, AuthSessionControl.getShopAuthentication());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
 
 	// 가맹점 기본정보 전체 조회
 	@GetMapping("/AllInfo")

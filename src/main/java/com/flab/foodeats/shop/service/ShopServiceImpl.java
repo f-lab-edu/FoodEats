@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.shop.mapper.ShopMapper;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.shop.model.code.SuccessShopCode;
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.user.interceptor.auth.ShopAuth;
@@ -47,6 +48,23 @@ public class ShopServiceImpl implements ShopService {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_DELETE_SUCCESS);
 		return apiResponse;
 	}
+
+
+	// 가맹점 등록 (상태정보)
+	public ApiResponse registerDetailShopInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findStatusInfoById(shopInfoStoredInSession.getShopId()));
+		shopMapper.registerStatusInfo(statusShopInfo, shopInfoStoredInSession.getShopId());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
+		return apiResponse;
+	}
+
+	// 가맹점 수정 (상태정보)
+	public ApiResponse updateDetailShopInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession) {
+		shopMapper.updateStatusInfo(statusShopInfo, shopInfoStoredInSession.getShopId());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_UPDATE_SUCCESS);
+		return apiResponse;
+	}
+
 
 	/**
 	 * 추후 조회는 삭제

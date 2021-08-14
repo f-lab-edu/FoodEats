@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.StatusShopInfo;
 
 @RestController
 @RequestMapping("/shop")
@@ -26,6 +27,15 @@ public interface ShopController {
 	public ResponseEntity<?> updateBasicShopInfo(@Valid @RequestBody EssentialShopInfo essentialShopInfo);
 	@DeleteMapping("/essentialInfo/delete")
 	public ResponseEntity<?> deleteBasicShopInfo(@Valid @RequestBody EssentialShopInfo essentialShopInfo);
+
+	/**
+	 * 가맹점 상태 정보
+	 */
+	@PostMapping("/statusInfo/register")
+	public ResponseEntity<?> registerDetailShopInfo(@Valid @RequestBody StatusShopInfo statusShopInfo);
+	@PutMapping("/statusInfo/update")
+	public ResponseEntity<?> updateDetailShopInfo(@Valid @RequestBody StatusShopInfo statusShopInfo);
+
 
 	/**
 	 * 검색 및 조회
