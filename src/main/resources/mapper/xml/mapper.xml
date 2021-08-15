@@ -72,9 +72,12 @@
     WHERE id = #{id};
   </select>
 
-  <!-- 가맹점 ShopId 조회 / 가맹점-->
-  <select id="findShopIdById" parameterType="String" resultType="int">
-    SELECT shopId
+  <!-- shopId 조회 / 가맹점-->
+  <resultMap type="Integer" id="findUserShopId">
+    <result property="shopId" column="shop_id"/>
+  </resultMap>
+  <select id="findShopIdById" parameterType="String" resultMap="findUserShopId">
+    SELECT shop_id
     FROM Login_Shop_Data
     WHERE id = #{id};
   </select>
