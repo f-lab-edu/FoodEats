@@ -30,7 +30,7 @@ public interface ShopService {
 	ApiResponse updateConvenienceShopInfo(ConvenientShopInfo convenientShopInfo,ShopAuth shopInfoStoredInSession);
 
 	// 전체조회
-	ApiResponse searchShopAllInfo();
+	ApiResponse searchShopAllInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession);
 
 	// 가맹점 배달 가능 지역 등록
 	ApiResponse registerShopDeliveryLocation(Long shopId, ShopDeliveryLocation shopDeliveryLocation);

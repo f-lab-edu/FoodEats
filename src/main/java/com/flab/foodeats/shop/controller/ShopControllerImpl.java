@@ -78,7 +78,7 @@ public class ShopControllerImpl implements ShopController {
 	// 가맹점 기본정보 전체 조회
 	@GetMapping("/AllInfo")
 	public ResponseEntity<?> searchShopAllInfo() {
-		ApiResponse apiResponse = shopService.searchShopAllInfo();
+		ApiResponse apiResponse = shopService.searchShopAllInfo(new StatusShopInfo(),AuthSessionControl.getShopAuthentication());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
