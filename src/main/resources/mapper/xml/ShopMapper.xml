@@ -91,4 +91,34 @@
         SELECT *
         FROM shop_essential_info;
     </select>
+
+
+    <!-- 가맹점 상태 오픈 -->
+    <update id="startShop" parameterType="StatusShopInfo">
+        UPDATE shop_status_info
+        SET shop_open_status = "OPEN"
+        WHERE shop_id = #{shopId};
+    </update>
+    <!-- 회원 상태 마감 -->
+    <update id="closeShop" parameterType="StatusShopInfo">
+        UPDATE shop_status_info
+        SET shop_open_status = "CLOSE"
+        WHERE shop_id = #{shopId};
+    </update>
+
+
+    <!-- 가맹점 상태정보 조회  -->
+    <resultMap type="StatusShopInfo" id="shopStatusInfoMap">
+        <result property="shopId" column="shop_id"/>
+        <result property="openTime" column="open_time"/>
+        <result property="closeTime" column="close_time" />
+        <result property="closingDay" column="closing_day"/>
+        <result property="shopOpenStatus" column="shop_open_status"/>
+    </resultMap>
+    <select id="findShopStatusInfo" parameterType="Integer" resultMap="shopStatusInfoMap">
+        SELECT *
+        FROM shop_status_info
+        WHERE shop_id = #{shopId};
+    </select>
+
 </mapper>

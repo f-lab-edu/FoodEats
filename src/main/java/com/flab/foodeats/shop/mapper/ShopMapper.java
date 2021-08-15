@@ -46,6 +46,15 @@ public interface ShopMapper {
 	// 가맹점 기본정보 전체 조회
 	List<EssentialShopInfo> shopListAllInfo();
 
+	// 가게 상태 오픈
+	void startShop(@Param("statusShopInfo") StatusShopInfo statusShopInfo, Integer shopId);
+
+	// 가게 상태 마감
+	void closeShop(@Param("statusShopInfo") StatusShopInfo statusShopInfo, Integer shopId);
+
+	// 가맹점 상태 정보 조회
+	StatusShopInfo findShopStatusInfo(Integer shopId);
+
 	// 가맹점 배달 가능 지역 등록
 	void registerShopDeliveryLocation(@Param("shopId") Long shopId,
 		@Param("deliveryLocation") String deliveryLocation,
