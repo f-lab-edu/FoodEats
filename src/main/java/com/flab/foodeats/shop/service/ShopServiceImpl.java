@@ -1,7 +1,5 @@
 package com.flab.foodeats.shop.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,7 +28,7 @@ public class ShopServiceImpl implements ShopService {
 
 	// 가맹점 등록 (기본정보)
 	public ApiResponse registerEssentialShopInfo(EssentialShopInfo essentialShopInfo, ShopAuth shopInfoStoredInSession) {
-		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findEssentialInfoById(shopInfoStoredInSession.getShopId()));
+		shopErrorCheck.shopInfoAlreadyExist(shopMapper.findEssentialInfoByShopId(shopInfoStoredInSession.getShopId()));
 		shopMapper.registerEssentialInfo(essentialShopInfo, shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
 		return apiResponse;
@@ -53,10 +51,10 @@ public class ShopServiceImpl implements ShopService {
 		return apiResponse;
 	}
 
-
 	// 가맹점 등록 (상태정보)
 	public ApiResponse registerDetailShopInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession) {
-		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findStatusInfoById(shopInfoStoredInSession.getShopId()));
+		shopErrorCheck.shopInfoAlreadyExist(shopMapper.findStatusInfoByShopId(shopInfoStoredInSession.getShopId()));
+		shopErrorCheck.shopEssentialInfoNotExist(shopMapper.findEssentialInfoByShopId(shopInfoStoredInSession.getShopId()));
 		shopMapper.registerStatusInfo(statusShopInfo, shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
 		return apiResponse;
@@ -69,10 +67,10 @@ public class ShopServiceImpl implements ShopService {
 		return apiResponse;
 	}
 
-
 	// 가맹점 등록 (편리정보)
 	public ApiResponse registerConvenienceShopInfo(ConvenientShopInfo convenientShopInfo, ShopAuth shopInfoStoredInSession) {
-		shopErrorCheck.ShopInfoAlreadyExist(shopMapper.findConvenienceInfoById(shopInfoStoredInSession.getShopId()));
+		shopErrorCheck.shopInfoAlreadyExist(shopMapper.findConvenienceInfoByShopId(shopInfoStoredInSession.getShopId()));
+		shopErrorCheck.shopEssentialInfoNotExist(shopMapper.findEssentialInfoByShopId(shopInfoStoredInSession.getShopId()));
 		shopMapper.registerConvenienceInfo(convenientShopInfo, shopInfoStoredInSession.getShopId());
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_REGISTER_SUCCESS);
 		return apiResponse;
@@ -86,13 +84,14 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 
+
 	/**
 	 * 추후 조회는 삭제
 	 * 유석햄 코드에 ChangeShopStatusAutomatic 적용
 	 */
 	// 가맹점 기본정보 전체 조회
 	public ApiResponse searchShopAllInfo() {
-		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.ShopListAllInfo());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.shopListAllInfo());
 		return apiResponse;
 	}
 

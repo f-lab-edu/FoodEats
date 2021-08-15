@@ -34,17 +34,17 @@ public interface ShopMapper {
 	// 가맹점 수정 (편리)
 	void updateConvenienceInfo(@Param("convenientShopInfo") ConvenientShopInfo convenientShopInfo, Integer shopId);
 
-	// 가맹점 기본정보 조회 By ShopId
-	Integer findEssentialInfoById(Integer shopId);
+	// 가맹점 기본정보 조회 - 중복등록 검증
+	Integer findEssentialInfoByShopId(Integer shopId);
 
-	// 가맹점 상태정보 조회 By ShopId/
-	Integer findStatusInfoById(Integer shopId);
+	// 가맹점 상태정보 조회 - 중복등록 검증
+	Integer findStatusInfoByShopId(Integer shopId);
 
-	// 가맹점 편리정보 조회 By ShopId
-	Integer findConvenienceInfoById(Integer shopId);
+	// 가맹점 편리정보 조회 - 중복등록 검증
+	Integer findConvenienceInfoByShopId(Integer shopId);
 
 	// 가맹점 기본정보 전체 조회
-	List<EssentialShopInfo> ShopListAllInfo();
+	List<EssentialShopInfo> shopListAllInfo();
 
 	// 가맹점 배달 가능 지역 등록
 	void registerShopDeliveryLocation(@Param("shopId") Long shopId,
