@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.global.StatusCode;
+import com.flab.foodeats.shop.holiday.HolidayCheck;
 import com.flab.foodeats.shop.mapper.ShopMapper;
 import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
@@ -91,6 +92,15 @@ public class ShopServiceImpl implements ShopService {
 	 */
 	// 가맹점 기본정보 전체 조회
 	public ApiResponse searchShopAllInfo() {
+
+		// 공휴일 체크
+		if(new HolidayCheck().holidayCheck()){
+			System.out.println("공휴일");
+		}
+		else{
+			System.out.println("공휴일x");
+		}
+
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.shopListAllInfo());
 		return apiResponse;
 	}
