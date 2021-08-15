@@ -1,11 +1,11 @@
-package com.flab.foodeats.shop.search.service;
+package com.flab.foodeats.search.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.flab.foodeats.shop.search.model.SearchShopResultDTO;
-import com.flab.foodeats.shop.search.model.code.SearchErrorCode;
+import com.flab.foodeats.search.model.SearchShopResultDTO;
+import com.flab.foodeats.search.model.code.SearchErrorCode;
 
 @Component
 public class ShopSearchErrorCheck {

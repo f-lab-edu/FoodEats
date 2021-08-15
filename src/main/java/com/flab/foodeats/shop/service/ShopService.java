@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.ShopDeliveryLocation;
 import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.user.interceptor.auth.ShopAuth;
 
@@ -30,4 +31,7 @@ public interface ShopService {
 
 	// 전체조회
 	ApiResponse searchShopAllInfo();
+
+	// 가맹점 배달 가능 지역 등록
+	ApiResponse registerShopDeliveryLocation(Long shopId, ShopDeliveryLocation shopDeliveryLocation);
 }

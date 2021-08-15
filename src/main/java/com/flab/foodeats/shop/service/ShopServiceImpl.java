@@ -2,6 +2,7 @@ package com.flab.foodeats.shop.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,8 @@ import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.shop.mapper.ShopMapper;
 import com.flab.foodeats.shop.model.ConvenientShopInfo;
 import com.flab.foodeats.shop.model.EssentialShopInfo;
+import com.flab.foodeats.shop.model.ShopDeliveryLocation;
+import com.flab.foodeats.shop.model.ShopDeliveryLocationParam;
 import com.flab.foodeats.shop.model.StatusShopInfo;
 import com.flab.foodeats.shop.model.code.SuccessShopCode;
 import com.flab.foodeats.global.ApiResponse;
@@ -90,6 +93,18 @@ public class ShopServiceImpl implements ShopService {
 	// 가맹점 기본정보 전체 조회
 	public ApiResponse searchShopAllInfo() {
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.ShopListAllInfo());
+		return apiResponse;
+	}
+
+	// 가맹점 배달 가능 지역 등록
+	@Override
+	public ApiResponse registerShopDeliveryLocation(Long shopId, ShopDeliveryLocation shopDeliveryLocation) {
+		List<ShopDeliveryLocationParam> deliveryParams = shopDeliveryLocation.getDeliveryParams();
+		for (ShopDeliveryLocationParam deliveryParam : deliveryParams) {
+			shopMapper.registerShopDeliveryLocation(shopId, deliveryParam.getDeliveryLocation(),
+				deliveryParam.getDeliveryLocationTip());
+		}
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessShopCode.SHOP_UPDATE_SUCCESS);
 		return apiResponse;
 	}
 }
