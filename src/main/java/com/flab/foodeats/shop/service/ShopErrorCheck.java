@@ -11,9 +11,15 @@ public class ShopErrorCheck {
 	// 가맹점 기본정보 등록 - ShopId 중복 등록 차단
 	// 가맹점 상세정보 등록 - ShopId 중복 등록 차단
 	// 가맹점 편리정보 등록 - ShopId 중복 등록 차단
-	public void ShopInfoAlreadyExist(Integer shopId) {
+	public void shopInfoAlreadyExist(Integer shopId) {
 		if (shopId != null) {
 			throw new DuplicateKeyException(ErrorShopCode.SHOP_EXIST.getMessage());
+		}
+	}
+
+	public void shopEssentialInfoNotExist(Integer shopId) {
+		if (shopId == null) {
+			throw new DuplicateKeyException(ErrorShopCode.ESSENTIAL_INFO_NOT_EXIST.getMessage());
 		}
 	}
 }
