@@ -1,6 +1,7 @@
 package com.flab.foodeats.shop.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class EssentialShopInfo {
 
@@ -8,7 +9,7 @@ public class EssentialShopInfo {
 	 * 가맹점 등록
 	 * DB : shop_info
 	 */
-
+	private int shopId;
 	@NotBlank(message = "Input Your Category ")
 	private String category;
 	@NotBlank(message = "Input Your Brand")
@@ -21,11 +22,20 @@ public class EssentialShopInfo {
 	public EssentialShopInfo() {
 	}
 
-	public EssentialShopInfo(String category, String brand, String location, String phone) {
+	public EssentialShopInfo(int shopId, String category, String brand, String location, String phone) {
+		this.shopId = shopId;
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
+	}
+
+	public int getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(int shopId) {
+		this.shopId = shopId;
 	}
 
 	public String getCategory() {
@@ -58,5 +68,16 @@ public class EssentialShopInfo {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@Override
+	public String toString() {
+		return "EssentialShopInfo{" +
+			"shopId=" + shopId +
+			", category='" + category + '\'' +
+			", brand='" + brand + '\'' +
+			", location='" + location + '\'' +
+			", phone='" + phone + '\'' +
+			'}';
 	}
 }
