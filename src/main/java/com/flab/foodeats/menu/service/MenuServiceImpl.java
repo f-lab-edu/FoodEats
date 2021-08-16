@@ -2,6 +2,8 @@ package com.flab.foodeats.menu.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.flab.foodeats.global.ApiResponse;
 import com.flab.foodeats.global.StatusCode;
 import com.flab.foodeats.menu.mapper.MenuMapper;
@@ -10,6 +12,7 @@ import com.flab.foodeats.menu.model.MenuOptionParam;
 import com.flab.foodeats.menu.model.MenuRegisterParam;
 import com.flab.foodeats.menu.model.code.SuccessMenuCode;
 
+@Service
 public class MenuServiceImpl implements MenuService{
 	private MenuMapper menuMapper;
 
