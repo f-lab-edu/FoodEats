@@ -27,4 +27,13 @@ public interface MenuMapper {
 	// 메뉴별 옵션 검색
 	List<MenuOptionParam> searchMenuOption(int menuId);
 
+	void updateMenu(@Param("menuId") int menuId, @Param("menuEssentialParam") MenuEssentialParam menuEssentialParam);
+
+	void deleteMenu(int menuId);
+
+	void updateMenuOption(
+		@Param("menuOptionId") int menuOptionId, @Param("menuOptionParam") MenuOptionParam menuOptionParam);
+
+	void deleteMenuOption(int menuOptionId);
+
 }

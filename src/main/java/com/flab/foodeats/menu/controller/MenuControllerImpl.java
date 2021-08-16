@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.global.ApiResponse;
+import com.flab.foodeats.menu.model.MenuEssentialParam;
+import com.flab.foodeats.menu.model.MenuOptionParam;
 import com.flab.foodeats.menu.model.MenuRegisterParam;
 import com.flab.foodeats.menu.service.MenuService;
 
@@ -34,6 +36,30 @@ public class MenuControllerImpl implements MenuController {
 	@Override
 	public ResponseEntity<?> searchMenuOption(int menuId) {
 		ApiResponse apiResponse = menuService.searchMenuOption(menuId);
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	@Override
+	public ResponseEntity<?> updateMenu(int menuId, MenuEssentialParam menuEssentialParam) {
+		ApiResponse apiResponse = menuService.updateMenu(menuId, menuEssentialParam);
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	@Override
+	public ResponseEntity<?> deleteMenu(int menuId) {
+		ApiResponse apiResponse = menuService.deleteMenu(menuId);
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	@Override
+	public ResponseEntity<?> updateMenuOption(int menuOptionId, MenuOptionParam menuOptionParam) {
+		ApiResponse apiResponse = menuService.updateMenuOption(menuOptionId, menuOptionParam);
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	@Override
+	public ResponseEntity<?> deleteMenuOption(int menuOptionId) {
+		ApiResponse apiResponse = menuService.deleteMenuOption(menuOptionId);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 }

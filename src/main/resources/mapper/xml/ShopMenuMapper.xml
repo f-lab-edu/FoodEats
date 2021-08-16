@@ -42,4 +42,32 @@
         FROM shop_menu_option
         WHERE menu_id = #{menuId};
     </select>
+
+    <update id="updateMenu">
+        UPDATE shop_menu_register
+        SET menu_name = #{menuEssentialParam.menuName}, menu_price = #{menuEssentialParam.menuPrice}
+        , menu_configuration = #{menuEssentialParam.menuConfiguration}
+        , menu_group = #{menuEssentialParam.menuGroup}
+        WHERE menu_id = #{menuId};
+    </update>
+
+    <delete id = "deleteMenu" parameterType="int">
+        DELETE
+        FROM shop_menu_register
+        WHERE menu_id = #{menuId};
+    </delete>
+
+    <update id="updateMenuOption">
+        UPDATE shop_menu_option
+        SET menu_option_name = #{menuOptionParam.menuOptionName},
+        menu_option_price = #{menuOptionParam.menuOptionPrice}
+        WHERE menu_option_id = #{menuOptionId};
+    </update>
+
+    <delete id="deleteMenuOption">
+        DELETE
+        FROM shop_menu_option
+        WHERE menu_option_id = #{menuOptionId};
+    </delete>
+
 </mapper>
