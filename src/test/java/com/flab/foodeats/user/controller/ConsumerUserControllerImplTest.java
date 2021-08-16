@@ -1,6 +1,5 @@
 package com.flab.foodeats.user.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -20,17 +19,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.foodeats.user.model.DeleteFormDTO;
+import com.flab.foodeats.user.interceptor.auth.Auth;
 import com.flab.foodeats.user.model.InsertFormDTO;
 import com.flab.foodeats.user.model.LoginFormDTO;
 import com.flab.foodeats.user.model.UpdateFormDTO;
-import com.flab.foodeats.user.util.SessionConst;
+import com.flab.foodeats.user.model.code.ErrorUserCode;
+import com.flab.foodeats.user.model.code.SuccessUserCode;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
 @Transactional
-class MemberControllerImplTest {
+class ConsumerUserControllerImplTest {
 
 	@Autowired
 	protected MockMvc mockMvc;
@@ -41,10 +41,9 @@ class MemberControllerImplTest {
 
 	@BeforeEach
 	public void setUp() {
-		LoginFormDTO loginForm = new LoginFormDTO("test","test!");
-
+		LoginFormDTO loginFormDTO = new LoginFormDTO("dudntn","711");
 		session = new MockHttpSession();
-		session.setAttribute(SessionConst.LOGIN, loginForm);
+		session.setAttribute(Auth.CUNSUMER_KEY, loginFormDTO.getId());
 	}
 
 	@AfterEach
@@ -54,126 +53,96 @@ class MemberControllerImplTest {
 
 	@Test
 	@DisplayName("회원가입 테스트")
-	public void test() throws Exception {
+	public void consumerRegisterTest() throws Exception {
 		InsertFormDTO member = new InsertFormDTO("newMember1","123","123");
 		String json = objectMapper.writeValueAsString(member);
 
-		mockMvc.perform(post("/user/insert")
+		mockMvc.perform(post("/user/consumer/register")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
-			.andExpect(status().isCreated());
+			.andExpect(jsonPath("message").value(SuccessUserCode.USER_INSERT_SUCCESS.getMessage()));
 	}
 
 	@Test
 	@DisplayName("회원가입 실패 - ID 중복")
-	public void insertFail() throws Exception {
-		InsertFormDTO member = new InsertFormDTO("test","123","123");
+	public void consumerRegisterAlreadyExistTest() throws Exception {
+		InsertFormDTO member = new InsertFormDTO("dudtn","711","123");
 		String json = objectMapper.writeValueAsString(member);
 
-		mockMvc.perform(post("/user/insert")
+		mockMvc.perform(post("/user/consumer/register")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("message").value("이미 가입된 id 입니다"));
+			.andExpect(jsonPath("message").value(ErrorUserCode.ID_EXIST.getMessage()));
 	}
 
 	@Test
 	@DisplayName("로그인 테스트")
-	void login() throws Exception {
-		LoginFormDTO loginForm = new LoginFormDTO("test","test!");
+	void consumerLoginSuccessTest() throws Exception {
+		LoginFormDTO loginForm = new LoginFormDTO("dudtn","711");
 		String json = objectMapper.writeValueAsString(loginForm);
 
-		mockMvc.perform(post("/user/login")
+		mockMvc.perform(post("/user/consumer/login")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
-			.andExpect(status().isOk());
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("message").value(SuccessUserCode.USER_LOGIN_SUCCESS.getMessage()));
 	}
 
 	@Test
 	@DisplayName("로그인 테스트 - 비밀번호 오류")
-	void loginFail() throws Exception {
-		LoginFormDTO loginForm = new LoginFormDTO("test","test!1");
+	void consumerLoginFailTest() throws Exception {
+		LoginFormDTO loginForm = new LoginFormDTO("dudtn","7");
 		String json = objectMapper.writeValueAsString(loginForm);
 
-		// then
-		mockMvc.perform(post("/user/login")
+		mockMvc.perform(post("/user/consumer/login")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("message").value("비밀번호가 일치하지 않습니다."));
+			.andExpect(jsonPath("message").value(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage()));
 	}
 
 	@Test
 	@DisplayName("로그인 테스트 - id 존재 x")
-	void loginFail2() throws Exception {
+	void consumerLoginIDIsNotExistTest() throws Exception {
 		LoginFormDTO loginForm = new LoginFormDTO("testx","test!");
 		String json = objectMapper.writeValueAsString(loginForm);
 
-		mockMvc.perform(post("/user/login")
+		 mockMvc.perform(post("/user/consumer/login")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("message").value("해당 id가 존재하지 않습니다."));
+			.andExpect(jsonPath("message").value(ErrorUserCode.ID_NOT_EXIST.getMessage()));
 	}
 
 	@Test
 	@DisplayName("회원정보 수정 성공")
-	void updateTest() throws Exception {
-		UpdateFormDTO updateFormDTO = new UpdateFormDTO("test","123","123");
+	void UpdateConsumerInfoTest() throws Exception {
+		UpdateFormDTO updateFormDTO = new UpdateFormDTO("123","123");
 		String json = objectMapper.writeValueAsString(updateFormDTO);
 
-		mockMvc.perform(put("/user/update")
+		mockMvc.perform(put("/user/consumer/update")
 			.session(session)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(json))
 			.andDo(print())
-			.andExpect(status().isOk());
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("message").value(SuccessUserCode.USER_UPDATE_SUCCESS.getMessage()));
 	}
 
-	@Test
-	@DisplayName("회원정보 수정 실패 - id 불일치")
-	void updateTestFail() throws Exception {
-		UpdateFormDTO updateFormDTO = new UpdateFormDTO("test2","123","123");
-		String json = objectMapper.writeValueAsString(updateFormDTO);
-
-		mockMvc.perform(put("/user/update")
-			.session(session)
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(json))
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-	}
 
 	@Test
 	@DisplayName("회원정보 삭제 성공")
-	void deleteTest() throws Exception {
-		DeleteFormDTO deleteFormDTO = new DeleteFormDTO("test","123");
-		String json = objectMapper.writeValueAsString(deleteFormDTO);
-
-		mockMvc.perform(delete("/user/delete")
+	void deleteConsumerInfoTest() throws Exception {
+		mockMvc.perform(delete("/user/consumer/delete")
 			.session(session)
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(json))
+			.contentType(MediaType.APPLICATION_JSON))
 			.andDo(print())
 			.andExpect(status().isOk());
-	}
-
-	@Test
-	@DisplayName("회원정보 삭제 실패 - id 불일치")
-	void deleteTestFail() throws Exception {
-		DeleteFormDTO deleteFormDTO = new DeleteFormDTO("test2","123");
-		String json = objectMapper.writeValueAsString(deleteFormDTO);
-
-		mockMvc.perform(delete("/user/delete")
-			.session(session)
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(json))
-			.andDo(print())
-			.andExpect(status().isBadRequest());
 	}
 }
