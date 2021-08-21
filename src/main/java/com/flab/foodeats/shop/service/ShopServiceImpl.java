@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.global.StatusCode;
+import com.flab.foodeats.shop.autostatus.ShopAutomaticStatus;
 import com.flab.foodeats.shop.holiday.HolidayCheck;
 import com.flab.foodeats.shop.mapper.ShopMapper;
 import com.flab.foodeats.shop.model.ConvenientShopInfo;
@@ -21,10 +22,13 @@ public class ShopServiceImpl implements ShopService {
 
 	private ShopMapper shopMapper;
 	private ShopErrorCheck shopErrorCheck;
+	private ShopAutomaticStatus shopAutomaticStatus;
 
-	public ShopServiceImpl(ShopMapper shopMapper, ShopErrorCheck shopErrorCheck) {
+	public ShopServiceImpl(ShopMapper shopMapper, ShopErrorCheck shopErrorCheck,
+		ShopAutomaticStatus shopAutomaticStatus) {
 		this.shopMapper = shopMapper;
 		this.shopErrorCheck = shopErrorCheck;
+		this.shopAutomaticStatus = shopAutomaticStatus;
 	}
 
 	// 가맹점 등록 (기본정보)
@@ -91,7 +95,7 @@ public class ShopServiceImpl implements ShopService {
 	 * 유석햄 코드에 ChangeShopStatusAutomatic 적용
 	 */
 	// 가맹점 기본정보 전체 조회
-	public ApiResponse searchShopAllInfo() {
+	public ApiResponse searchShopAllInfo(StatusShopInfo statusShopInfo, ShopAuth shopInfoStoredInSession) {
 
 		// 공휴일 체크
 		if(new HolidayCheck().holidayCheck()){
@@ -99,6 +103,15 @@ public class ShopServiceImpl implements ShopService {
 		}
 		else{
 			System.out.println("공휴일x");
+		}
+
+		// 가맹점 자동상태 변환
+		statusShopInfo = shopMapper.findShopStatusInfo(shopInfoStoredInSession.getShopId());
+		if(shopAutomaticStatus.changeShopStatusAuto(statusShopInfo)){
+			shopMapper.startShop(statusShopInfo, shopInfoStoredInSession.getShopId());
+		}
+		else{
+			shopMapper.closeShop(statusShopInfo, shopInfoStoredInSession.getShopId());
 		}
 
 		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, shopMapper.shopListAllInfo());
