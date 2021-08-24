@@ -13,16 +13,21 @@ import com.flab.foodeats.domain.user.User;
 public interface UserMapper {
 
 
-	void registerConsumer(@Param("Consumer") RegisterUserTarget registerUserTarget);
-	void registerMerchant(@Param("Merchant") RegisterUserTarget registerUserTarget);
-	void registerRider(@Param("Rider") RegisterUserTarget registerUserTarget);
+	void saveConsumer(@Param("Consumer") User user);
+	void saveMerchant(@Param("Merchant") User user);
+	void saveRider(@Param("Rider") User user);
 
-	User findConsumerInfoById(String userId);
-	User findMerchantInfoById(String userId);
-	User findRiderInfoById(String userId);
+	User findConsumerById(String userId);
+	User findMerchantById(String userId);
+	User findRiderById(String userId);
 
-	void modifyConsumerInfoById( @Param("Consumer") ModifyUserTarget modifyUserTarget);
-	void modifyMerchantInfoById( @Param("Merchant") ModifyUserTarget modifyUserTarget);
-	void modifyRiderInfoById( @Param("Rider") ModifyUserTarget modifyUserTarget);
+	void modifyConsumerById( @Param("Consumer") User user);
+	void modifyMerchantById( @Param("Merchant") User user);
+	void modifyRiderById( @Param("Rider") User user);
+
+	void deleteConsumerById(String userId);
+	void deleteMerchantById(String userId);
+	void deleteRiderById(String userId);
+
 
 }
