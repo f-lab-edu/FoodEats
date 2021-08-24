@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.foodeats.infra.user.UserMapper">
+
+    <!-- 회원가입  / 소비자-->
+    <insert id="registerConsumer" parameterType="RegisterUserTarget">
+        INSERT
+        INTO user_consumer_info
+        VALUES(#{Consumer.userId}, #{Consumer.password}, #{Consumer.name});
+    </insert>
+    <!-- 회원가입  / 가맹점-->
+    <insert id="registerMerchant" parameterType="RegisterUserTarget">
+        INSERT
+        INTO user_merchant_info
+        VALUES(#{Merchant.userId}, #{Merchant.password}, #{Merchant.name});
+    </insert>
+    <!-- 회원가입  / 가맹점-->
+    <insert id="registerRider" parameterType="RegisterUserTarget">
+        INSERT
+        INTO user_rider_info
+        VALUES(#{Rider.userId}, #{Rider.password}, #{Rider.name});
+    </insert>
+
+
+
+    <resultMap type="User" id="UserSelect">
+        <result property="userId" column="user_id"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <!-- 사용자 조회 (By ID) / 소비자-->
+    <select id="findConsumerInfoById" parameterType="String" resultMap="UserSelect">
+        SELECT *
+        FROM user_consumer_info
+        WHERE user_id = #{userId};
+    </select>
+    <!-- 사용자 조회 (By ID) / 가맹점-->
+    <select id="findMerchantInfoById" parameterType="String" resultMap="UserSelect">
+        SELECT *
+        FROM user_merchant_info
+        WHERE user_id = #{userId};
+    </select>
+    <!-- 사용자 조회 (By ID) / 가맹점-->
+    <select id="findRiderInfoById" parameterType="String" resultMap="UserSelect">
+        SELECT *
+        FROM user_rider_info
+        WHERE user_id = #{userId};
+    </select>
+
+
+    <!-- 회원정보 수정 / 소비자 -->
+    <update id="modifyConsumerInfoById" parameterType="ModifyUserTarget">
+        UPDATE user_consumer_info
+        SET password = #{Consumer.password}, name = #{Consumer.name}
+        WHERE user_id = #{Consumer.userId};
+    </update>
+    <!-- 회원정보 수정 / 소비자 -->
+    <update id="modifyMerchantInfoById" parameterType="ModifyUserTarget">
+        UPDATE user_merchant_info
+        SET password = #{Merchant.password}, name = #{Merchant.name}
+        WHERE user_id = #{Merchant.userId};
+    </update><!-- 회원정보 수정 / 소비자 -->
+    <update id="modifyRiderInfoById" parameterType="ModifyUserTarget">
+        UPDATE user_rider_info
+        SET password = #{Rider.password}, name = #{Rider.name}
+        WHERE user_id = #{Rider.userId};
+    </update>
+</mapper>
