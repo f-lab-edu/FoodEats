@@ -1,4 +1,4 @@
-package com.flab.foodeats.domain.user.auth;
+package com.flab.foodeats.common.auth;
 
 import com.flab.foodeats.domain.user.UserType;
 
@@ -8,10 +8,9 @@ public class AuthInfo {
 	private String userId;
 	private UserType userType;
 
-	protected AuthInfo(){
+	protected AuthInfo() {
 
 	}
-
 
 	public String getUserId() {
 		return userId;
@@ -29,21 +28,23 @@ public class AuthInfo {
 		this.userType = userType;
 	}
 
-	public static AuthInfo of(String userId, UserType userType){
-		AuthInfo authInfo =  new AuthInfo();
+	public static AuthInfo of(String userId, UserType userType) {
+		AuthInfo authInfo = new AuthInfo();
 		authInfo.userId = userId;
 		authInfo.userType = userType;
 		return authInfo;
 	}
 
-	public static AuthInfo consuemrOf(String userId){
-		return of(userId,UserType.CONSUMER);
+	public static AuthInfo consuemrOf(String userId) {
+		return of(userId, UserType.CONSUMER);
 	}
-	public static AuthInfo merchantOf(String userId){
-		return of(userId,UserType.MERCHANT);
+
+	public static AuthInfo merchantOf(String userId) {
+		return of(userId, UserType.MERCHANT);
 	}
-	public static AuthInfo riderOf(String userId){
-		return of(userId,UserType.RIDER);
+
+	public static AuthInfo riderOf(String userId) {
+		return of(userId, UserType.RIDER);
 	}
 
 	public AuthInfo(String userId, UserType userType) {
@@ -51,12 +52,5 @@ public class AuthInfo {
 		this.userType = userType;
 	}
 
-	@Override
-	public String toString() {
-		return "AuthInfo{" +
-			"userId='" + userId + '\'' +
-			", userType=" + userType +
-			'}';
-	}
 }
 

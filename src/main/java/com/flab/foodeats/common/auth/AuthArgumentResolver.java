@@ -1,4 +1,4 @@
-package com.flab.foodeats.domain.user.auth;
+package com.flab.foodeats.common.auth;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		boolean hasAuthInfo = parameter.getParameterType().isAssignableFrom(AuthInfo.class); //두 형식이 같은지 비교(isAssignableForm)
+		boolean hasAuthInfo = parameter.getParameterType().isAssignableFrom(AuthInfo.class);
 
 		return hasAuthInfo;
 	}
