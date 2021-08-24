@@ -1,20 +1,22 @@
 package com.flab.foodeats.common.response;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiResponse {
+public class ApiResponse<T> {
 
 	private StatusCode status;
-	private Object message;
-	private Object data;
+	private T message;
+	private T data;
 
-	public ApiResponse(StatusCode status, Object message) {
+	public ApiResponse(StatusCode status, T message) {
 		this.status = status;
 		this.message = message;
 	}
 
-	public ApiResponse(StatusCode status, Object message, Object data) {
+	public ApiResponse(StatusCode status, T message, T data) {
 		this.status = status;
 		this.message = message;
 		this.data = data;
@@ -28,27 +30,31 @@ public class ApiResponse {
 		this.status = status;
 	}
 
-	public Object getMessage() {
+	public T getMessage() {
 		return message;
 	}
 
-	public void setMessage(Object message) {
+	public void setMessage(T message) {
 		this.message = message;
 	}
 
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 
-	public static ApiResponse responseMessage(StatusCode status, Object message) {
+	public static ApiResponse responseError(StatusCode status, Map message) {
 		return new ApiResponse(status, message);
 	}
 
-	public static ApiResponse responseData(StatusCode status, Object message, Object data) {
+	public static ApiResponse responseMessage(StatusCode status, String message) {
+		return new ApiResponse(status, message);
+	}
+
+	public static ApiResponse responseData(StatusCode status, String message, String data) {
 		return new ApiResponse(status, message, data);
 	}
 
