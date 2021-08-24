@@ -1,10 +1,14 @@
 package com.flab.foodeats.api.user;
 
+import javax.validation.constraints.NotBlank;
+
 import com.flab.foodeats.application.user.LoginUserTarget;
 
 public class LoginUserRequest {
 
+	@NotBlank(message = "Input Your UserId")
 	private String userId;
+	@NotBlank(message = "Input Your Password")
 	private String password;
 
 	public LoginUserRequest() {
