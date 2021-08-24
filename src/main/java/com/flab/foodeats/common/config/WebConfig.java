@@ -8,8 +8,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.flab.foodeats.domain.user.auth.AuthArgumentResolver;
-import com.flab.foodeats.domain.user.auth.AuthInterceptor;
+import com.flab.foodeats.common.auth.AuthArgumentResolver;
+import com.flab.foodeats.common.auth.AuthInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

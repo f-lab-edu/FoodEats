@@ -9,7 +9,12 @@ public enum SuccessUserCode {
 	USER_FINDALL_SUCCESS("Find_ALL_Member Success"),
 	USER_FINDMEMBER_SUCCESS("Find_Member Success"),
 	USER_UPDATE_SUCCESS("Update Success"),
-	USER_DELETE_SUCCESS("Delete Success");
+	USER_DELETE_SUCCESS("Delete Success"),
+	SHOP_REGISTER_SUCCESS("Register Shop Success"),
+	SHOP_UPDATE_SUCCESS("Update Shop Success"),
+	SHOP_DELETE_SUCCESS("Delete Shop Success"),
+	SHOP_OPEN_SUCCESS("Open Shop Success"),
+	SHOP_CLOSE_SUCCESS("Close Shop Success");
 
 	private final String message;
 

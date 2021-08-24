@@ -26,8 +26,8 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> illegalExHandler(IllegalArgumentException e) {
-		ApiResponse dataApiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
-		return new ResponseEntity<>(dataApiResponse, HttpStatus.BAD_REQUEST);
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -36,8 +36,8 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> runtimeException(DuplicateKeyException e) {
-		ApiResponse dataApiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
-		return new ResponseEntity<>(dataApiResponse, HttpStatus.BAD_REQUEST);
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> nullPointerHandler(NullPointerException e) {
-		ApiResponse dataApiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
-		return new ResponseEntity<>(dataApiResponse, HttpStatus.BAD_REQUEST);
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class ErrorAdvice {
 			errors.put(fieldName, errorMessage);
 		});
 
-		ApiResponse dataApiResponse = new ApiResponse(StatusCode.FAIL, errors);
-		return new ResponseEntity<>(dataApiResponse, HttpStatus.BAD_REQUEST);
+		ApiResponse apiResponse = ApiResponse.responseError(StatusCode.FAIL, errors);
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ErrorAdvice {
 	 */
 	@ExceptionHandler
 	public ResponseEntity<ApiResponse> exceptionHandler(Exception e) {
-		ApiResponse dataApiResponse = new ApiResponse(StatusCode.FAIL, e.getMessage());
-		return new ResponseEntity<>(dataApiResponse, HttpStatus.BAD_REQUEST);
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.FAIL, e.getMessage());
+		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 }
