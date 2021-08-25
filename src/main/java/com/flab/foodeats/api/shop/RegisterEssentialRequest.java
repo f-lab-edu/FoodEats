@@ -1,4 +1,4 @@
-package com.flab.foodeats.api.shop.dto;
+package com.flab.foodeats.api.shop;
 
 import javax.validation.constraints.NotBlank;
 
