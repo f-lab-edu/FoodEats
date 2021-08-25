@@ -46,6 +46,10 @@ public class ShopServiceImpl implements ShopService {
 		shopMapper.registerStatusInfo(target.toEntity());
 	}
 
+	// 가맹점 수정 (상태정보)
+	public void updateStatusShopInfo(StatusTarget target) {
+		shopMapper.updateStatusInfo(target.toEntity());
+	}
 
 	public <T> void shopInfoAlreadyExist(T entity) {
 		if (entity != null) {
