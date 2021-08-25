@@ -6,12 +6,6 @@ import com.flab.foodeats.domain.shop.Status;
 
 public class StatusTarget {
 
-	/**
-	 * TODO
-	 * 가맹점 오픈 상태
-	 * 어노테이션 기반으로 자바에서 디폴트 설정할 수 있는지 확인!
-	 */
-
 	private String shopId;
 	private LocalTime openTime;
 	private LocalTime closeTime;

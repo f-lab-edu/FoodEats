@@ -4,10 +4,6 @@ import com.flab.foodeats.domain.shop.Essential;
 
 public class EssentialTarget {
 
-	/**
-	 * 가맹점 등록
-	 * DB : shop_info
-	 */
 	private String shopId;
 	private String category;
 	private String brand;
