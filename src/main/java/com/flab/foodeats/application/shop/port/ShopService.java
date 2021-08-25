@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 import com.flab.foodeats.application.shop.RegisterEssentialTarget;
+import com.flab.foodeats.application.shop.RegisterStatusTarget;
 import com.flab.foodeats.application.shop.UpdateEssentialTarget;
 
 @Service
@@ -14,6 +15,8 @@ public interface ShopService {
 	void updateEssentialShopInfo(UpdateEssentialTarget target);
 	void deleteEssentialShopInfo(DeleteEssentialTarget target);
 
+	// 상태정보
+	void registerStatusShopInfo(RegisterStatusTarget target);
 
 
 
