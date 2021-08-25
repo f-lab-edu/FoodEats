@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.api.shop.DeleteEssentialRequest;
 import com.flab.foodeats.api.shop.RegisterEssentialRequest;
+import com.flab.foodeats.api.shop.RegisterStatusRequest;
 import com.flab.foodeats.api.shop.UpdateEssentialRequest;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.auth.AuthInfo;
@@ -60,6 +61,16 @@ public class ShopApi {
 		AuthInfo authInfo) {
 		shopService.deleteEssentialShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_DELETE_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	// 가맹점 등록 (상태정보)
+	@AuthRequired(role = UserType.MERCHANT)
+	@PostMapping("/statusInfo/register")
+	public ResponseEntity<?> registerStatusInfo(@Valid @RequestBody RegisterStatusRequest dto, @AuthUsed
+		AuthInfo authInfo) {
+		shopService.registerStatusShopInfo(dto.toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
