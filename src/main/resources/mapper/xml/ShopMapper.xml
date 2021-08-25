@@ -11,6 +11,14 @@
         VALUES(#{Essential.shopId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
         #{Essential.phone});
     </insert>
+    <!-- 가맹점 수정 (기본) -->
+    <update id="updateEssentialInfo" parameterType="Essential">
+        UPDATE shop_essential_info
+        SET category = #{Essential.category}, brand = #{Essential.brand}, location = #{Essential.location},
+        phone = #{Essential.phone}
+        WHERE shop_id = #{Essential.shopId};
+    </update>
+
 
     <resultMap type="Essential" id="essentialMap">
         <result property="shopId" column="shop_id"/>
