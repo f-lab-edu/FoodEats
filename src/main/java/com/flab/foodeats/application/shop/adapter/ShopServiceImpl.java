@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
-import com.flab.foodeats.application.shop.RegisterEssentialTarget;
-import com.flab.foodeats.application.shop.RegisterStatusTarget;
-import com.flab.foodeats.application.shop.UpdateEssentialTarget;
+import com.flab.foodeats.application.shop.EssentialTarget;
+import com.flab.foodeats.application.shop.StatusTarget;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.domain.shop.Essential;
@@ -24,15 +23,14 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	// 가맹점 등록 (기본정보)
-	public void registerEssentialShopInfo(RegisterEssentialTarget target) {
+	public void registerEssentialShopInfo(EssentialTarget target) {
 		Essential essential = shopMapper.findEssentialByShopId(target.getShopId());
 		shopInfoAlreadyExist(essential);
 		shopMapper.registerEssentialInfo(target.toEntity());
-
 	}
 
 	// 가맹점 수정 (기본정보)
-	public void updateEssentialShopInfo(UpdateEssentialTarget target) {
+	public void updateEssentialShopInfo(EssentialTarget target) {
 		shopMapper.updateEssentialInfo(target.toEntity());
 	}
 
@@ -42,13 +40,11 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	// 가맹점 등록 (상태정보)
-	public void registerStatusShopInfo(RegisterStatusTarget target) {
+	public void registerStatusShopInfo(StatusTarget target) {
 		shopInfoAlreadyExist(shopMapper.findStatusByShopId(target.getShopId()));
 		shopEssentialInfoNotExist(shopMapper.findEssentialByShopId(target.getShopId()));
 		shopMapper.registerStatusInfo(target.toEntity());
-
 	}
-
 
 
 	public <T> void shopInfoAlreadyExist(T entity) {

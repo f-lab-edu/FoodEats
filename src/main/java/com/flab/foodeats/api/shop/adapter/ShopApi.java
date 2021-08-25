@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.foodeats.api.shop.DeleteEssentialRequest;
-import com.flab.foodeats.api.shop.RegisterEssentialRequest;
-import com.flab.foodeats.api.shop.RegisterStatusRequest;
-import com.flab.foodeats.api.shop.UpdateEssentialRequest;
+import com.flab.foodeats.api.shop.EssentialRequest;
+import com.flab.foodeats.api.shop.StatusRequest;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.auth.AuthInfo;
 import com.flab.foodeats.common.auth.AuthRequired;
@@ -37,7 +36,7 @@ public class ShopApi {
 	// 가맹점 등록 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/essentialInfo/register")
-	public ResponseEntity<?> registerEssentialInfo(@Valid @RequestBody RegisterEssentialRequest dto,
+	public ResponseEntity<?> registerEssentialInfo(@Valid @RequestBody EssentialRequest dto,
 		@AuthUsed AuthInfo authInfo) {
 		shopService.registerEssentialShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
@@ -47,7 +46,7 @@ public class ShopApi {
 	// 가맹점 수정 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/essentialInfo/update")
-	public ResponseEntity<?> updateEssentialInfo(@Valid @RequestBody UpdateEssentialRequest dto, @AuthUsed
+	public ResponseEntity<?> updateEssentialInfo(@Valid @RequestBody EssentialRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.updateEssentialShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
@@ -67,7 +66,7 @@ public class ShopApi {
 	// 가맹점 등록 (상태정보)
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/statusInfo/register")
-	public ResponseEntity<?> registerStatusInfo(@Valid @RequestBody RegisterStatusRequest dto, @AuthUsed
+	public ResponseEntity<?> registerStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.registerStatusShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());

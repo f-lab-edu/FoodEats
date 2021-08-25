@@ -1,28 +1,36 @@
-package com.flab.foodeats.api.shop;
+package com.flab.foodeats.application.shop;
 
-import javax.validation.constraints.NotBlank;
+import com.flab.foodeats.domain.shop.Essential;
 
-import com.flab.foodeats.application.shop.UpdateEssentialTarget;
+public class EssentialTarget {
 
-public class UpdateEssentialRequest {
-
-	@NotBlank(message = "Input Your Category ")
+	/**
+	 * 가맹점 등록
+	 * DB : shop_info
+	 */
+	private String shopId;
 	private String category;
-	@NotBlank(message = "Input Your Brand")
 	private String brand;
-	@NotBlank(message = "Input Your Location")
 	private String location;
-	@NotBlank(message = "Input Your Phone")
 	private String phone;
 
-	public UpdateEssentialRequest() {
+	public EssentialTarget() {
 	}
 
-	public UpdateEssentialRequest(String category, String brand, String location, String phone) {
+	public EssentialTarget(String shopId, String category, String brand, String location, String phone) {
+		this.shopId = shopId;
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
+	}
+
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 
 	public String getCategory() {
@@ -57,7 +65,7 @@ public class UpdateEssentialRequest {
 		this.phone = phone;
 	}
 
-	public UpdateEssentialTarget toParam(String userId) {
-		return new UpdateEssentialTarget (userId, category, brand, location, phone);
+	public Essential toEntity(){
+		return new Essential(shopId,category,brand,location,phone);
 	}
 }

@@ -4,7 +4,7 @@ import java.time.LocalTime;
 
 import com.flab.foodeats.domain.shop.Status;
 
-public class RegisterStatusTarget {
+public class StatusTarget {
 
 	/**
 	 * TODO
@@ -17,7 +17,7 @@ public class RegisterStatusTarget {
 	private LocalTime closeTime;
 	private String closingDay;
 
-	public RegisterStatusTarget(String shopId, LocalTime openTime, LocalTime closeTime, String closingDay) {
+	public StatusTarget(String shopId, LocalTime openTime, LocalTime closeTime, String closingDay) {
 		this.shopId = shopId;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
