@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.foodeats.infra.shop.ShopMapper">
+
+
+    <!-- 가맹점 등록 (기본)  -->
+    <insert id="registerEssentialInfo" parameterType="Essential">
+        INSERT
+        INTO shop_essential_info
+        VALUES(#{Essential.shopId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
+        #{Essential.phone});
+    </insert>
+
+    <resultMap type="Essential" id="essentialMap">
+        <result property="shopId" column="shop_id"/>
+        <result property="category" column="category"/>
+        <result property="brand" column="brand"/>
+        <result property="location" column="location"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+    <select id="findEssentialByShopId" parameterType="String" resultMap="essentialMap">
+        SELECT *
+        FROM shop_essential_info
+        WHERE shop_id = #{shopId};
+    </select>
+
+
+
+
+</mapper>
