@@ -6,10 +6,6 @@ import com.flab.foodeats.application.shop.RegisterEssentialTarget;
 
 public class RegisterEssentialRequest {
 
-	/**
-	 * 가맹점 등록
-	 * DB : shop_info
-	 */
 	@NotBlank(message = "Input Your Category ")
 	private String category;
 	@NotBlank(message = "Input Your Brand")
