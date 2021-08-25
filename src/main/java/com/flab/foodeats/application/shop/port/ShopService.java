@@ -16,6 +16,7 @@ public interface ShopService {
 
 	// 상태정보
 	void registerStatusShopInfo(StatusTarget target);
+	void updateStatusShopInfo(StatusTarget target);
 
 
 
