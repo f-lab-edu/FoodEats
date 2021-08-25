@@ -73,5 +73,15 @@ public class ShopApi {
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
+	// 가맹점 수정 (상태정보)
+	@AuthRequired(role = UserType.MERCHANT)
+	@PutMapping("/statusInfo/update")
+	public ResponseEntity<?> updateStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
+		AuthInfo authInfo) {
+		shopService.updateStatusShopInfo(dto.toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
 
 }
