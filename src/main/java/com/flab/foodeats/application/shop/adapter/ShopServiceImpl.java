@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.foodeats.application.shop.RegisterEssentialTarget;
+import com.flab.foodeats.application.shop.UpdateEssentialTarget;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.domain.shop.Essential;
@@ -29,6 +30,11 @@ public class ShopServiceImpl implements ShopService {
 		shopInfoAlreadyExist(essential);
 		shopMapper.registerEssentialInfo(target.toEntity());
 
+	}
+
+	// 가맹점 수정 (기본정보)
+	public void updateEssentialShopInfo(UpdateEssentialTarget target) {
+		shopMapper.updateEssentialInfo(target.toEntity());
 	}
 
 
