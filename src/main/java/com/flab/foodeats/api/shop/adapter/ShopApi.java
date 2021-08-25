@@ -5,11 +5,13 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.foodeats.api.shop.dto.RegisterEssentialRequest;
+import com.flab.foodeats.api.shop.RegisterEssentialRequest;
+import com.flab.foodeats.api.shop.UpdateEssentialRequest;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.auth.AuthInfo;
 import com.flab.foodeats.common.auth.AuthRequired;
@@ -36,6 +38,16 @@ public class ShopApi {
 		@AuthUsed AuthInfo authInfo) {
 		shopService.registerEssentialShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	// 가맹점 수정 (필수정보)
+	@AuthRequired(role = UserType.MERCHANT)
+	@PutMapping("/essentialInfo/update")
+	public ResponseEntity<?> updateEssentialInfo(@Valid @RequestBody UpdateEssentialRequest dto, @AuthUsed
+		AuthInfo authInfo) {
+		shopService.updateEssentialShopInfo(dto.toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
