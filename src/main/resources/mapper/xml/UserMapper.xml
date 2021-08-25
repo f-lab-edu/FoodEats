@@ -5,22 +5,22 @@
 <mapper namespace="com.flab.foodeats.infra.user.UserMapper">
 
     <!-- 회원가입  / 소비자-->
-    <insert id="registerConsumer" parameterType="RegisterUserTarget">
+    <insert id="saveConsumer" parameterType="User">
         INSERT
         INTO user_consumer_info
-        VALUES(#{Consumer.userId}, #{Consumer.password}, #{Consumer.name});
+        VALUES(#{Consumer.userId}, #{Consumer.password}, #{Consumer.name}, #{Consumer.email}, #{Consumer.phone}, #{Consumer.address});
     </insert>
     <!-- 회원가입  / 가맹점-->
-    <insert id="registerMerchant" parameterType="RegisterUserTarget">
+    <insert id="saveMerchant" parameterType="User">
         INSERT
         INTO user_merchant_info
-        VALUES(#{Merchant.userId}, #{Merchant.password}, #{Merchant.name});
+        VALUES(#{Merchant.userId}, #{Merchant.password}, #{Merchant.name}, #{Merchant.email}, #{Merchant.phone}, #{Merchant.address});
     </insert>
     <!-- 회원가입  / 가맹점-->
-    <insert id="registerRider" parameterType="RegisterUserTarget">
+    <insert id="saveRider" parameterType="User">
         INSERT
         INTO user_rider_info
-        VALUES(#{Rider.userId}, #{Rider.password}, #{Rider.name});
+        VALUES(#{Rider.userId}, #{Rider.password}, #{Rider.name}, #{Rider.email}, #{Rider.phone}, #{Rider.address});
     </insert>
 
 
@@ -29,21 +29,24 @@
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="address" column="address"/>
     </resultMap>
     <!-- 사용자 조회 (By ID) / 소비자-->
-    <select id="findConsumerInfoById" parameterType="String" resultMap="UserSelect">
+    <select id="findConsumerById" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_consumer_info
         WHERE user_id = #{userId};
     </select>
     <!-- 사용자 조회 (By ID) / 가맹점-->
-    <select id="findMerchantInfoById" parameterType="String" resultMap="UserSelect">
+    <select id="findMerchantById" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_merchant_info
         WHERE user_id = #{userId};
     </select>
     <!-- 사용자 조회 (By ID) / 가맹점-->
-    <select id="findRiderInfoById" parameterType="String" resultMap="UserSelect">
+    <select id="findRiderById" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_rider_info
         WHERE user_id = #{userId};
@@ -51,20 +54,43 @@
 
 
     <!-- 회원정보 수정 / 소비자 -->
-    <update id="modifyConsumerInfoById" parameterType="ModifyUserTarget">
+    <update id="modifyConsumerById" parameterType="User">
         UPDATE user_consumer_info
-        SET password = #{Consumer.password}, name = #{Consumer.name}
+        SET password = #{Consumer.password}, name = #{Consumer.name}, email = #{Consumer.email},
+        phone = #{Consumer.phone}, address = #{Consumer.address}
         WHERE user_id = #{Consumer.userId};
     </update>
     <!-- 회원정보 수정 / 소비자 -->
-    <update id="modifyMerchantInfoById" parameterType="ModifyUserTarget">
+    <update id="modifyMerchantById" parameterType="User">
         UPDATE user_merchant_info
-        SET password = #{Merchant.password}, name = #{Merchant.name}
+        SET password = #{Merchant.password}, name = #{Merchant.name}, email = #{Merchant.email},
+        phone = #{Merchant.phone}, address = #{Merchant.address}
         WHERE user_id = #{Merchant.userId};
     </update><!-- 회원정보 수정 / 소비자 -->
-    <update id="modifyRiderInfoById" parameterType="ModifyUserTarget">
+    <update id="modifyRiderById" parameterType="User">
         UPDATE user_rider_info
-        SET password = #{Rider.password}, name = #{Rider.name}
+        SET password = #{Rider.password}, name = #{Rider.name}, email = #{Rider.email},
+        phone = #{Rider.phone}, address = #{Rider.address}
         WHERE user_id = #{Rider.userId};
     </update>
+
+    <!-- 회원정보 탈퇴 / 소비자 -->
+    <delete id="deleteConsumerById" parameterType="String">
+        DELETE
+        FROM user_consumer_info
+        WHERE user_id = #{userId};
+    </delete>
+    <!-- 회원정보 탈퇴 / 가맹점 -->
+    <delete id="deleteMerchantById" parameterType="String">
+        DELETE
+        FROM user_merchant_info
+        WHERE user_id = #{userId};
+    </delete>
+    <!-- 회원정보 탈퇴 / 가맹점 -->
+    <delete id="deleteRiderById" parameterType="String">
+        DELETE
+        FROM user_rider_info
+        WHERE user_id = #{userId};
+    </delete>
+
 </mapper>

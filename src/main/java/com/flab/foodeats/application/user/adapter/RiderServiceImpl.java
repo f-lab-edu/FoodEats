@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flab.foodeats.application.user.DeleteUserTarget;
 import com.flab.foodeats.application.user.LoginUserTarget;
 import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
@@ -25,20 +26,34 @@ public class RiderServiceImpl implements UserService {
 	}
 
 	@Override
-	public void registerUserInfo(RegisterUserTarget registerUserTarget) {
-		errorCheck.alreadyExistUserInfo(userMapper.findRiderInfoById(registerUserTarget.getUserId()));
-		userMapper.registerRider(registerUserTarget);
+	public void registerUserInfo(RegisterUserTarget dto) {
+		User user = dto.toEntity();
+		errorCheck.alreadyExistUserInfo(getUserInfo(user.getUserId()));
+		userMapper.saveRider(user);
 	}
 
 	@Override
-	public void loginUserInfo(LoginUserTarget loginUserTarget) {
-		User consumerInfo = userMapper.findRiderInfoById(loginUserTarget.getUserId());
-		errorCheck.notExistUserInfo(consumerInfo);
-		errorCheck.validateLoginInfo(consumerInfo.getPassword(), loginUserTarget.getPassword());
+	public void login(LoginUserTarget target) {
+		User merchatInfo = getUserInfo(target.getUserId());
+		errorCheck.notExistUserInfo(merchatInfo);
+		errorCheck.validateLoginInfo(merchatInfo.getPassword(), target.getPassword());
 	}
 
 	@Override
-	public void modifyUserInfo(ModifyUserTarget modifyUserTarget) {
-		userMapper.modifyRiderInfoById(modifyUserTarget);
+	public void modifyUserInfo(ModifyUserTarget target) {
+		User user = target.toEntity();
+		userMapper.modifyRiderById(user);
 	}
+
+	@Override
+	public void deleteUserInfo(DeleteUserTarget target) {
+		User user = getUserInfo(target.getUserId());
+		errorCheck.validateLoginInfo(user.getPassword(),target.getPassword());
+		userMapper.deleteRiderById(user.getUserId());
+	}
+
+	private User getUserInfo(String userId){
+		return userMapper.findRiderById(userId);
+	}
+
 }

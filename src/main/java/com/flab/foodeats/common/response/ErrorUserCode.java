@@ -10,7 +10,9 @@ public enum ErrorUserCode {
 	AUTH_ANNOTATION_REQUIRED("Interceptor No Annotation"),
 	AUTH_ROLE_NOT_MATCH("Auth Role Not Mathch"),
 	SESSION_CAST_UNMATCH("Session Cast UnMatch"),
-	SESSION_INVALID_AUTHENTICATION("Session Invalid At Authentication");
+	SESSION_INVALID_AUTHENTICATION("Session Invalid At Authentication"),
+	SHOP_EXIST("Shop Already Exist"),
+	ESSENTIAL_INFO_NOT_EXIST("Essential Info Is Not Exist");
 
 	private final String message;
 

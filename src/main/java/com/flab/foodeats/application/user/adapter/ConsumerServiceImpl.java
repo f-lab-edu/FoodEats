@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flab.foodeats.application.user.DeleteUserTarget;
 import com.flab.foodeats.application.user.LoginUserTarget;
 import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
@@ -25,22 +26,34 @@ public class ConsumerServiceImpl implements UserService {
 	}
 
 	@Override
-	public void registerUserInfo(RegisterUserTarget registerUserTarget) {
-		errorCheck.alreadyExistUserInfo(userMapper.findConsumerInfoById(registerUserTarget.getUserId()));
-		userMapper.registerConsumer(registerUserTarget);
+	public void registerUserInfo(RegisterUserTarget dto) {
+		User user = dto.toEntity();
+		errorCheck.alreadyExistUserInfo(getUserInfo(user.getUserId()));
+		userMapper.saveConsumer(user);
 	}
 
 	@Override
-	public void loginUserInfo(LoginUserTarget loginUserTarget) {
-		User consumerInfo = userMapper.findConsumerInfoById(loginUserTarget.getUserId());
+	public void login(LoginUserTarget target) {
+		User consumerInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(consumerInfo);
-		errorCheck.validateLoginInfo(consumerInfo.getPassword(), loginUserTarget.getPassword());
+		errorCheck.validateLoginInfo(consumerInfo.getPassword(), target.getPassword());
 	}
 
 	@Override
-	public void modifyUserInfo(ModifyUserTarget modifyUserTarget) {
-		userMapper.modifyConsumerInfoById(modifyUserTarget);
+	public void modifyUserInfo(ModifyUserTarget target) {
+		User user = target.toEntity();
+		userMapper.modifyConsumerById(user);
 	}
 
+	@Override
+	public void deleteUserInfo(DeleteUserTarget target) {
+		User user = getUserInfo(target.getUserId());
+		errorCheck.validateLoginInfo(user.getPassword(),target.getPassword());
+		userMapper.deleteConsumerById(user.getUserId());
+	}
+
+	private User getUserInfo(String userId){
+		return userMapper.findConsumerById(userId);
+	}
 }
 

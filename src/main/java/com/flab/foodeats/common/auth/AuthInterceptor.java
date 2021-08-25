@@ -1,4 +1,4 @@
-package com.flab.foodeats.domain.user.auth;
+package com.flab.foodeats.common.auth;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +16,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
+
 		AuthRequired authRequired = getAuthRequired(handler);
-		if (null == authRequired) {
+		AuthUsed authUsed = getAuthUsed(handler);
+
+		if (authRequired == null && authUsed == null) {
 			return true;
 		}
 
@@ -30,9 +33,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	private void validateRole(AuthRequired authRequired, AuthInfo authInfo) throws Exception {
 		if (authRequired.role() != authInfo.getUserType()) {
+
 			throw new Exception(ErrorUserCode.AUTH_ROLE_NOT_MATCH.getMessage());
 		}
 	}
+
 
 	private AuthInfo getAuthInfo(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(false);
@@ -45,6 +50,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 	private AuthRequired getAuthRequired(Object handler) {
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
 		return handlerMethod.getMethod().getAnnotation(AuthRequired.class);
+	}
+
+	private AuthUsed getAuthUsed(Object handler) {
+		HandlerMethod handlerMethod = (HandlerMethod)handler;
+		return handlerMethod.getMethod().getAnnotation(AuthUsed.class);
 	}
 
 }
