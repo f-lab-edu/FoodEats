@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flab.foodeats.api.shop.ConvenientRequest;
 import com.flab.foodeats.api.shop.DeleteEssentialRequest;
 import com.flab.foodeats.api.shop.EssentialRequest;
 import com.flab.foodeats.api.shop.StatusRequest;
@@ -79,6 +80,26 @@ public class ShopApi {
 	public ResponseEntity<?> updateStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.updateStatusShopInfo(dto.toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	// 가맹점 등록 (편리정보)
+	@AuthRequired(role = UserType.MERCHANT)
+	@PostMapping("/convenienceInfo/register")
+	public ResponseEntity<?> registerConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
+		@AuthUsed AuthInfo authInfo) {
+		shopService.registerConvenienceShopInfo(dto.toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	// 가맹점 수정 (편리정보)
+	@AuthRequired(role = UserType.MERCHANT)
+	@PutMapping("/convenienceInfo/update")
+	public ResponseEntity<?> updateConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
+		@AuthUsed AuthInfo authInfo) {
+		shopService.updateConvenienceShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
