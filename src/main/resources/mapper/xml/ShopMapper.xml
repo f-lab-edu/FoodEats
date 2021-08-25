@@ -33,6 +33,12 @@
         VALUES(#{Status.shopId}, #{Status.openTime}, #{Status.closeTime},
         #{Status.closingDay});
     </insert>
+    <!-- 가맹점 수정 (상태) -->
+    <update id="updateStatusInfo" parameterType="Status">
+        UPDATE shop_status_info
+        SET open_time = #{Status.openTime}, close_time = #{Status.closeTime}, closing_day = #{Status.closingDay}
+        WHERE shop_id = #{Status.shopId};
+    </update>
 
     <resultMap type="Essential" id="essentialMap">
         <result property="shopId" column="shop_id"/>

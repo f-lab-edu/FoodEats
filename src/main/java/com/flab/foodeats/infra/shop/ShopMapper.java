@@ -19,6 +19,8 @@ public interface ShopMapper {
 
 	// 가맹점 등록 (상태)
 	void registerStatusInfo(@Param("Status") Status status);
+	// 가맹점 수정 (상태)
+	void updateStatusInfo(@Param("Status") Status status);
 
 	// 가맹점 기본정보 조회 - 중복등록 검증
 	Essential findEssentialByShopId(String shopId);
