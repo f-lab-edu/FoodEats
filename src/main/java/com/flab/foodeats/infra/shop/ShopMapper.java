@@ -13,6 +13,8 @@ public interface ShopMapper {
 	void registerEssentialInfo(@Param("Essential") Essential essential);
 	// 가맹점 수정 (필수)
 	void updateEssentialInfo(@Param("Essential") Essential essential);
+	// 가맹점 삭제 (필수)
+	void deleteEssentialInfo(String shopId);
 
 	// 가맹점 기본정보 조회 - 중복등록 검증
 	Essential findEssentialByShopId(String shopId);

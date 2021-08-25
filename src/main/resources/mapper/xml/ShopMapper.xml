@@ -18,7 +18,14 @@
         phone = #{Essential.phone}
         WHERE shop_id = #{Essential.shopId};
     </update>
-
+    <!-- 가맹점 삭제 (기본) -->
+    <delete id="deleteEssentialInfo" parameterType="String">
+        DELETE shop_essential_info, shop_convenience_info, shop_status_info
+        FROM shop_essential_info
+        INNER JOIN shop_convenience_info ON shop_essential_info.shop_id = shop_convenience_info.shop_id
+        INNER JOIN shop_status_info ON shop_essential_info.shop_id = shop_status_info.shop_id
+        WHERE shop_essential_info.shop_id = #{shopId};
+    </delete>
 
     <resultMap type="Essential" id="essentialMap">
         <result property="shopId" column="shop_id"/>
