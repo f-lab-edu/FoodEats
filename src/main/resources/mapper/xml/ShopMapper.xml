@@ -3,7 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.foodeats.infra.shop.ShopMapper">
 
-
     <!-- 가맹점 등록 (기본)  -->
     <insert id="registerEssentialInfo" parameterType="Essential">
         INSERT
@@ -27,6 +26,14 @@
         WHERE shop_essential_info.shop_id = #{shopId};
     </delete>
 
+    <!-- 가맹점 등록 (상태)  -->
+    <insert id="registerStatusInfo" parameterType="Status">
+        INSERT
+        INTO shop_status_info(shop_id,open_time,close_time,closing_day)
+        VALUES(#{Status.shopId}, #{Status.openTime}, #{Status.closeTime},
+        #{Status.closingDay});
+    </insert>
+
     <resultMap type="Essential" id="essentialMap">
         <result property="shopId" column="shop_id"/>
         <result property="category" column="category"/>
@@ -40,7 +47,18 @@
         WHERE shop_id = #{shopId};
     </select>
 
-
+    <resultMap type="Status" id="statusMap">
+        <result property="shopId" column="shop_id"/>
+        <result property="openTime" column="open_time"/>
+        <result property="closeTime" column="close_time"/>
+        <result property="shopOpenStatus" column="shop_open_status"/>
+        <result property="closingDay" column="closing_day"/>
+    </resultMap>
+    <select id="findStatusByShopId" parameterType="String" resultMap="statusMap">
+        SELECT *
+        FROM shop_status_info
+        WHERE shop_id = #{shopId};
+    </select>
 
 
 </mapper>
