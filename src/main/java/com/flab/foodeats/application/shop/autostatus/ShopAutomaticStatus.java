@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.domain.shop.Status;
 
-@Service
 public class ShopAutomaticStatus {
 
 	public boolean changeShopStatusAuto(Status statusInfo) {
