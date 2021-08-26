@@ -4,6 +4,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flab.foodeats.application.shop.ConvenientTarget;
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 import com.flab.foodeats.application.shop.EssentialTarget;
 import com.flab.foodeats.application.shop.StatusTarget;
@@ -49,6 +50,18 @@ public class ShopServiceImpl implements ShopService {
 	// 가맹점 수정 (상태정보)
 	public void updateStatusShopInfo(StatusTarget target) {
 		shopMapper.updateStatusInfo(target.toEntity());
+	}
+
+	// 가맹점 등록 (편리정보)
+	public void registerConvenienceShopInfo(ConvenientTarget target) {
+		shopInfoAlreadyExist(shopMapper.findConvenienceByShopId(target.getShopId()));
+		shopEssentialInfoNotExist(shopMapper.findEssentialByShopId(target.getShopId()));
+		shopMapper.registerConvenienceInfo(target.toEntity());
+	}
+
+	// 가맹점 수정 (편리정보)
+	public void updateConvenienceShopInfo(ConvenientTarget target) {
+		shopMapper.updateConvenienceInfo(target.toEntity());
 	}
 
 	public <T> void shopInfoAlreadyExist(T entity) {

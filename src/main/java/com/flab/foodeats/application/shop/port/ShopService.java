@@ -2,6 +2,7 @@ package com.flab.foodeats.application.shop.port;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.foodeats.application.shop.ConvenientTarget;
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 import com.flab.foodeats.application.shop.EssentialTarget;
 import com.flab.foodeats.application.shop.StatusTarget;
@@ -18,6 +19,8 @@ public interface ShopService {
 	void registerStatusShopInfo(StatusTarget target);
 	void updateStatusShopInfo(StatusTarget target);
 
-
+	// 편리정보
+	void registerConvenienceShopInfo(ConvenientTarget target);
+	void updateConvenienceShopInfo(ConvenientTarget target);
 
 }

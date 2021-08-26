@@ -40,6 +40,19 @@
         WHERE shop_id = #{Status.shopId};
     </update>
 
+    <!-- 가맹점 등록 (편리)  -->
+    <insert id="registerConvenienceInfo" parameterType="Convenient">
+        INSERT
+        INTO shop_convenience_info
+        VALUES(#{Convenient.shopId}, #{Convenient.grade}, #{Convenient.deliveryMethod}, #{Convenient.shopPaymentMethod});
+    </insert>
+    <!-- 가맹점 수정 (편리) -->
+    <update id="updateConvenienceInfo" parameterType="Convenient">
+        UPDATE shop_convenience_info
+        SET grade = #{Convenient.grade}, delivery_method = #{Convenient.deliveryMethod}, shop_payment_method = #{Convenient.shopPaymentMethod}
+        WHERE shop_id = #{Convenient.shopId};
+    </update>
+
     <resultMap type="Essential" id="essentialMap">
         <result property="shopId" column="shop_id"/>
         <result property="category" column="category"/>
@@ -66,5 +79,16 @@
         WHERE shop_id = #{shopId};
     </select>
 
+    <resultMap type="Convenient" id="convenientMap">
+        <result property="shopId" column="shop_id"/>
+        <result property="grade" column="grade"/>
+        <result property="deliveryMethod" column="delivery_method"/>
+        <result property="shopPaymentMethod" column="shop_payment_method"/>
+    </resultMap>
+    <select id="findConvenienceByShopId" parameterType="String" resultMap="convenientMap">
+        SELECT *
+        FROM shop_convenience_info
+        WHERE shop_id = #{shopId};
+    </select>
 
 </mapper>
