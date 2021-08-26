@@ -1,10 +1,13 @@
 package com.flab.foodeats.api.shop.adapter;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,7 @@ import com.flab.foodeats.common.auth.AuthUsed;
 import com.flab.foodeats.common.response.ApiResponse;
 import com.flab.foodeats.common.response.StatusCode;
 import com.flab.foodeats.common.response.SuccessUserCode;
+import com.flab.foodeats.domain.shop.Essential;
 import com.flab.foodeats.domain.user.UserType;
 
 @RestController
@@ -101,6 +105,15 @@ public class ShopApi {
 		@AuthUsed AuthInfo authInfo) {
 		shopService.updateConvenienceShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+	}
+
+	// 가맹점 기본정보 전체 조회
+	@GetMapping("/AllInfo")
+	@AuthRequired(role = UserType.MERCHANT)
+	public ResponseEntity<?> searchShopAllInfo(@AuthUsed AuthInfo authInfo) {
+		List<Essential> list = shopService.searchShopAllInfo(new StatusRequest().toParam(authInfo.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseList(StatusCode.SUCCESS, SuccessUserCode.USER_REGISTER_SUCCESS.getMessage(),list);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
