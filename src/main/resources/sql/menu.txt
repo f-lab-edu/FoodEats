@@ -1,0 +1,24 @@
+// 저의 로컬에서 작업한 테이블이고 추후 은수님과 스터디 시간에 얘기를 나눈 후 조정이 필요합니다.
+
+CREATE TABLE `shop_menu_register` (
+  `shop_id` int NOT NULL,
+  `menu_id` int NOT NULL AUTO_INCREMENT,
+  `menu_name` varchar(45) NOT NULL,
+  `menu_price` int NOT NULL,
+  `menu_configuration` varchar(100) NOT NULL,
+  `menu_group` varchar(45) NOT NULL,
+  `menu_explanation` varchar(100) NOT NULL,
+  PRIMARY KEY (`menu_id`),
+  KEY `shop_id` (`shop_id`),
+  CONSTRAINT `shop_menu_register_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop_member_info` (`shop_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `shop_menu_option` (
+  `menu_id` int NOT NULL,
+  `menu_option_id` int NOT NULL AUTO_INCREMENT,
+  `menu_option_name` varchar(45) NOT NULL,
+  `menu_option_price` int NOT NULL,
+  PRIMARY KEY (`menu_option_id`),
+  KEY `shop_menu_option_ibfk_3` (`menu_id`),
+  CONSTRAINT `shop_menu_option_ibfk_3` FOREIGN KEY (`menu_id`) REFERENCES `shop_menu_register` (`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
