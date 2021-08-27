@@ -4,19 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Menu {
 
-	@JsonProperty
 	private int shopId;
-	@JsonProperty
 	private int menuId;
-	@JsonProperty
 	private String menuName;
-	@JsonProperty
 	private int menuPrice;
-	@JsonProperty
 	private String menuConfiguration;
-	@JsonProperty
 	private String menuExplanation;
-	@JsonProperty
 	private String menuGroup;
 
 	public Menu() {
@@ -36,5 +29,25 @@ public class Menu {
 
 	public String getMenuGroup() {
 		return menuGroup;
+	}
+
+	public int getShopId() {
+		return shopId;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public int getMenuPrice() {
+		return menuPrice;
+	}
+
+	public String getMenuConfiguration() {
+		return menuConfiguration;
+	}
+
+	public String getMenuExplanation() {
+		return menuExplanation;
 	}
 }
