@@ -4,13 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MenuOption {
 
-	@JsonProperty
 	private int menuId;
-	@JsonProperty
 	private int menuOptionId;
-	@JsonProperty
 	private String menuOptionName;
-	@JsonProperty
 	private int menuOptionPrice;
 
 	public MenuOption() {
