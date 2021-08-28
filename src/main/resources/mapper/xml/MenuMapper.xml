@@ -17,7 +17,7 @@
     <insert id="registerMenu">
         INSERT
         INTO shop_menu_register (shop_id, menu_name, menu_price, menu_configuration, menu_explanation, menu_group)
-        VALUES (#{shopId}, #{menu.menuName},#{menu.menuPrice},
+        VALUES (#{menu.shopId}, #{menu.menuName},#{menu.menuPrice},
         #{menu.menuConfiguration}, #{menu.menuExplanation}, #{menu.menuGroup});
     </insert>
 
@@ -31,7 +31,7 @@
         UPDATE shop_menu_register
         SET menu_name = #{menu.menuName}, menu_price = #{menu.menuPrice}, menu_configuration = #{menu.menuConfiguration}
         , menu_explanation = #{menu.menuExplanation}, menu_group = #{menu.menuGroup}
-        WHERE menu_id = #{menuId};
+        WHERE menu_id = #{menu.menuId};
     </update>
 
     <delete id = "deleteMenu" parameterType="int">
