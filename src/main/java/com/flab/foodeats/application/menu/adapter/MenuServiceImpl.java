@@ -21,13 +21,7 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public void registerMenu(int shopId, EssentialMenuTarget target) {
 		List<Menu> menus = menuMapper.searchMenu(shopId);
-		List<Menu> isExistMenu = menus.stream()
-			.filter(m -> m.getMenuName().equals(target.getMenuName()))
-			.collect(Collectors.toList());
-
-		if (!isExistMenu.isEmpty()) {
-			throw new IllegalArgumentException("이미 등록되어 있는 메뉴");
-		}
+		checkIsDuplicateMenu(menus, target);
 		menuMapper.registerMenu(shopId, target.toEntity());
 	}
 
@@ -47,5 +41,15 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public void deleteMenu(int menuId) {
 		menuMapper.deleteMenu(menuId);
+	}
+	
+	private void checkIsDuplicateMenu(List<Menu> menus, EssentialMenuTarget target) {
+		Optional<Menu> existMenu = menus.stream()
+			.filter(m -> m.getMenuName().equals(target.getMenuName()))
+			.findAny();
+
+		if (existMenu.isPresent()) {
+			throw new IllegalArgumentException("이미 등록되어 있는 메뉴");
+		}
 	}
 }
