@@ -10,12 +10,12 @@ import com.flab.foodeats.domain.menu.Menu;
 @Mapper
 public interface MenuMapper {
 
-	void registerMenu(@Param("shopId") int shopId, @Param("menu") Menu menu);
+	void registerMenu(@Param("menu") Menu menu);
 
 	List<Menu> searchMenu(int shopId);
 
-	void modifyMenu(@Param("shopId") int shopId, @Param("menu")Menu menu);
+	void modifyMenu(@Param("menu")Menu menu);
 
-	void deleteMenu(int menuId);
+	void deleteMenu(int shopId, int menuId);
 }
 
