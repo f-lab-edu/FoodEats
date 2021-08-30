@@ -1,5 +1,7 @@
 package com.flab.foodeats.application.shop.adapter;
 
+import java.util.List;
+
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,9 +10,13 @@ import com.flab.foodeats.application.shop.ConvenientTarget;
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 import com.flab.foodeats.application.shop.EssentialTarget;
 import com.flab.foodeats.application.shop.StatusTarget;
+import com.flab.foodeats.application.shop.autostatus.ShopAutomaticStatus;
+import com.flab.foodeats.application.shop.holiday.PublicHoliday;
+import com.flab.foodeats.application.shop.holiday.Weekend;
 import com.flab.foodeats.application.shop.port.ShopService;
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.domain.shop.Essential;
+import com.flab.foodeats.domain.shop.Status;
 import com.flab.foodeats.infra.shop.ShopMapper;
 
 @Service
@@ -57,6 +63,47 @@ public class ShopServiceImpl implements ShopService {
 		shopInfoAlreadyExist(shopMapper.findConvenienceByShopId(target.getShopId()));
 		shopEssentialInfoNotExist(shopMapper.findEssentialByShopId(target.getShopId()));
 		shopMapper.registerConvenienceInfo(target.toEntity());
+	}
+
+	/**
+	 * 추후 삭제
+	 * 동작을 확인하기 위한 조회입니다.
+	 * 추후 삭제할 부분 입니다!
+	 */
+
+	public List<Essential> searchShopAllInfo(StatusTarget target) {
+
+		// 주말 체크
+		if(new Weekend().weekendCheck()){
+			System.out.println("주말");
+		}
+		else{
+			System.out.println("주말x");
+		}
+
+		// 공휴일 체크
+		if(new PublicHoliday().calculator()){
+			System.out.println("공휴일");
+		}
+		else{
+			System.out.println("공휴일x");
+		}
+
+		/**
+		 * todo
+		 * null 체크 / 데이터 있는지
+		 */
+		// 가맹점 자동상태 변환
+		Status status = shopMapper.findStatusByShopId(target.getShopId());
+		if(new ShopAutomaticStatus().changeShopStatusAuto(status)){
+			shopMapper.startShop(status);
+		}
+		else{
+			shopMapper.closeShop(status);
+		}
+
+
+		return shopMapper.shopListAllInfo();
 	}
 
 	// 가맹점 수정 (편리정보)

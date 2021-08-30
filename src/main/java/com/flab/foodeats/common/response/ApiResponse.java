@@ -1,5 +1,6 @@
 package com.flab.foodeats.common.response;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,6 +45,10 @@ public class ApiResponse<T> {
 
 	public void setData(T data) {
 		this.data = data;
+	}
+
+	public static ApiResponse responseList(StatusCode status, String message, List data) {
+		return new ApiResponse(status, message, data);
 	}
 
 	public static ApiResponse responseError(StatusCode status, Map message) {
