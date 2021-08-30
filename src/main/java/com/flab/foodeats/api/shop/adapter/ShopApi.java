@@ -109,7 +109,7 @@ public class ShopApi {
 	}
 
 	// 가맹점 기본정보 전체 조회
-	@GetMapping("/AllInfo")
+	@GetMapping("/all-info")
 	@AuthRequired(role = UserType.MERCHANT)
 	public ResponseEntity<?> searchShopAllInfo(@AuthUsed AuthInfo authInfo) {
 		List<Essential> list = shopService.searchShopAllInfo(new StatusRequest().toParam(authInfo.getUserId()));
