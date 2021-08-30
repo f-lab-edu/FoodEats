@@ -2,7 +2,8 @@ package com.flab.foodeats.domain.shop;
 
 public class Essential {
 
-	private String shopId;
+	private Long shopId;
+	private String userId;
 	private String category;
 	private String brand;
 	private String location;
@@ -11,20 +12,29 @@ public class Essential {
 	public Essential() {
 	}
 
-	public Essential(String shopId, String category, String brand, String location, String phone) {
+	public Essential(Long shopId, String userId, String category, String brand, String location, String phone) {
 		this.shopId = shopId;
+		this.userId = userId;
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
 	}
 
-	public String getShopId() {
+	public Long getShopId() {
 		return shopId;
 	}
 
-	public void setShopId(String shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getCategory() {
@@ -62,7 +72,8 @@ public class Essential {
 	@Override
 	public String toString() {
 		return "Essential{" +
-			"shopId='" + shopId + '\'' +
+			"shopId=" + shopId +
+			", userId='" + userId + '\'' +
 			", category='" + category + '\'' +
 			", brand='" + brand + '\'' +
 			", location='" + location + '\'' +

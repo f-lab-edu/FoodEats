@@ -1,7 +1,7 @@
 package com.flab.foodeats.domain.shop;
 
 public class Convenient {
-	private String shopId;
+	private Long shopId;
 	private String grade;
 	private String deliveryMethod;
 	private String shopPaymentMethod;
@@ -10,18 +10,18 @@ public class Convenient {
 
 	}
 
-	public Convenient(String shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
+	public Convenient(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
 		this.shopId = shopId;
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
 		this.shopPaymentMethod = shopPaymentMethod;
 	}
 
-	public String getShopId() {
+	public Long getShopId() {
 		return shopId;
 	}
 
-	public void setShopId(String shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
 
