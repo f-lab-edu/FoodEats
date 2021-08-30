@@ -82,6 +82,25 @@ class PublicHolidayTest {
 	}
 
 	@Test
+	@DisplayName("2020년 설날 / 대체공휴일 o / 대체공휴일 x")
+	void valid2020LunarNewYear() {
+		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200124"), is(true)); //금
+		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200125"), is(true)); //토
+		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200126"), is(true)); //일
+		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200127"), is(true)); //월 대체공휴일o
+		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200128"), is(false)); //화 대체공휴일x
+	}
+
+	@Test
+	@DisplayName("2019년 설날 / 대체공휴일 x")
+	void valid2019LunarNewYear() {
+		assertThat(new PublicHoliday().setPublicHoliday("2019").contains("20190204"), is(true)); //월
+		assertThat(new PublicHoliday().setPublicHoliday("2019").contains("20190205"), is(true)); //화
+		assertThat(new PublicHoliday().setPublicHoliday("2019").contains("20190206"), is(true)); //수
+		assertThat(new PublicHoliday().setPublicHoliday("2019").contains("20190207"), is(false)); //월 대체공휴일x
+	}
+
+	@Test
 	@DisplayName(" 2020년 삼일절 일요일")
 	void independenceMovementDay() {
 		assertThat(new PublicHoliday().setPublicHoliday("2020").contains("20200301"), is(true)); //일
