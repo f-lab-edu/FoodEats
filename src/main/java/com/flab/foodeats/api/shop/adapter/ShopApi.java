@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.foodeats.api.shop.ConvenientRequest;
 import com.flab.foodeats.api.shop.DeleteEssentialRequest;
+import com.flab.foodeats.api.shop.ConvenientRequest;
 import com.flab.foodeats.api.shop.EssentialRequest;
 import com.flab.foodeats.api.shop.StatusRequest;
 import com.flab.foodeats.application.shop.port.ShopService;
@@ -27,6 +27,7 @@ import com.flab.foodeats.common.response.StatusCode;
 import com.flab.foodeats.common.response.SuccessUserCode;
 import com.flab.foodeats.domain.shop.Essential;
 import com.flab.foodeats.domain.user.UserType;
+
 
 @RestController
 @RequestMapping("/shop")
@@ -40,7 +41,7 @@ public class ShopApi {
 
 	// 가맹점 등록 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/essentialInfo/register")
+	@PostMapping("/essentialInfo")
 	public ResponseEntity<?> registerEssentialInfo(@Valid @RequestBody EssentialRequest dto,
 		@AuthUsed AuthInfo authInfo) {
 		shopService.registerEssentialShopInfo(dto.toParam(authInfo.getUserId()));
@@ -50,7 +51,7 @@ public class ShopApi {
 
 	// 가맹점 수정 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/essentialInfo/update")
+	@PutMapping("/essentialInfo")
 	public ResponseEntity<?> updateEssentialInfo(@Valid @RequestBody EssentialRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.updateEssentialShopInfo(dto.toParam(authInfo.getUserId()));
@@ -60,8 +61,8 @@ public class ShopApi {
 
 	// 가맹점 삭제 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@DeleteMapping("/essentialInfo/delete")
-	public ResponseEntity<?> deleteEssentialInfo(@Valid @RequestBody DeleteEssentialRequest dto, @AuthUsed
+	@DeleteMapping("/essentialInfo")
+	public ResponseEntity<?> deleteEssentialInfo(DeleteEssentialRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.deleteEssentialShopInfo(dto.toParam(authInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_DELETE_SUCCESS.getMessage());
@@ -70,40 +71,40 @@ public class ShopApi {
 
 	// 가맹점 등록 (상태정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/statusInfo/register")
+	@PostMapping("/statusInfo")
 	public ResponseEntity<?> registerStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
-		shopService.registerStatusShopInfo(dto.toParam(authInfo.getUserId()));
+		shopService.registerStatusShopInfo(dto.toParam(),authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	// 가맹점 수정 (상태정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/statusInfo/update")
+	@PutMapping("/statusInfo")
 	public ResponseEntity<?> updateStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
-		shopService.updateStatusShopInfo(dto.toParam(authInfo.getUserId()));
+		shopService.updateStatusShopInfo(dto.toParam(),authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	// 가맹점 등록 (편리정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/convenienceInfo/register")
+	@PostMapping("/convenienceInfo")
 	public ResponseEntity<?> registerConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
 		@AuthUsed AuthInfo authInfo) {
-		shopService.registerConvenienceShopInfo(dto.toParam(authInfo.getUserId()));
+		shopService.registerConvenienceShopInfo(dto.toParam(),authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	// 가맹점 수정 (편리정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/convenienceInfo/update")
+	@PutMapping("/convenienceInfo")
 	public ResponseEntity<?> updateConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
 		@AuthUsed AuthInfo authInfo) {
-		shopService.updateConvenienceShopInfo(dto.toParam(authInfo.getUserId()));
+		shopService.updateConvenienceShopInfo(dto.toParam(),authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.SHOP_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
@@ -112,10 +113,9 @@ public class ShopApi {
 	@GetMapping("/all-info")
 	@AuthRequired(role = UserType.MERCHANT)
 	public ResponseEntity<?> searchShopAllInfo(@AuthUsed AuthInfo authInfo) {
-		List<Essential> list = shopService.searchShopAllInfo(new StatusRequest().toParam(authInfo.getUserId()));
+		List<Essential> list = shopService.searchShopAllInfo(new StatusRequest().toParam(),authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseList(StatusCode.SUCCESS, SuccessUserCode.USER_REGISTER_SUCCESS.getMessage(),list);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
-
 
 }
