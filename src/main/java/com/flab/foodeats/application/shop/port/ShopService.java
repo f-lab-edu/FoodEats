@@ -1,11 +1,14 @@
 package com.flab.foodeats.application.shop.port;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.application.shop.ConvenientTarget;
 import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 import com.flab.foodeats.application.shop.EssentialTarget;
 import com.flab.foodeats.application.shop.StatusTarget;
+import com.flab.foodeats.domain.shop.Essential;
 
 @Service
 public interface ShopService {
@@ -23,4 +26,6 @@ public interface ShopService {
 	void registerConvenienceShopInfo(ConvenientTarget target);
 	void updateConvenienceShopInfo(ConvenientTarget target);
 
+	// 전체조회
+	List<Essential> searchShopAllInfo(StatusTarget target);
 }

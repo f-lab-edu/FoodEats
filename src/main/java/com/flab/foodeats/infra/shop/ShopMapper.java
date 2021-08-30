@@ -1,5 +1,7 @@
 package com.flab.foodeats.infra.shop;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -34,5 +36,12 @@ public interface ShopMapper {
 	Status findStatusByShopId(String shopId);
 	// 가맹점 편리정보 조회 - 중복등록 검증
 	Convenient findConvenienceByShopId(String shopId);
+
+	// 가맹점 기본정보 전체 조회
+	List<Essential> shopListAllInfo();
+	// 가게 상태 오픈
+	void startShop(@Param("Status") Status status);
+	// 가게 상태 마감
+	void closeShop(@Param("Status") Status status);
 }
 

@@ -91,4 +91,22 @@
         WHERE shop_id = #{shopId};
     </select>
 
+
+    <select id="shopListAllInfo" resultMap="essentialMap">
+        SELECT *
+        FROM shop_essential_info;
+    </select>
+    <!-- 가맹점 상태 오픈 -->
+    <update id="startShop" parameterType="Status">
+        UPDATE shop_status_info
+        SET shop_open_status = "OPEN"
+        WHERE shop_id = #{Status.shopId};
+    </update>
+    <!-- 회원 상태 마감 -->
+    <update id="closeShop" parameterType="Status">
+        UPDATE shop_status_info
+        SET shop_open_status = "CLOSE"
+        WHERE shop_id = #{Status.shopId};
+    </update>
+
 </mapper>
