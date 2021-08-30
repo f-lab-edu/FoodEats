@@ -131,13 +131,13 @@ public class ShopServiceImpl implements ShopService {
 
 	private <T> void shopEntityInfoNotExist(T entity) {
 		if (entity == null) {
-			throw new DuplicateKeyException(ErrorUserCode.ENTITY_INFO_NOT_EXIST.getMessage());
+			throw new NullPointerException(ErrorUserCode.ENTITY_INFO_NOT_EXIST.getMessage());
 		}
 	}
 
 	private void shopEessentialInfoNotExist(Essential essential) {
 		if (essential == null) {
-			throw new DuplicateKeyException(ErrorUserCode.ESSENTIAL_INFO_NOT_EXIST.getMessage());
+			throw new NullPointerException(ErrorUserCode.ESSENTIAL_INFO_NOT_EXIST.getMessage());
 		}
 	}
 }
