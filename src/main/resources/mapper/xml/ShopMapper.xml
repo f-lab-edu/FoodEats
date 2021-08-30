@@ -3,11 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.foodeats.infra.shop.ShopMapper">
 
+
     <!-- 가맹점 등록 (기본)  -->
     <insert id="registerEssentialInfo" parameterType="Essential">
         INSERT
-        INTO shop_essential_info
-        VALUES(#{Essential.shopId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
+        INTO shop_essential_info(user_id,category,brand,location,phone)
+        VALUES(#{Essential.userId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
         #{Essential.phone});
     </insert>
     <!-- 가맹점 수정 (기본) -->
@@ -18,12 +19,10 @@
         WHERE shop_id = #{Essential.shopId};
     </update>
     <!-- 가맹점 삭제 (기본) -->
-    <delete id="deleteEssentialInfo" parameterType="String">
-        DELETE shop_essential_info, shop_convenience_info, shop_status_info
+    <delete id="deleteEssentialInfo" parameterType="Long">
+        DELETE shop_essential_info.*
         FROM shop_essential_info
-        INNER JOIN shop_convenience_info ON shop_essential_info.shop_id = shop_convenience_info.shop_id
-        INNER JOIN shop_status_info ON shop_essential_info.shop_id = shop_status_info.shop_id
-        WHERE shop_essential_info.shop_id = #{shopId};
+        WHERE shop_id = #{shopId};
     </delete>
 
     <!-- 가맹점 등록 (상태)  -->
@@ -39,6 +38,13 @@
         SET open_time = #{Status.openTime}, close_time = #{Status.closeTime}, closing_day = #{Status.closingDay}
         WHERE shop_id = #{Status.shopId};
     </update>
+    <!-- 가맹점 삭제 (상태) -->
+    <delete id="deleteStatusInfo" parameterType="Long">
+        DELETE shop_status_info.*
+        FROM shop_status_info
+        WHERE shop_id = #{shopId};
+    </delete>
+
 
     <!-- 가맹점 등록 (편리)  -->
     <insert id="registerConvenienceInfo" parameterType="Convenient">
@@ -52,8 +58,16 @@
         SET grade = #{Convenient.grade}, delivery_method = #{Convenient.deliveryMethod}, shop_payment_method = #{Convenient.shopPaymentMethod}
         WHERE shop_id = #{Convenient.shopId};
     </update>
+    <!-- 가맹점 삭제 (편리) -->
+    <delete id="deleteConvenienceInfo" parameterType="Long">
+        DELETE shop_convenience_info.*
+        FROM shop_convenience_info
+        WHERE shop_id = #{shopId};
+    </delete>
+
 
     <resultMap type="Essential" id="essentialMap">
+        <result property="userId" column="user_id"/>
         <result property="shopId" column="shop_id"/>
         <result property="category" column="category"/>
         <result property="brand" column="brand"/>
@@ -63,7 +77,7 @@
     <select id="findEssentialByShopId" parameterType="String" resultMap="essentialMap">
         SELECT *
         FROM shop_essential_info
-        WHERE shop_id = #{shopId};
+        WHERE user_id = #{userId};
     </select>
 
     <resultMap type="Status" id="statusMap">
@@ -74,9 +88,10 @@
         <result property="closingDay" column="closing_day"/>
     </resultMap>
     <select id="findStatusByShopId" parameterType="String" resultMap="statusMap">
-        SELECT *
+        SELECT shop_status_info.*
         FROM shop_status_info
-        WHERE shop_id = #{shopId};
+        INNER JOIN shop_essential_info ON shop_essential_info.shop_id = shop_status_info.shop_id
+        WHERE shop_essential_info.user_id = #{userId};
     </select>
 
     <resultMap type="Convenient" id="convenientMap">
@@ -86,10 +101,12 @@
         <result property="shopPaymentMethod" column="shop_payment_method"/>
     </resultMap>
     <select id="findConvenienceByShopId" parameterType="String" resultMap="convenientMap">
-        SELECT *
+        SELECT shop_convenience_info.*
         FROM shop_convenience_info
-        WHERE shop_id = #{shopId};
+        INNER JOIN shop_essential_info ON shop_essential_info.shop_id = shop_convenience_info.shop_id
+        WHERE shop_essential_info.user_id = #{userId};
     </select>
+
 
 
     <select id="shopListAllInfo" resultMap="essentialMap">
