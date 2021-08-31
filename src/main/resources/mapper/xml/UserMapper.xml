@@ -7,19 +7,19 @@
     <!-- 회원가입  / 소비자-->
     <insert id="saveConsumer" parameterType="User">
         INSERT
-        INTO user_consumer_info
+        INTO user_consumer_info(user_id,password,name,email,phone,address)
         VALUES(#{Consumer.userId}, #{Consumer.password}, #{Consumer.name}, #{Consumer.email}, #{Consumer.phone}, #{Consumer.address});
     </insert>
     <!-- 회원가입  / 가맹점-->
     <insert id="saveMerchant" parameterType="User">
         INSERT
-        INTO user_merchant_info
+        INTO user_merchant_info(user_id,password,name,email,phone,address)
         VALUES(#{Merchant.userId}, #{Merchant.password}, #{Merchant.name}, #{Merchant.email}, #{Merchant.phone}, #{Merchant.address});
     </insert>
     <!-- 회원가입  / 가맹점-->
     <insert id="saveRider" parameterType="User">
         INSERT
-        INTO user_rider_info
+        INTO user_rider_info(user_id,password,name,email,phone,address)
         VALUES(#{Rider.userId}, #{Rider.password}, #{Rider.name}, #{Rider.email}, #{Rider.phone}, #{Rider.address});
     </insert>
 
