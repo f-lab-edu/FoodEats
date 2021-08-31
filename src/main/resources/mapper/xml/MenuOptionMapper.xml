@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.foodeats.infra.menu.MenuOptionMapper">
+
+    <resultMap type="MenuOption" id="menuOptionResult">
+        <result property="menuId" column="menu_id"/>
+        <result property="menuOptionId" column="menu_option_id"/>
+        <result property="menuOptionName" column="menu_option_name"/>
+        <result property="menuOptionPrice" column="menu_option_price"/>
+    </resultMap>
+
+    <insert id="registerOption">
+        INSERT
+        INTO shop_menu_option (menu_id, menu_option_name, menu_option_price)
+        VALUES (#{menuId}, #{menuOptionName},#{menuOptionPrice});
+    </insert>
+
+    <select id="searchMenuOption" parameterType="int" resultMap="menuOptionResult">
+        SELECT *
+        FROM shop_menu_option
+        WHERE menu_id = #{menuId};
+    </select>
+
+    <update id="updateMenuOption">
+        UPDATE shop_menu_option
+        SET menu_option_name = #{menuOptionName}, menu_option_price = #{menuOptionPrice}
+        WHERE menu_option_id = #{menuOptionId};
+    </update>
+
+    <delete id = "deleteMenuOption" parameterType="int">
+        DELETE
+        FROM shop_menu_option
+        WHERE menu_option_id = #{menuOptionId};
+    </delete>
+</mapper>
