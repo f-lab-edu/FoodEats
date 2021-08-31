@@ -45,9 +45,9 @@ public class MerchantApi {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpSession httpSession) {
-		userService.login(dto.toParam());
+		Long merchantId = userService.login(dto.toParam());
 		ApiResponse apiResponse =ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage());
-		httpSession.setAttribute(AuthInfo.AUTH_KEY, AuthInfo.merchantOf(dto.getUserId()));
+		httpSession.setAttribute(AuthInfo.AUTH_KEY, AuthInfo.merchantOf(merchantId,dto.getUserId()));
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
@@ -62,7 +62,7 @@ public class MerchantApi {
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/modification")
 	public ResponseEntity<?> modifyUserInfo(@Valid @RequestBody ModifyUserRequest dto, @AuthUsed AuthInfo authInfo) {
-		userService.modifyUserInfo(dto.toParam(authInfo.getUserId()));
+		userService.modifyUserInfo(dto.toParam(authInfo));
 		ApiResponse apiResponse =ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
