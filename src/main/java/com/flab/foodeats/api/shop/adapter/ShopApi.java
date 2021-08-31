@@ -41,7 +41,7 @@ public class ShopApi {
 
 	// 가맹점 등록 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/essentialInfo")
+	@PostMapping("/essential-info")
 	public ResponseEntity<?> registerEssentialInfo(@Valid @RequestBody EssentialRequest dto,
 		@AuthUsed AuthInfo authInfo) {
 		shopService.registerEssentialShopInfo(dto.toParam(authInfo.getUserId()));
@@ -51,7 +51,7 @@ public class ShopApi {
 
 	// 가맹점 수정 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/essentialInfo")
+	@PutMapping("/essential-info")
 	public ResponseEntity<?> updateEssentialInfo(@Valid @RequestBody EssentialRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.updateEssentialShopInfo(dto.toParam(authInfo.getUserId()));
@@ -61,7 +61,7 @@ public class ShopApi {
 
 	// 가맹점 삭제 (필수정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@DeleteMapping("/essentialInfo")
+	@DeleteMapping("/essential-info")
 	public ResponseEntity<?> deleteEssentialInfo(DeleteEssentialRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.deleteEssentialShopInfo(dto.toParam(authInfo.getUserId()));
@@ -71,7 +71,7 @@ public class ShopApi {
 
 	// 가맹점 등록 (상태정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/statusInfo")
+	@PostMapping("/status-info")
 	public ResponseEntity<?> registerStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.registerStatusShopInfo(dto.toParam(),authInfo.getUserId());
@@ -81,7 +81,7 @@ public class ShopApi {
 
 	// 가맹점 수정 (상태정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/statusInfo")
+	@PutMapping("/status-info")
 	public ResponseEntity<?> updateStatusInfo(@Valid @RequestBody StatusRequest dto, @AuthUsed
 		AuthInfo authInfo) {
 		shopService.updateStatusShopInfo(dto.toParam(),authInfo.getUserId());
@@ -91,7 +91,7 @@ public class ShopApi {
 
 	// 가맹점 등록 (편리정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PostMapping("/convenienceInfo")
+	@PostMapping("/convenience-info")
 	public ResponseEntity<?> registerConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
 		@AuthUsed AuthInfo authInfo) {
 		shopService.registerConvenienceShopInfo(dto.toParam(),authInfo.getUserId());
@@ -101,7 +101,7 @@ public class ShopApi {
 
 	// 가맹점 수정 (편리정보)
 	@AuthRequired(role = UserType.MERCHANT)
-	@PutMapping("/convenienceInfo")
+	@PutMapping("/convenience-info")
 	public ResponseEntity<?> updateConvenienceInfo(@Valid @RequestBody ConvenientRequest dto,
 		@AuthUsed AuthInfo authInfo) {
 		shopService.updateConvenienceShopInfo(dto.toParam(),authInfo.getUserId());
