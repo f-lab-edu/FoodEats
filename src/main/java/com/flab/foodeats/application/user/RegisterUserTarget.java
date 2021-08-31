@@ -15,7 +15,7 @@ public class RegisterUserTarget {
 	public RegisterUserTarget(String userId, String password, String name, String email, String phone,
 		String address) {
 		this.userId = userId;
-		this.password = password;
+		this.password = Encryption.encoder(password);
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
@@ -47,6 +47,6 @@ public class RegisterUserTarget {
 	}
 
 	public User toEntity() {
-		return new User(userId, password, name, email, phone, address);
+		return new User(0L,userId, password, name, email, phone, address);
 	}
 }
