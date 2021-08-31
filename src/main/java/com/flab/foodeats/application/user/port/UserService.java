@@ -9,7 +9,7 @@ public interface UserService {
 
 	void registerUserInfo(RegisterUserTarget registerUserTarget);
 
-	void login(LoginUserTarget loginUserTarget);
+	Long login(LoginUserTarget loginUserTarget);
 
 	void modifyUserInfo(ModifyUserTarget modifyUserTarget);
 
