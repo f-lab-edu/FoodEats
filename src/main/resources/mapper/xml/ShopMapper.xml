@@ -126,4 +126,10 @@
         WHERE shop_id = #{Status.shopId};
     </update>
 
+    <select id="findShopIdByMerchantId" parameterType="String" resultType="int">
+        SELECT shop_id
+        FROM shop_essential_info
+        WHERE user_id = #{userId};
+    </select>
+
 </mapper>

@@ -51,6 +51,6 @@ public interface ShopMapper {
 	// 가게 상태 마감
 	void closeShop(@Param("Status") Status status);
 
-
+	int findShopIdByMerchantId(String userId);
 }
 
