@@ -95,7 +95,6 @@ public class PublicHoliday {
 		holidaysSet.add(yyyy + prev_seol.substring(4));        // ""
 		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0101"));  // 설날
 		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0102"));  // 설날
-		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0103"));  // 설날
 		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0408"));  // 석탄일
 		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0814"));  // 추석
 		holidaysSet.add(yyyy + separateLunarYearAndDay(yyyy, "0815"));  // 추석
@@ -144,20 +143,15 @@ public class PublicHoliday {
 		if (LocalDate.parse(changeLunarToSolar(yyyy + "0101"), formatter).getDayOfWeek().getValue() == LD_SATURDAY
 			||
 			LocalDate.parse(changeLunarToSolar(yyyy + "0101"), formatter).getDayOfWeek().getValue() == LD_SUNDAY) {
-			holidaysSet.add(changeLunarToSolar(yyyy + "0104"));
+			holidaysSet.add(changeLunarToSolar(yyyy + "0103"));
 		}
-		if (LocalDate.parse(changeLunarToSolar(yyyy + "0102"), formatter).getDayOfWeek().getValue() == LD_SATURDAY
-			||
-			LocalDate.parse(changeLunarToSolar(yyyy + "0102"), formatter).getDayOfWeek().getValue() == LD_SUNDAY) {
-			holidaysSet.add(changeLunarToSolar(yyyy + "0104"));
-		}
-		if (LocalDate.parse(changeLunarToSolar(yyyy + "0103"), formatter).getDayOfWeek().getValue()
+		if (LocalDate.parse(changeLunarToSolar(yyyy + "0102"), formatter).getDayOfWeek().getValue()
 			== LD_SATURDAY) {
-			holidaysSet.add(changeLunarToSolar(yyyy + "0105"));
+			holidaysSet.add(changeLunarToSolar(yyyy + "0104"));
 		}
 		if (
-			LocalDate.parse(changeLunarToSolar(yyyy + "0103"), formatter).getDayOfWeek().getValue() == LD_SUNDAY) {
-			holidaysSet.add(changeLunarToSolar(yyyy + "0104"));
+			LocalDate.parse(changeLunarToSolar(yyyy + "0102"), formatter).getDayOfWeek().getValue() == LD_SUNDAY) {
+			holidaysSet.add(changeLunarToSolar(yyyy + "0103"));
 		}
 	}
 
@@ -199,9 +193,9 @@ public class PublicHoliday {
 
 	private String validStringLength(String yyyymmdd){
 		/*
-		* 오류가 날 수 없는 구조
-		* 입력을 LocalDateTime으로 오늘 날짜를 입력
-		*/
+		 * 오류가 날 수 없는 구조
+		 * 입력을 LocalDateTime으로 오늘 날짜를 입력
+		 */
 
 		if (yyyymmdd == null)
 			return null;
