@@ -33,10 +33,11 @@ public class MerchantServiceImpl implements UserService {
 	}
 
 	@Override
-	public void login(LoginUserTarget target) {
+	public Long login(LoginUserTarget target) {
 		User merchantInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(merchantInfo);
 		errorCheck.validateLoginInfo(merchantInfo.getPassword(), target.getPassword());
+		return merchantInfo.getId();
 	}
 
 	@Override
