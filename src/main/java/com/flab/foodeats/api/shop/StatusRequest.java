@@ -54,7 +54,7 @@ public class StatusRequest {
 	}
 
 
-	public StatusTarget toParam(String userId) {
-		return new StatusTarget(userId, openTime, closeTime, closingDay);
+	public StatusTarget toParam() {
+		return new StatusTarget(openTime, closeTime, closingDay);
 	}
 }

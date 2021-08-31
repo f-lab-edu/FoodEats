@@ -4,7 +4,7 @@ import com.flab.foodeats.domain.shop.Essential;
 
 public class EssentialTarget {
 
-	private String shopId;
+	private String userId;
 	private String category;
 	private String brand;
 	private String location;
@@ -13,20 +13,20 @@ public class EssentialTarget {
 	public EssentialTarget() {
 	}
 
-	public EssentialTarget(String shopId, String category, String brand, String location, String phone) {
-		this.shopId = shopId;
+	public EssentialTarget(String userId, String category, String brand, String location, String phone) {
+		this.userId = userId;
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
 	}
 
-	public String getShopId() {
-		return shopId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setShopId(String shopId) {
-		this.shopId = shopId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getCategory() {
@@ -61,7 +61,11 @@ public class EssentialTarget {
 		this.phone = phone;
 	}
 
-	public Essential toEntity(){
-		return new Essential(shopId,category,brand,location,phone);
+	public Essential changeToEntityForRegister(){
+		return new Essential(0l, userId,category,brand,location,phone);
+	}
+
+	public Essential changeToEntityForUpdate(Long shopId){
+		return new Essential(shopId, userId,category,brand,location,phone);
 	}
 }

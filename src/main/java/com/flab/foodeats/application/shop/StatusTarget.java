@@ -6,24 +6,14 @@ import com.flab.foodeats.domain.shop.Status;
 
 public class StatusTarget {
 
-	private String shopId;
 	private LocalTime openTime;
 	private LocalTime closeTime;
 	private String closingDay;
 
-	public StatusTarget(String shopId, LocalTime openTime, LocalTime closeTime, String closingDay) {
-		this.shopId = shopId;
+	public StatusTarget(LocalTime openTime, LocalTime closeTime, String closingDay) {
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.closingDay = closingDay;
-	}
-
-	public String getShopId() {
-		return shopId;
-	}
-
-	public void setShopId(String shopId) {
-		this.shopId = shopId;
 	}
 
 	public LocalTime getOpenTime() {
@@ -50,8 +40,8 @@ public class StatusTarget {
 		this.closingDay = closingDay;
 	}
 
-	public Status toEntity(){
-		return new Status(shopId,openTime,closeTime,closingDay,"Close");
+	public Status toEntity(Long shopId) {
+		return new Status(shopId, openTime, closeTime, closingDay, "Close");
 	}
 
 }

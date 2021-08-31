@@ -3,14 +3,13 @@ package com.flab.foodeats.domain.shop;
 import java.time.LocalTime;
 
 public class Status {
-	private String shopId;
+	private Long shopId;
 	private LocalTime openTime;
 	private LocalTime closeTime;
 	private String closingDay;
 	private String shopOpenStatus;
 
-	public Status(String shopId, LocalTime openTime, LocalTime closeTime, String closingDay,
-		String shopOpenStatus) {
+	public Status(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay, String shopOpenStatus) {
 		this.shopId = shopId;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
@@ -18,11 +17,15 @@ public class Status {
 		this.shopOpenStatus = shopOpenStatus;
 	}
 
-	public String getShopId() {
+	public Status(Long shopId) {
+		this.shopId = shopId;
+	}
+
+	public Long getShopId() {
 		return shopId;
 	}
 
-	public void setShopId(String shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
 
