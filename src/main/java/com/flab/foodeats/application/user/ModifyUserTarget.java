@@ -17,7 +17,7 @@ public class ModifyUserTarget {
 		String address) {
 		this.id = id;
 		this.userId = userId;
-		this.password = Encryption.encoder(password);
+		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
