@@ -35,10 +35,10 @@ class ShopServiceImplTest {
 	@Mock
 	ShopMapper shopMapper;
 
-	static EssentialTarget essentialTarget;
-	static DeleteEssentialTarget deleteEssentialTarget;
-	static StatusTarget statusTarget;
-	static ConvenientTarget convenientTarget;
+	EssentialTarget essentialTarget;
+	DeleteEssentialTarget deleteEssentialTarget;
+	StatusTarget statusTarget;
+	ConvenientTarget convenientTarget;
 
 	@BeforeEach
 	void setUp() {
