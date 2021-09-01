@@ -15,7 +15,7 @@ public class RegisterUserTarget {
 	public RegisterUserTarget(String userId, String password, String name, String email, String phone,
 		String address) {
 		this.userId = userId;
-		this.password = Encryption.encoder(password);
+		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
