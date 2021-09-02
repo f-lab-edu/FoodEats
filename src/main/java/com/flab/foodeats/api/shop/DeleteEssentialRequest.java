@@ -4,9 +4,7 @@ import com.flab.foodeats.application.shop.DeleteEssentialTarget;
 
 public class DeleteEssentialRequest {
 
-	public DeleteEssentialTarget toParam(String userId) {
-		return new DeleteEssentialTarget(userId);
+	public DeleteEssentialTarget toParam(Long shopId) {
+		return new DeleteEssentialTarget(shopId);
 	}
-
-
 }

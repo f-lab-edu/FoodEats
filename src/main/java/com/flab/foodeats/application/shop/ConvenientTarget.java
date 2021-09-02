@@ -7,7 +7,7 @@ import com.flab.foodeats.domain.shop.Essential;
 
 public class ConvenientTarget {
 
-
+	private Long shopId;
 	private String grade;
 	private String deliveryMethod;
 	private String shopPaymentMethod;
@@ -15,10 +15,19 @@ public class ConvenientTarget {
 	public ConvenientTarget() {
 	}
 
-	public ConvenientTarget(String grade, String deliveryMethod, String shopPaymentMethod) {
+	public ConvenientTarget(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
+		this.shopId = shopId;
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
 		this.shopPaymentMethod = shopPaymentMethod;
+	}
+
+	public Long getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
 	}
 
 	public String getGrade() {
@@ -45,7 +54,7 @@ public class ConvenientTarget {
 		this.shopPaymentMethod = shopPaymentMethod;
 	}
 
-	public Convenient toEntity(Long shopId){
+	public Convenient toEntity(){
 		return new Convenient(shopId,grade,deliveryMethod,shopPaymentMethod);
 	}
 }

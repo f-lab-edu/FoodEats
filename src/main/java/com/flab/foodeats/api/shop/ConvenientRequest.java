@@ -47,8 +47,8 @@ public class ConvenientRequest {
 		this.shopPaymentMethod = shopPaymentMethod;
 	}
 
-	public ConvenientTarget toParam() {
-		return new ConvenientTarget(grade, deliveryMethod, shopPaymentMethod);
+	public ConvenientTarget toParam(Long shopId) {
+		return new ConvenientTarget(shopId, grade, deliveryMethod, shopPaymentMethod);
 	}
 
 }
