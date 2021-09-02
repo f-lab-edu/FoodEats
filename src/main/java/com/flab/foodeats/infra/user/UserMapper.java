@@ -21,6 +21,10 @@ public interface UserMapper {
 	User findMerchantById(String userId);
 	User findRiderById(String userId);
 
+	User findConsumerById(Long id);
+	User findMerchantByShopId(Long shopId);
+	User findRiderByRiderId(Long riderId);
+
 	void modifyConsumerById( @Param("Consumer") User user);
 	void modifyMerchantById( @Param("Merchant") User user);
 	void modifyRiderById( @Param("Rider") User user);

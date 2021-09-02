@@ -26,6 +26,7 @@
 
 
     <resultMap type="User" id="UserSelect">
+        <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
@@ -33,23 +34,31 @@
         <result property="phone" column="phone"/>
         <result property="address" column="address"/>
     </resultMap>
-    <!-- 사용자 조회 (By ID) / 소비자-->
-    <select id="findConsumerById" parameterType="String" resultMap="UserSelect">
+    <!-- 소비자 조회 (By userId) / 소비자-->
+    <select id="findConsumerByUserId" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_consumer_info
         WHERE user_id = #{userId};
     </select>
-    <!-- 사용자 조회 (By ID) / 가맹점-->
-    <select id="findMerchantById" parameterType="String" resultMap="UserSelect">
+    <!-- 가맹점 조회 (By userId) / 가맹점-->
+    <select id="findMerchantByUserId" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_merchant_info
         WHERE user_id = #{userId};
     </select>
-    <!-- 사용자 조회 (By ID) / 가맹점-->
-    <select id="findRiderById" parameterType="String" resultMap="UserSelect">
+    <!-- 라이더 조회 (By userId) / 라이더-->
+    <select id="findRiderByUserId" parameterType="String" resultMap="UserSelect">
         SELECT *
         FROM user_rider_info
         WHERE user_id = #{userId};
+    </select>
+
+
+    <!-- 가맹점 조회 (By ID) / 가맹점-->
+    <select id="findMerchantByShopId" parameterType="Long" resultMap="UserSelect">
+        SELECT *
+        FROM user_merchant_info
+        WHERE id = #{shopId};
     </select>
 
 
