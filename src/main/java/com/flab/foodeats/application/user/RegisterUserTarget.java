@@ -47,6 +47,6 @@ public class RegisterUserTarget {
 	}
 
 	public User toEntity() {
-		return new User(userId, password, name, email, phone, address);
+		return new User(0L,userId, password, name, email, phone, address);
 	}
 }

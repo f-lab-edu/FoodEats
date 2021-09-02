@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import com.flab.foodeats.application.user.ModifyUserTarget;
+import com.flab.foodeats.common.auth.AuthInfo;
 
 public class ModifyUserRequest {
 
@@ -56,7 +57,7 @@ public class ModifyUserRequest {
 		return address;
 	}
 
-	public ModifyUserTarget toParam(String userId) {
-		return new ModifyUserTarget(userId, password, name, email, phone, address);
+	public ModifyUserTarget toParam(AuthInfo authInfo) {
+		return new ModifyUserTarget(authInfo.getId(), authInfo.getUserId(), password, name, email, phone, address);
 	}
 }

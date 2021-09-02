@@ -36,13 +36,6 @@ public class ConsumerApi {
 		this.userService = userService;
 	}
 
-	/**
-	 * url 명명규칙
-	 * 1. 소문자 사용
-	 * 2. 하이푼 사용
-	 * 3. 동작 사용 금지 /
-	 * 4. 명사 사용but 동사도 허용용	 * @return
-	 */
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> registerUserInfo(@Valid @RequestBody RegisterUserRequest dto) {
 		userService.registerUserInfo(dto.toParam());
@@ -52,9 +45,9 @@ public class ConsumerApi {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpSession httpSession) {
-		userService.login(dto.toParam());
+		Long consumerId = userService.login(dto.toParam());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage());
-		httpSession.setAttribute(AuthInfo.AUTH_KEY, AuthInfo.consuemrOf(dto.getUserId()));
+		httpSession.setAttribute(AuthInfo.AUTH_KEY, AuthInfo.consuemrOf(consumerId,dto.getUserId()));
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
@@ -68,14 +61,14 @@ public class ConsumerApi {
 
 	@AuthRequired(role = UserType.CONSUMER)
 	@PutMapping("/modification")
-	public ResponseEntity<?> modifyUserInfo(@Valid @RequestBody ModifyUserRequest dto, @AuthUsed AuthInfo authedLoginInfo) {
-		userService.modifyUserInfo(dto.toParam(authedLoginInfo.getUserId()));
+	public ResponseEntity<?> modifyUserInfo(@Valid @RequestBody ModifyUserRequest dto, @AuthUsed AuthInfo authInfo) {
+		userService.modifyUserInfo(dto.toParam(authInfo));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	@AuthRequired(role = UserType.CONSUMER)
-	@DeleteMapping("/delete-user")
+	@DeleteMapping("/user")
 	public ResponseEntity<?> deleteConsumerUser(@Valid @RequestBody DeleteUserRequest dto, @AuthUsed AuthInfo authedLoginInfo) {
 		userService.deleteUserInfo(dto.toParam(authedLoginInfo.getUserId()));
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_DELETE_SUCCESS.getMessage());
