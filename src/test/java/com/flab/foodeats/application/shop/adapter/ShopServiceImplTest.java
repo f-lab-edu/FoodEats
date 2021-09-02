@@ -29,7 +29,7 @@ import com.flab.foodeats.infra.shop.ShopMapper;
 @ExtendWith(MockitoExtension.class)
 class ShopServiceImplTest {
 
-	@InjectMocks
+	//@InjectMocks
 	ShopServiceImpl shopService;
 
 	@Mock
@@ -42,6 +42,9 @@ class ShopServiceImplTest {
 
 	@BeforeEach
 	void setUp() {
+		// @InjectMocks service
+		shopService = new ShopServiceImpl(userMapper);
+		
 		essentialTarget = new EssentialTarget("eunsoo", "noodle", "BBQ", "BUSAN", "01079286788");
 
 		deleteEssentialTarget = new DeleteEssentialTarget("eunsoo");
