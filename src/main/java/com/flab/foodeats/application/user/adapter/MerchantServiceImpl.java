@@ -36,7 +36,7 @@ public class MerchantServiceImpl implements UserService {
 	public Long login(LoginUserTarget target) {
 		User merchantInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(merchantInfo);
-		errorCheck.validateLoginInfo(merchantInfo.getPassword(), target.getPassword());
+		errorCheck.validateLoginInfo(merchantInfo.getPassword(), target.toEntity().getPassword());
 		return merchantInfo.getId();
 	}
 
