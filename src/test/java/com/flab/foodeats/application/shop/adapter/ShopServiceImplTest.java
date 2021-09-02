@@ -1,3 +1,4 @@
+/*
 package com.flab.foodeats.application.shop.adapter;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +45,7 @@ class ShopServiceImplTest {
 	void setUp() {
 		// @InjectMocks service
 		shopService = new ShopServiceImpl(userMapper);
-		
+
 		essentialTarget = new EssentialTarget("eunsoo", "noodle", "BBQ", "BUSAN", "01079286788");
 
 		deleteEssentialTarget = new DeleteEssentialTarget("eunsoo");
@@ -228,3 +229,4 @@ class ShopServiceImplTest {
 	}
 
 }
+*/
