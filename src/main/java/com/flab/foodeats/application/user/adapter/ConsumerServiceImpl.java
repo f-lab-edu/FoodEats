@@ -36,7 +36,7 @@ public class ConsumerServiceImpl implements UserService {
 	public Long login(LoginUserTarget target) {
 		User consumerInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(consumerInfo);
-		errorCheck.validateLoginInfo(consumerInfo.getPassword(), target.getPassword());
+		errorCheck.validateLoginInfo(consumerInfo.getPassword(), target.toEntity().getPassword());
 		return consumerInfo.getId();
 	}
 
