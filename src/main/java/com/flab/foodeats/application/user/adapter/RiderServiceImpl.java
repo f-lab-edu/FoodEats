@@ -36,7 +36,7 @@ public class RiderServiceImpl implements UserService {
 	public Long login(LoginUserTarget target) {
 		User riderInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(riderInfo);
-		errorCheck.validateLoginInfo(riderInfo.getPassword(), target.getPassword());
+		errorCheck.validateLoginInfo(riderInfo.getPassword(), target.toEntity().getPassword());
 		return riderInfo.getId();
 	}
 
