@@ -37,11 +37,11 @@ public interface ShopMapper {
 	void deleteConvenienceInfo(Long shopId);
 
 	// 가맹점 기본정보 조회 - 중복등록 검증
-	Essential findEssentialByShopId(String userId);
+	Essential findEssentialByShopId(Long shopId);
 	// 가맹점 상태정보 조회 - 중복등록 검증
-	Status findStatusByShopId(String userId);
+	Status findStatusByShopId(Long shopId);
 	// 가맹점 편리정보 조회 - 중복등록 검증
-	Convenient findConvenienceByShopId(String userId);
+	Convenient findConvenienceByShopId(Long shopId);
 
 
 	// 가맹점 기본정보 전체 조회
@@ -50,7 +50,5 @@ public interface ShopMapper {
 	void startShop(@Param("Status") Status status);
 	// 가게 상태 마감
 	void closeShop(@Param("Status") Status status);
-
-
 }
 

@@ -15,6 +15,11 @@ public class User {
 	public User() {
 	}
 
+	public User(String userId, String password) {
+		this.userId = userId;
+		this.password = Encryption.encoder(password);
+	}
+
 	public User(Long id, String userId, String password, String name, String email, String phone, String address) {
 		this.id = id;
 		this.userId = userId;

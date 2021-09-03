@@ -6,6 +6,7 @@ import com.flab.foodeats.application.shop.EssentialTarget;
 
 public class EssentialRequest {
 
+
 	@NotBlank(message = "Input Your Category ")
 	private String category;
 	@NotBlank(message = "Input Your Brand")
@@ -57,7 +58,7 @@ public class EssentialRequest {
 		this.phone = phone;
 	}
 
-	public EssentialTarget toParam(String userId) {
-		return new EssentialTarget(userId, category, brand, location, phone);
+	public EssentialTarget toParam(Long shopId) {
+		return new EssentialTarget(shopId, category, brand, location, phone);
 	}
 }

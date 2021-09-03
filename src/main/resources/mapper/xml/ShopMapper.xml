@@ -7,8 +7,8 @@
     <!-- 가맹점 등록 (기본)  -->
     <insert id="registerEssentialInfo" parameterType="Essential">
         INSERT
-        INTO shop_essential_info(user_id,category,brand,location,phone)
-        VALUES(#{Essential.userId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
+        INTO shop_essential_info(shop_id,category,brand,location,phone)
+        VALUES(#{Essential.shopId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
         #{Essential.phone});
     </insert>
     <!-- 가맹점 수정 (기본) -->
@@ -67,17 +67,16 @@
 
 
     <resultMap type="Essential" id="essentialMap">
-        <result property="userId" column="user_id"/>
         <result property="shopId" column="shop_id"/>
         <result property="category" column="category"/>
         <result property="brand" column="brand"/>
         <result property="location" column="location"/>
         <result property="phone" column="phone"/>
     </resultMap>
-    <select id="findEssentialByShopId" parameterType="String" resultMap="essentialMap">
+    <select id="findEssentialByShopId" parameterType="Long" resultMap="essentialMap">
         SELECT *
         FROM shop_essential_info
-        WHERE user_id = #{userId};
+        WHERE shop_id = #{shopId};
     </select>
 
     <resultMap type="Status" id="statusMap">
@@ -87,11 +86,10 @@
         <result property="shopOpenStatus" column="shop_open_status"/>
         <result property="closingDay" column="closing_day"/>
     </resultMap>
-    <select id="findStatusByShopId" parameterType="String" resultMap="statusMap">
-        SELECT shop_status_info.*
+    <select id="findStatusByShopId" parameterType="Long" resultMap="statusMap">
+        SELECT *
         FROM shop_status_info
-        INNER JOIN shop_essential_info ON shop_essential_info.shop_id = shop_status_info.shop_id
-        WHERE shop_essential_info.user_id = #{userId};
+        WHERE shop_id = #{shopId};
     </select>
 
     <resultMap type="Convenient" id="convenientMap">
@@ -100,11 +98,10 @@
         <result property="deliveryMethod" column="delivery_method"/>
         <result property="shopPaymentMethod" column="shop_payment_method"/>
     </resultMap>
-    <select id="findConvenienceByShopId" parameterType="String" resultMap="convenientMap">
-        SELECT shop_convenience_info.*
+    <select id="findConvenienceByShopId" parameterType="Long" resultMap="convenientMap">
+        SELECT *
         FROM shop_convenience_info
-        INNER JOIN shop_essential_info ON shop_essential_info.shop_id = shop_convenience_info.shop_id
-        WHERE shop_essential_info.user_id = #{userId};
+        WHERE shop_id = #{shopId};
     </select>
 
 

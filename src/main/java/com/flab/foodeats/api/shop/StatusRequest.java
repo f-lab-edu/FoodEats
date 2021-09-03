@@ -54,7 +54,7 @@ public class StatusRequest {
 	}
 
 
-	public StatusTarget toParam() {
-		return new StatusTarget(openTime, closeTime, closingDay);
+	public StatusTarget toParam(Long shopId) {
+		return new StatusTarget(shopId, openTime, closeTime, closingDay);
 	}
 }
