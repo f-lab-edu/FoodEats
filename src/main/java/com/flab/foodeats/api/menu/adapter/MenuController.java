@@ -38,7 +38,7 @@ public class MenuController {
 	public ResponseEntity<?> registerMenu(@PathVariable int shopId,
 										  @Valid @RequestBody EssentialMenuRequest request,
 										  @AuthUsed AuthInfo authInfo) {
-		menuService.registerMenu(request.toParam(shopId), authInfo.getUserId());
+		menuService.registerMenu(request.toParam(shopId), authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
 	}
@@ -49,7 +49,7 @@ public class MenuController {
 	public ResponseEntity<?> updateMenu(@PathVariable int shopId, @PathVariable int menuId,
 										@Valid @RequestBody EssentialMenuRequest request,
 										@AuthUsed AuthInfo authInfo) {
-		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo.getUserId());
+		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
@@ -59,7 +59,7 @@ public class MenuController {
 	@DeleteMapping("/{shopId}/menu/{menuId}")
 	public ResponseEntity<?> deleteMenu(@PathVariable int shopId, @PathVariable int menuId,
 										@AuthUsed AuthInfo authInfo) {
-		menuService.deleteMenu(shopId, menuId, authInfo.getUserId());
+		menuService.deleteMenu(shopId, menuId, authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_DELETE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
