@@ -12,21 +12,26 @@ import com.flab.foodeats.common.error.exception.UnauthorizedException;
 import com.flab.foodeats.domain.menu.Menu;
 import com.flab.foodeats.infra.menu.MenuMapper;
 import com.flab.foodeats.infra.shop.ShopMapper;
+import com.flab.foodeats.infra.user.UserMapper;
 
 @Service
 public class MenuServiceImpl implements MenuService {
 
 	private final MenuMapper menuMapper;
 	private final ShopMapper shopMapper;
+	private final UserMapper userMapper;
 
-	public MenuServiceImpl(MenuMapper menuMapper, ShopMapper shopMapper) {
+	public MenuServiceImpl(MenuMapper menuMapper, ShopMapper shopMapper, UserMapper userMapper) {
 		this.menuMapper = menuMapper;
 		this.shopMapper = shopMapper;
+		this.userMapper = userMapper;
 	}
 
 	@Override
 	public void registerMenu(EssentialMenuTarget target, String userId) {
-		checkIsAuthorizedUser(target.getShopId(), userId);
+		Long ownerShopId = target.getShopId();
+		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
 
 		List<Menu> menus = menuMapper.searchMenu(target.getShopId());
 		checkIsExistMenu(menus, target);
@@ -36,13 +41,16 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public void modifyMenu(EssentialMenuTarget target, String userId) {
-		checkIsAuthorizedUser(target.getShopId(), userId);
+		Long ownerShopId = target.getShopId();
+		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
 		menuMapper.modifyMenu(target.toEntity());
 	}
 
 	@Override
 	public void deleteMenu(int shopId, int menuId, String userId) {
-		checkIsAuthorizedUser(shopId, userId);
+		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
 		menuMapper.deleteMenu(shopId, menuId);
 	}
 	
@@ -56,9 +64,8 @@ public class MenuServiceImpl implements MenuService {
 		}
 	}
 
-	private void checkIsAuthorizedUser(int shopId, String userId) {
-		int shopIdByMerchantId = shopMapper.findShopIdByMerchantId(userId);
-		if (shopId != shopIdByMerchantId) {
+	private void checkIsAuthorizedUser(String requestedId, String userId) {
+		if (!requestedId.equals(userId)) {
 			throw new UnauthorizedException();
 		}
 	}
