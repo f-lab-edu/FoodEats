@@ -1,6 +1,7 @@
 package com.flab.foodeats.application.user;
 
 import com.flab.foodeats.common.Encryption;
+import com.flab.foodeats.domain.user.User;
 
 public class LoginUserTarget {
 
@@ -20,4 +21,7 @@ public class LoginUserTarget {
 		return password;
 	}
 
+	public User toEntity() {
+		return new User(userId, password);
+	}
 }

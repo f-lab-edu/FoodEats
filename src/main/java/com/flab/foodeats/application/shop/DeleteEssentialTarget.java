@@ -2,17 +2,21 @@ package com.flab.foodeats.application.shop;
 
 public class DeleteEssentialTarget {
 
-	private String userId;
+	private Long shopId;
 
-	public DeleteEssentialTarget(String userId) {
-		this.userId = userId;
+	public DeleteEssentialTarget() {
+
 	}
 
-	public String getUserId() {
-		return userId;
+	public DeleteEssentialTarget(Long shopId) {
+		this.shopId = shopId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public Long getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
 	}
 }

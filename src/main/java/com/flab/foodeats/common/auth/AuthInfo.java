@@ -5,11 +5,21 @@ import com.flab.foodeats.domain.user.UserType;
 public class AuthInfo {
 	public static String AUTH_KEY = "AUTH_KEY"; // session에 key로 스트링을 넣을 때 사용
 
+	private Long id;
 	private String userId;
 	private UserType userType;
 
-	protected AuthInfo() {
 
+	protected AuthInfo(){
+
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getUserId() {
@@ -28,23 +38,22 @@ public class AuthInfo {
 		this.userType = userType;
 	}
 
-	public static AuthInfo of(String userId, UserType userType) {
-		AuthInfo authInfo = new AuthInfo();
+	public static AuthInfo of(Long id, String userId, UserType userType){
+		AuthInfo authInfo =  new AuthInfo();
+		authInfo.id = id;
 		authInfo.userId = userId;
 		authInfo.userType = userType;
 		return authInfo;
 	}
 
-	public static AuthInfo consuemrOf(String userId) {
-		return of(userId, UserType.CONSUMER);
+	public static AuthInfo consuemrOf(Long id ,String userId){
+		return of(id, userId,UserType.CONSUMER);
 	}
-
-	public static AuthInfo merchantOf(String userId) {
-		return of(userId, UserType.MERCHANT);
+	public static AuthInfo merchantOf(Long id ,String userId){
+		return of(id, userId,UserType.MERCHANT);
 	}
-
-	public static AuthInfo riderOf(String userId) {
-		return of(userId, UserType.RIDER);
+	public static AuthInfo riderOf(Long id ,String userId){
+		return of(id, userId,UserType.RIDER);
 	}
 
 	public AuthInfo(String userId, UserType userType) {
@@ -52,5 +61,12 @@ public class AuthInfo {
 		this.userType = userType;
 	}
 
+	@Override
+	public String toString() {
+		return "AuthInfo{" +
+			"userId='" + userId + '\'' +
+			", userType=" + userType +
+			'}';
+	}
 }
 

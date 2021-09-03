@@ -9,6 +9,10 @@ public class Status {
 	private String closingDay;
 	private String shopOpenStatus;
 
+	public Status() {
+
+	}
+
 	public Status(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay, String shopOpenStatus) {
 		this.shopId = shopId;
 		this.openTime = openTime;

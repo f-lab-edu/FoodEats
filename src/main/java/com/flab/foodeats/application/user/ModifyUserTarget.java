@@ -5,6 +5,7 @@ import com.flab.foodeats.domain.user.User;
 
 public class ModifyUserTarget {
 
+	private final Long id;
 	private final String userId;
 	private final String password;
 	private final String name;
@@ -12,14 +13,19 @@ public class ModifyUserTarget {
 	private final String phone;
 	private final String address;
 
-	public ModifyUserTarget(String userId, String password, String name, String email, String phone,
+	public ModifyUserTarget(Long id, String userId, String password, String name, String email, String phone,
 		String address) {
+		this.id = id;
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getUserId() {
@@ -47,6 +53,6 @@ public class ModifyUserTarget {
 	}
 
 	public User toEntity() {
-		return new User(userId, password, name, email, phone, address);
+		return new User(id, userId, password, name, email, phone, address);
 	}
 }

@@ -33,10 +33,11 @@ public class RiderServiceImpl implements UserService {
 	}
 
 	@Override
-	public void login(LoginUserTarget target) {
-		User merchatInfo = getUserInfo(target.getUserId());
-		errorCheck.notExistUserInfo(merchatInfo);
-		errorCheck.validateLoginInfo(merchatInfo.getPassword(), target.getPassword());
+	public Long login(LoginUserTarget target) {
+		User riderInfo = getUserInfo(target.getUserId());
+		errorCheck.notExistUserInfo(riderInfo);
+		errorCheck.validateLoginInfo(riderInfo.getPassword(), target.toEntity().getPassword());
+		return riderInfo.getId();
 	}
 
 	@Override
