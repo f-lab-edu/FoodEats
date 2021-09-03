@@ -141,9 +141,9 @@ public class ShopServiceImpl implements ShopService {
 		return shopMapper.findEssentialByShopId(shopId);
 	}
 
-	private void validShopOwner(String authedUserId, Long requestShopId){
-		String requestUserId = userMapper.findMerchantByShopId(requestShopId).getUserId();
-		if(!authedUserId.equals(requestUserId)){
+	private void validShopOwner(String authedUserId, Long requestedShopId){
+		String requestedUserId = userMapper.findMerchantByShopId(requestedShopId).getUserId();
+		if(!authedUserId.equals(requestedUserId)){
 			throw new SecurityException(ErrorUserCode.ID_NOT_MATCH.getMessage());
 		}
 	}
