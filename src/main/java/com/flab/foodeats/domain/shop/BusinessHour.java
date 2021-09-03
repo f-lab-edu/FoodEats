@@ -2,18 +2,18 @@ package com.flab.foodeats.domain.shop;
 
 import java.time.LocalTime;
 
-public class Status {
+public class BusinessHour {
 	private Long shopId;
 	private LocalTime openTime;
 	private LocalTime closeTime;
 	private String closingDay;
 	private String shopOpenStatus;
 
-	public Status() {
+	public BusinessHour() {
 
 	}
 
-	public Status(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay, String shopOpenStatus) {
+	public BusinessHour(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay, String shopOpenStatus) {
 		this.shopId = shopId;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
@@ -21,7 +21,7 @@ public class Status {
 		this.shopOpenStatus = shopOpenStatus;
 	}
 
-	public Status(Long shopId) {
+	public BusinessHour(Long shopId) {
 		this.shopId = shopId;
 	}
 

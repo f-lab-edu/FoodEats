@@ -1,16 +1,16 @@
 package com.flab.foodeats.domain.shop;
 
-public class Convenient {
+public class ShopDelivery {
 	private Long shopId;
 	private String grade;
 	private String deliveryMethod;
 	private String shopPaymentMethod;
 
-	public Convenient(){
+	public ShopDelivery(){
 
 	}
 
-	public Convenient(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
+	public ShopDelivery(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
 		this.shopId = shopId;
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
