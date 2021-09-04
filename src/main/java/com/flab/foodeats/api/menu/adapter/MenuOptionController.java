@@ -36,10 +36,10 @@ public class MenuOptionController {
 	// 특정 메뉴에 옵션 등록
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/{shopId}/menu-option/{menuId}")
-	public ResponseEntity<?> registerMenuOption(@PathVariable int shopId, @PathVariable int menuId,
+	public ResponseEntity<?> registerMenuOption(@PathVariable Long shopId, @PathVariable int menuId,
 												@RequestBody @Valid List<OptionRequest> optionRequests,
 												@AuthUsed AuthInfo authInfo) {
-		menuOptionService.registerMenuOption(shopId, menuId, optionRequests, authInfo.getUserId());
+		menuOptionService.registerMenuOption(shopId, menuId, optionRequests, authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.OPTION_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
 	}
@@ -47,10 +47,10 @@ public class MenuOptionController {
 	// 메뉴 옵션 수정
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu-option/{menuOptionId}")
-	public ResponseEntity<?> updateMenuOption(@PathVariable int shopId, @PathVariable int menuOptionId,
+	public ResponseEntity<?> updateMenuOption(@PathVariable Long shopId, @PathVariable int menuOptionId,
 											  @RequestBody @Valid List<OptionRequest> optionRequests,
 											  @AuthUsed AuthInfo authInfo) {
-		menuOptionService.updateMenuOption(shopId, menuOptionId, optionRequests, authInfo.getUserId());
+		menuOptionService.updateMenuOption(shopId, menuOptionId, optionRequests, authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.OPTION_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
@@ -58,9 +58,9 @@ public class MenuOptionController {
 	// 메뉴 옵션 삭제
 	@AuthRequired(role = UserType.MERCHANT)
 	@DeleteMapping("/{shopId}/menu-option/{menuOptionId}")
-	public ResponseEntity<?> deleteMenuOption(@PathVariable int shopId, @PathVariable int menuOptionId,
+	public ResponseEntity<?> deleteMenuOption(@PathVariable Long shopId, @PathVariable int menuOptionId,
 											  @AuthUsed AuthInfo authInfo) {
-		menuOptionService.deleteMenuOption(shopId, menuOptionId, authInfo.getUserId());
+		menuOptionService.deleteMenuOption(shopId, menuOptionId, authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.OPTION_DELETE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
