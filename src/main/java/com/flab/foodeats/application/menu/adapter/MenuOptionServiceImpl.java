@@ -15,16 +15,17 @@ import com.flab.foodeats.infra.shop.ShopMapper;
 public class MenuOptionServiceImpl implements MenuOptionService {
 
 	private final MenuOptionMapper menuOptionMapper;
-	private final ShopMapper shopMapper;
+	private final UserMapper userMapper;
 
-	public MenuOptionServiceImpl(MenuOptionMapper menuOptionMapper, ShopMapper shopMapper) {
+	public MenuOptionServiceImpl(MenuOptionMapper menuOptionMapper, UserMapper userMapper) {
 		this.menuOptionMapper = menuOptionMapper;
-		this.shopMapper = shopMapper;
+		this.userMapper = userMapper;
 	}
 
 	@Override
-	public void registerMenuOption(int shopId, int menuId, List<OptionRequest> optionRequests, String userId) {
-		checkIsAuthorizedUser(shopId, userId);
+	public void registerMenuOption(Long shopId, int menuId, List<OptionRequest> optionRequests, String userId) {
+		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
 
 		List<MenuOption> menuOptions = menuOptionMapper.searchMenuOption(menuId);
 		checkIsExistOption(optionRequests, menuOptions);
@@ -34,23 +35,23 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void updateMenuOption(int shopId, int menuOptionId, List<OptionRequest> optionRequests, String userId) {
-		checkIsAuthorizedUser(shopId, userId);
-		MenuOption option = menuOptionMapper.searchMenuOptionByOptionId(menuOptionId);
-		for (OptionRequest optionRequest : optionRequests) {
-			option.updateOption(optionRequest.getMenuOptionName(),optionRequest.getMenuOptionPrice());
-			menuOptionMapper.updateMenuOption(option);
-		}
+	public void updateMenuOption(Long shopId, OptionTarget optionTarget, AuthInfo authInfo) {
+		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		
+		MenuOption option = menuOptionMapper.searchMenuOptionByOptionId(optionTarget.getMenuOptionId());
+		option.updateOption(optionTarget.getMenuOptionName(), optionTarget.getMenuOptionPrice());
+		menuOptionMapper.updateMenuOption(option);
 	}
 
 	@Override
-	public void deleteMenuOption(int shopId, int menuOptionId, String userId) {
+	public void deleteMenuOption(Long shopId, int menuOptionId, String userId) {
 		checkIsAuthorizedUser(shopId, userId);
 		menuOptionMapper.deleteMenuOption(menuOptionId);
 	}
 
-	private void checkIsAuthorizedUser(int shopId, String userId) {
-		if (shopId != shopMapper.findShopIdByMerchantId(userId)) {
+	private void checkIsAuthorizedUser(String requestedId, String userId) {
+		if (!requestedId.equals(userId)) {
 			throw new UnauthorizedException();
 		}
 	}
