@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.flab.foodeats.api.menu.OptionRequest;
 import com.flab.foodeats.application.menu.port.MenuOptionService;
+import org.springframework.transaction.annotation.Transactional;
 import com.flab.foodeats.domain.menu.MenuOption;
 import com.flab.foodeats.infra.menu.MenuOptionMapper;
 import com.flab.foodeats.infra.shop.ShopMapper;
 
 @Service
+@Transactional
 public class MenuOptionServiceImpl implements MenuOptionService {
 
 	private final MenuOptionMapper menuOptionMapper;
