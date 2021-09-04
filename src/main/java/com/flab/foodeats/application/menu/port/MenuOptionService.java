@@ -6,9 +6,9 @@ import com.flab.foodeats.api.menu.OptionRequest;
 
 public interface MenuOptionService {
 
-	void registerMenuOption(int shopId, int menuId, List<OptionRequest> optionRequests, String userId);
+	void registerMenuOption(Long shopId, int menuId, List<OptionRequest> optionRequests, String userId);
 
-	void updateMenuOption(int shopId, int menuOptionId, List<OptionRequest> optionRequests, String userId);
+	void updateMenuOption(Long shopId, OptionTarget optionTarget, String userId);
 
-	void deleteMenuOption(int shopId, int menuOptionId, String userId);
+	void deleteMenuOption(Long shopId, int menuOptionId, String userId);
 }
