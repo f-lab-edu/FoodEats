@@ -4,6 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.flab.foodeats.application.OptionTarget;
 import com.flab.foodeats.domain.menu.MenuOption;
 
 public class OptionRequest {
@@ -29,6 +30,10 @@ public class OptionRequest {
 
 	public int getMenuOptionPrice() {
 		return menuOptionPrice;
+	}
+	
+	public OptionTarget toParam(int menuOptionId) {
+		return new OptionTarget(menuOptionId, menuOptionName, menuOptionPrice);
 	}
 
 	public MenuOption toEntity(int menuId) {
