@@ -48,9 +48,9 @@ public class MenuOptionController {
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu-option/{menuOptionId}")
 	public ResponseEntity<?> updateMenuOption(@PathVariable Long shopId, @PathVariable int menuOptionId,
-											  @RequestBody @Valid List<OptionRequest> optionRequests,
+											  @RequestBody @Valid OptionRequest optionRequest,
 											  @AuthUsed AuthInfo authInfo) {
-		menuOptionService.updateMenuOption(shopId, menuOptionId, optionRequests, authInfo);
+		menuOptionService.updateMenuOption(shopId, optionRequest.toParam(menuOptionId), authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.OPTION_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
