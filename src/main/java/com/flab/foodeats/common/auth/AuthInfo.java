@@ -1,8 +1,10 @@
 package com.flab.foodeats.common.auth;
 
+import java.io.Serializable;
+
 import com.flab.foodeats.domain.user.UserType;
 
-public class AuthInfo {
+public class AuthInfo implements Serializable {
 	public static String AUTH_KEY = "AUTH_KEY"; // session에 key로 스트링을 넣을 때 사용
 
 	private Long id;
