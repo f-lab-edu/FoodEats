@@ -9,9 +9,16 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.flab.foodeats.common.response.ErrorUserCode;
+import com.flab.foodeats.common.util.SessionManager;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+
+	private final SessionManager sessionManager;
+
+	public AuthInterceptor(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -33,18 +40,17 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	private void validateRole(AuthRequired authRequired, AuthInfo authInfo) throws Exception {
 		if (authRequired.role() != authInfo.getUserType()) {
-
 			throw new Exception(ErrorUserCode.AUTH_ROLE_NOT_MATCH.getMessage());
 		}
 	}
 
 
 	private AuthInfo getAuthInfo(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession(false);
-		if (null == session) {
+		AuthInfo authInfo = sessionManager.getSession(request);
+		if (null == authInfo) {
 			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
 		}
-		return (AuthInfo)session.getAttribute(AuthInfo.AUTH_KEY);
+		return authInfo;
 	}
 
 	private AuthRequired getAuthRequired(Object handler) {
