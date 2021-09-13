@@ -1,6 +1,7 @@
 package com.flab.foodeats.api.user.adapter;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +22,7 @@ import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.response.ApiResponse;
 import com.flab.foodeats.common.response.StatusCode;
 import com.flab.foodeats.common.response.SuccessUserCode;
+import com.flab.foodeats.common.util.SessionManager;
 import com.flab.foodeats.domain.user.UserType;
 import com.flab.foodeats.common.auth.AuthInfo;
 import com.flab.foodeats.common.auth.AuthRequired;
@@ -30,10 +32,12 @@ import com.flab.foodeats.common.auth.AuthUsed;
 @RequestMapping("/consumer")
 public class ConsumerApi {
 
-	private UserService userService;
+	private final UserService userService;
+	private final SessionManager sessionManager;
 
-	public ConsumerApi(@Qualifier("consumerService") UserService userService) {
+	public ConsumerApi(@Qualifier("consumerService") UserService userService, SessionManager sessionManager) {
 		this.userService = userService;
+		this.sessionManager = sessionManager;
 	}
 
 	@PostMapping("/sign-up")
@@ -44,17 +48,17 @@ public class ConsumerApi {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpSession httpSession) {
+	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpServletResponse response) {
 		Long consumerId = userService.login(dto.toParam());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage());
-		httpSession.setAttribute(AuthInfo.AUTH_KEY, AuthInfo.consuemrOf(consumerId,dto.getUserId()));
+		sessionManager.createSession(AuthInfo.consuemrOf(consumerId,dto.getUserId()), response);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	@AuthRequired(role = UserType.CONSUMER)
 	@PostMapping("/logout")
-	public ResponseEntity<?> logoutConsumerUser(@AuthUsed AuthInfo authedLoginInfo, HttpSession httpSession) {
-		httpSession.invalidate();
+	public ResponseEntity<?> logoutConsumerUser(@AuthUsed AuthInfo authedLoginInfo, HttpServletRequest request) {
+		sessionManager.expire(request);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
