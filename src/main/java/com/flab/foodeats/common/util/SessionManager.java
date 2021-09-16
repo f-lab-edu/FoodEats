@@ -15,7 +15,7 @@ import com.flab.foodeats.common.response.ErrorUserCode;
 @Component
 public class SessionManager {
 
-	public static final String SESSION_COOKIE_NAME = "AUTH_KEY";
+	public static final String SESSION_COOKIE_NAME = "JSESSIONID";
 
 	private final RedisSessionRepository redisSessionRepository;
 
