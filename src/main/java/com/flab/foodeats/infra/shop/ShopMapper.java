@@ -6,49 +6,50 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.flab.foodeats.api.shop.EssentialRequest;
-import com.flab.foodeats.domain.shop.Convenient;
-import com.flab.foodeats.domain.shop.Essential;
-import com.flab.foodeats.domain.shop.Status;
+import com.flab.foodeats.domain.shop.ShopDelivery;
+import com.flab.foodeats.domain.shop.Shop;
+import com.flab.foodeats.domain.shop.BusinessHour;
 
 @Mapper
 @Repository
 public interface ShopMapper {
 	// 가맹점 등록 (필수)
-	void registerEssentialInfo(@Param("Essential") Essential essential);
+	void registerShopInfo(@Param("Shop") Shop shop);
 	// 가맹점 수정 (필수)
-	void updateEssentialInfo(@Param("Essential") Essential essential);
+	void updateShopInfo(@Param("Shop") Shop shop);
 	// 가맹점 삭제 (필수)
-	void deleteEssentialInfo(Long shopId);
+	void deleteShopInfo(Long shopId);
 
 
 	// 가맹점 등록 (상태)
-	void registerStatusInfo(@Param("Status") Status status);
+	void registerBusinessHour(@Param("BusinessHour") BusinessHour businessHour);
 	// 가맹점 수정 (상태)
-	void updateStatusInfo(@Param("Status") Status status);
+	void updateBusinessHour(@Param("BusinessHour") BusinessHour businessHour);
 	// 가맹점 삭제 (상태)
-	void deleteStatusInfo(Long shopId);
+	void deleteBusinessHour(Long shopId);
 
 	// 가맹점 등록 (편리)
-	void registerConvenienceInfo(@Param("Convenient") Convenient convenient);
+	void registerShopDeliveryInfo(@Param("ShopDelivery") ShopDelivery shopDelivery);
 	// 가맹점 수정 (편리)
-	void updateConvenienceInfo(@Param("Convenient") Convenient convenient);
+	void updateShopDeliveryInfo(@Param("ShopDelivery") ShopDelivery shopDelivery);
 	// 가맹점 삭제 (편리)
-	void deleteConvenienceInfo(Long shopId);
+	void deleteShopDeliveryInfo(Long shopId);
 
 	// 가맹점 기본정보 조회 - 중복등록 검증
-	Essential findEssentialByShopId(Long shopId);
+	Shop findShopInfoByShopId(Long shopId);
 	// 가맹점 상태정보 조회 - 중복등록 검증
-	Status findStatusByShopId(Long shopId);
+	BusinessHour findBusinessHourByShopId(Long shopId);
 	// 가맹점 편리정보 조회 - 중복등록 검증
-	Convenient findConvenienceByShopId(Long shopId);
+	ShopDelivery findShopDeliveryInfoByShopId(Long shopId);
 
 
 	// 가맹점 기본정보 전체 조회
-	List<Essential> shopListAllInfo();
+	List<Shop> shopListAllInfo();
 	// 가게 상태 오픈
-	void startShop(@Param("Status") Status status);
+	void startShop(@Param("BusinessHour") BusinessHour businessHour);
 	// 가게 상태 마감
-	void closeShop(@Param("Status") Status status);
+	void closeShop(@Param("BusinessHour") BusinessHour businessHour);
+
+
 }
 

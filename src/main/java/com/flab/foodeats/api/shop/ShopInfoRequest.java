@@ -1,32 +1,29 @@
-package com.flab.foodeats.application.shop;
+package com.flab.foodeats.api.shop;
 
-import com.flab.foodeats.domain.shop.Essential;
+import javax.validation.constraints.NotBlank;
 
-public class EssentialTarget {
+import com.flab.foodeats.application.shop.ShopInfoTarget;
 
-	private Long shopId;
+public class ShopInfoRequest {
+
+
+	@NotBlank(message = "Input Your Category ")
 	private String category;
+	@NotBlank(message = "Input Your Brand")
 	private String brand;
+	@NotBlank(message = "Input Your Location")
 	private String location;
+	@NotBlank(message = "Input Your Phone")
 	private String phone;
 
-	public EssentialTarget() {
+	public ShopInfoRequest() {
 	}
 
-	public EssentialTarget(Long shopId, String category, String brand, String location, String phone) {
-		this.shopId = shopId;
+	public ShopInfoRequest(String category, String brand, String location, String phone) {
 		this.category = category;
 		this.brand = brand;
 		this.location = location;
 		this.phone = phone;
-	}
-
-	public Long getShopId() {
-		return shopId;
-	}
-
-	public void setShopId(Long shopId) {
-		this.shopId = shopId;
 	}
 
 	public String getCategory() {
@@ -61,7 +58,7 @@ public class EssentialTarget {
 		this.phone = phone;
 	}
 
-	public Essential toEntity() {
-		return new Essential(shopId, category, brand, location, phone);
+	public ShopInfoTarget toParam(Long shopId) {
+		return new ShopInfoTarget(shopId, category, brand, location, phone);
 	}
 }

@@ -1,14 +1,14 @@
 package com.flab.foodeats.application.shop;
 
-public class DeleteEssentialTarget {
+public class DeleteShopInfoTarget {
 
 	private Long shopId;
 
-	public DeleteEssentialTarget() {
+	public DeleteShopInfoTarget() {
 
 	}
 
-	public DeleteEssentialTarget(Long shopId) {
+	public DeleteShopInfoTarget(Long shopId) {
 		this.shopId = shopId;
 	}
 

@@ -5,122 +5,122 @@
 
 
     <!-- 가맹점 등록 (기본)  -->
-    <insert id="registerEssentialInfo" parameterType="Essential">
+    <insert id="registerShopInfo" parameterType="Shop">
         INSERT
         INTO shop_essential_info(shop_id,category,brand,location,phone)
-        VALUES(#{Essential.shopId}, #{Essential.category}, #{Essential.brand}, #{Essential.location},
-        #{Essential.phone});
+        VALUES(#{Shop.shopId}, #{Shop.category}, #{Shop.brand}, #{Shop.location},
+        #{Shop.phone});
     </insert>
     <!-- 가맹점 수정 (기본) -->
-    <update id="updateEssentialInfo" parameterType="Essential">
+    <update id="updateShopInfo" parameterType="Shop">
         UPDATE shop_essential_info
-        SET category = #{Essential.category}, brand = #{Essential.brand}, location = #{Essential.location},
-        phone = #{Essential.phone}
-        WHERE shop_id = #{Essential.shopId};
+        SET category = #{Shop.category}, brand = #{Shop.brand}, location = #{Shop.location},
+        phone = #{Shop.phone}
+        WHERE shop_id = #{Shop.shopId};
     </update>
     <!-- 가맹점 삭제 (기본) -->
-    <delete id="deleteEssentialInfo" parameterType="Long">
+    <delete id="deleteShopInfo" parameterType="Long">
         DELETE shop_essential_info.*
         FROM shop_essential_info
         WHERE shop_id = #{shopId};
     </delete>
 
     <!-- 가맹점 등록 (상태)  -->
-    <insert id="registerStatusInfo" parameterType="Status">
+    <insert id="registerBusinessHour" parameterType="BusinessHour">
         INSERT
-        INTO shop_status_info(shop_id,open_time,close_time,closing_day)
-        VALUES(#{Status.shopId}, #{Status.openTime}, #{Status.closeTime},
-        #{Status.closingDay});
+        INTO shop_business_hour_info(shop_id,open_time,close_time,closing_day)
+        VALUES(#{BusinessHour.shopId}, #{BusinessHour.openTime}, #{BusinessHour.closeTime},
+        #{BusinessHour.closingDay});
     </insert>
     <!-- 가맹점 수정 (상태) -->
-    <update id="updateStatusInfo" parameterType="Status">
-        UPDATE shop_status_info
-        SET open_time = #{Status.openTime}, close_time = #{Status.closeTime}, closing_day = #{Status.closingDay}
-        WHERE shop_id = #{Status.shopId};
+    <update id="updateBusinessHour" parameterType="BusinessHour">
+        UPDATE shop_business_hour_info
+        SET open_time = #{BusinessHour.openTime}, close_time = #{BusinessHour.closeTime}, closing_day = #{BusinessHour.closingDay}
+        WHERE shop_id = #{BusinessHour.shopId};
     </update>
     <!-- 가맹점 삭제 (상태) -->
-    <delete id="deleteStatusInfo" parameterType="Long">
-        DELETE shop_status_info.*
-        FROM shop_status_info
+    <delete id="deleteBusinessHour" parameterType="Long">
+        DELETE shop_business_hour_info.*
+        FROM shop_business_hour_info
         WHERE shop_id = #{shopId};
     </delete>
 
 
     <!-- 가맹점 등록 (편리)  -->
-    <insert id="registerConvenienceInfo" parameterType="Convenient">
+    <insert id="registerShopDeliveryInfo" parameterType="ShopDelivery">
         INSERT
-        INTO shop_convenience_info
-        VALUES(#{Convenient.shopId}, #{Convenient.grade}, #{Convenient.deliveryMethod}, #{Convenient.shopPaymentMethod});
+        INTO shop_delivery_info
+        VALUES(#{ShopDelivery.shopId}, #{ShopDelivery.grade}, #{ShopDelivery.deliveryMethod}, #{ShopDelivery.shopPaymentMethod});
     </insert>
     <!-- 가맹점 수정 (편리) -->
-    <update id="updateConvenienceInfo" parameterType="Convenient">
-        UPDATE shop_convenience_info
-        SET grade = #{Convenient.grade}, delivery_method = #{Convenient.deliveryMethod}, shop_payment_method = #{Convenient.shopPaymentMethod}
-        WHERE shop_id = #{Convenient.shopId};
+    <update id="updateShopDeliveryInfo" parameterType="ShopDelivery">
+        UPDATE shop_delivery_info
+        SET grade = #{ShopDelivery.grade}, delivery_method = #{ShopDelivery.deliveryMethod}, shop_payment_method = #{ShopDelivery.shopPaymentMethod}
+        WHERE shop_id = #{ShopDelivery.shopId};
     </update>
     <!-- 가맹점 삭제 (편리) -->
-    <delete id="deleteConvenienceInfo" parameterType="Long">
-        DELETE shop_convenience_info.*
-        FROM shop_convenience_info
+    <delete id="deleteShopDeliveryInfo" parameterType="Long">
+        DELETE shop_delivery_info.*
+        FROM shop_delivery_info
         WHERE shop_id = #{shopId};
     </delete>
 
 
-    <resultMap type="Essential" id="essentialMap">
+    <resultMap type="Shop" id="ShopInfoMap">
         <result property="shopId" column="shop_id"/>
         <result property="category" column="category"/>
         <result property="brand" column="brand"/>
         <result property="location" column="location"/>
         <result property="phone" column="phone"/>
     </resultMap>
-    <select id="findEssentialByShopId" parameterType="Long" resultMap="essentialMap">
+    <select id="findShopInfoByShopId" parameterType="Long" resultMap="ShopInfoMap">
         SELECT *
         FROM shop_essential_info
         WHERE shop_id = #{shopId};
     </select>
 
-    <resultMap type="Status" id="statusMap">
+    <resultMap type="BusinessHour" id="BusinessHourMap">
         <result property="shopId" column="shop_id"/>
         <result property="openTime" column="open_time"/>
         <result property="closeTime" column="close_time"/>
         <result property="shopOpenStatus" column="shop_open_status"/>
         <result property="closingDay" column="closing_day"/>
     </resultMap>
-    <select id="findStatusByShopId" parameterType="Long" resultMap="statusMap">
+    <select id="findBusinessHourByShopId" parameterType="Long" resultMap="BusinessHourMap">
         SELECT *
-        FROM shop_status_info
+        FROM shop_business_hour_info
         WHERE shop_id = #{shopId};
     </select>
 
-    <resultMap type="Convenient" id="convenientMap">
+    <resultMap type="ShopDelivery" id="ShopDeliveryMap">
         <result property="shopId" column="shop_id"/>
         <result property="grade" column="grade"/>
         <result property="deliveryMethod" column="delivery_method"/>
         <result property="shopPaymentMethod" column="shop_payment_method"/>
     </resultMap>
-    <select id="findConvenienceByShopId" parameterType="Long" resultMap="convenientMap">
+    <select id="findShopDeliveryInfoByShopId" parameterType="Long" resultMap="ShopDeliveryMap">
         SELECT *
-        FROM shop_convenience_info
+        FROM shop_delivery_info
         WHERE shop_id = #{shopId};
     </select>
 
 
 
-    <select id="shopListAllInfo" resultMap="essentialMap">
+    <select id="shopListAllInfo" resultMap="ShopInfoMap">
         SELECT *
         FROM shop_essential_info;
     </select>
     <!-- 가맹점 상태 오픈 -->
-    <update id="startShop" parameterType="Status">
-        UPDATE shop_status_info
-        SET shop_open_status = "OPEN"
-        WHERE shop_id = #{Status.shopId};
+    <update id="startShop" parameterType="BusinessHour">
+        UPDATE shop_business_hour_info
+        SET shop_business_hour_info = "OPEN"
+        WHERE shop_id = #{BusinessHour.shopId};
     </update>
     <!-- 회원 상태 마감 -->
-    <update id="closeShop" parameterType="Status">
-        UPDATE shop_status_info
-        SET shop_open_status = "CLOSE"
-        WHERE shop_id = #{Status.shopId};
+    <update id="closeShop" parameterType="BusinessHour">
+        UPDATE shop_business_hour_info
+        SET shop_business_hour_info = "CLOSE"
+        WHERE shop_id = #{BusinessHour.shopId};
     </update>
 
     <select id="findShopIdByMerchantId" parameterType="String" resultType="int">

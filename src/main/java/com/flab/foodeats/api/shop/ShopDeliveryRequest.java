@@ -2,9 +2,9 @@ package com.flab.foodeats.api.shop;
 
 import javax.validation.constraints.NotBlank;
 
-import com.flab.foodeats.application.shop.ConvenientTarget;
+import com.flab.foodeats.application.shop.ShopDeliveryTarget;
 
-public class ConvenientRequest {
+public class ShopDeliveryRequest {
 
 
 	@NotBlank(message = "Input Your grade ")
@@ -14,10 +14,10 @@ public class ConvenientRequest {
 	@NotBlank(message = "Input Your shopPaymentMethod")
 	private String shopPaymentMethod;
 
-	public ConvenientRequest() {
+	public ShopDeliveryRequest() {
 	}
 
-	public ConvenientRequest(String grade, String deliveryMethod, String shopPaymentMethod) {
+	public ShopDeliveryRequest(String grade, String deliveryMethod, String shopPaymentMethod) {
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
 		this.shopPaymentMethod = shopPaymentMethod;
@@ -47,8 +47,8 @@ public class ConvenientRequest {
 		this.shopPaymentMethod = shopPaymentMethod;
 	}
 
-	public ConvenientTarget toParam(Long shopId) {
-		return new ConvenientTarget(shopId, grade, deliveryMethod, shopPaymentMethod);
+	public ShopDeliveryTarget toParam(Long shopId) {
+		return new ShopDeliveryTarget(shopId, grade, deliveryMethod, shopPaymentMethod);
 	}
 
 }
