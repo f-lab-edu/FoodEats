@@ -1,6 +1,7 @@
 mybatis:
   type-aliases-package: com.flab.foodeats.domain.user, com.flab.foodeats.application.user,
-                        com.flab.foodeats.domain.shop, com.flab.foodeats.application.shop
+                        com.flab.foodeats.domain.shop, com.flab.foodeats.application.shop,
+                        com.flab.foodeats.domain.menu
   mapper-locations: mapper/xml/*.xml
 
 spring:

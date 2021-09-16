@@ -17,15 +17,9 @@
     <insert id="registerMenu">
         INSERT
         INTO shop_menu_register (shop_id, menu_name, menu_price, menu_configuration, menu_explanation, menu_group)
-        VALUES (#{menu.shopId}, #{menu.menuName},#{menu.menuPrice},
+        VALUES (#{menu.shopId}, #{menu.menuName}, #{menu.menuPrice},
         #{menu.menuConfiguration}, #{menu.menuExplanation}, #{menu.menuGroup});
     </insert>
-
-    <select id="searchMenu" parameterType="int" resultMap="menuResult">
-        SELECT *
-        FROM shop_menu_register
-        WHERE shop_id = #{shopId};
-    </select>
 
     <update id="updateMenu">
         UPDATE shop_menu_register
@@ -34,7 +28,7 @@
         WHERE menu_id = #{menu.menuId};
     </update>
 
-    <delete id = "deleteMenu" parameterType="int">
+    <delete id="deleteMenu" parameterType="int">
         DELETE
         FROM shop_menu_register
         WHERE menu_id = #{menuId};
