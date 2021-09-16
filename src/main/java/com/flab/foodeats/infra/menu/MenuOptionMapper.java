@@ -10,15 +10,13 @@ import com.flab.foodeats.domain.menu.MenuOption;
 @Mapper
 public interface MenuOptionMapper {
 
-	void registerOption(@Param("menuId") int menuId,
-		@Param("menuOptionName") String menuOptionName,
-		@Param("menuOptionPrice") int menuOptionPrice);
+	void registerOption(@Param("menuOption") MenuOption menuOption);
 
 	List<MenuOption> searchMenuOption(int menuId);
 
-	void updateMenuOption(@Param("menuOptionId") int menuOptionId,
-		@Param("menuOptionName") String menuOptionName,
-		@Param("menuOptionPrice") int menuOptionPrice);
+	MenuOption searchMenuOptionByOptionId(int menuOptionId);
+
+	void updateMenuOption(@Param("menuOption") MenuOption menuOption);
 
 	void deleteMenuOption(int menuOptionId);
 }

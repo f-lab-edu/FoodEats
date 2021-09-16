@@ -14,7 +14,7 @@
     <insert id="registerOption">
         INSERT
         INTO shop_menu_option (menu_id, menu_option_name, menu_option_price)
-        VALUES (#{menuId}, #{menuOptionName},#{menuOptionPrice});
+        VALUES (#{menuOption.menuId}, #{menuOption.menuOptionName}, #{menuOption.menuOptionPrice});
     </insert>
 
     <select id="searchMenuOption" parameterType="int" resultMap="menuOptionResult">
@@ -23,13 +23,19 @@
         WHERE menu_id = #{menuId};
     </select>
 
+    <select id="searchMenuOptionByOptionId" parameterType="int" resultMap="menuOptionResult">
+        SELECT *
+        FROM shop_menu_option
+        WHERE menu_id = #{menuOptionId};
+    </select>
+
     <update id="updateMenuOption">
         UPDATE shop_menu_option
-        SET menu_option_name = #{menuOptionName}, menu_option_price = #{menuOptionPrice}
-        WHERE menu_option_id = #{menuOptionId};
+        SET menu_option_name = #{menuOption.menuOptionName}, menu_option_price = #{menuOption.menuOptionPrice}
+        WHERE menu_option_id = #{menuOption.menuOptionId};
     </update>
 
-    <delete id = "deleteMenuOption" parameterType="int">
+    <delete id="deleteMenuOption" parameterType="int">
         DELETE
         FROM shop_menu_option
         WHERE menu_option_id = #{menuOptionId};
