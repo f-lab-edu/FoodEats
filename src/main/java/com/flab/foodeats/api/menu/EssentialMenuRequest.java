@@ -1,7 +1,10 @@
 package com.flab.foodeats.api.menu;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.flab.foodeats.application.menu.EssentialMenuTarget;
 
 public class EssentialMenuRequest {
 
@@ -9,6 +12,7 @@ public class EssentialMenuRequest {
 	private String menuName;
 
 	@NotNull(message = "Input MenuPrice ")
+	@Min(value = 500, message = "The minimum price is 500")
 	private int menuPrice;
 
 	@NotBlank(message = "Input MenuConfiguration")
@@ -32,8 +36,12 @@ public class EssentialMenuRequest {
 		this.menuGroup = menuGroup;
 	}
 
-	public EssentialMenuTarget toParam() {
-		return new EssentialMenuTarget(menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
+	public EssentialMenuTarget toParam(int shopId) {
+		return new EssentialMenuTarget(shopId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
+	}
+
+	public EssentialMenuTarget toParam(int shopId, int menuId) {
+		return new EssentialMenuTarget(shopId, menuId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
 	}
 
 	public String getMenuName() {

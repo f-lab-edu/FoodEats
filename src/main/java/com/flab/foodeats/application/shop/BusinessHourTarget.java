@@ -1,28 +1,21 @@
-package com.flab.foodeats.domain.shop;
+package com.flab.foodeats.application.shop;
 
 import java.time.LocalTime;
 
-public class Status {
+import com.flab.foodeats.domain.shop.BusinessHour;
+
+public class BusinessHourTarget {
+
 	private Long shopId;
 	private LocalTime openTime;
 	private LocalTime closeTime;
 	private String closingDay;
-	private String shopOpenStatus;
 
-	public Status() {
-
-	}
-
-	public Status(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay, String shopOpenStatus) {
+	public BusinessHourTarget(Long shopId, LocalTime openTime, LocalTime closeTime, String closingDay) {
 		this.shopId = shopId;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.closingDay = closingDay;
-		this.shopOpenStatus = shopOpenStatus;
-	}
-
-	public Status(Long shopId) {
-		this.shopId = shopId;
 	}
 
 	public Long getShopId() {
@@ -57,11 +50,8 @@ public class Status {
 		this.closingDay = closingDay;
 	}
 
-	public String getShopOpenStatus() {
-		return shopOpenStatus;
+	public BusinessHour toEntity(){
+		return new BusinessHour(shopId,openTime,closeTime,closingDay,"Close");
 	}
 
-	public void setShopOpenStatus(String shopOpenStatus) {
-		this.shopOpenStatus = shopOpenStatus;
-	}
 }

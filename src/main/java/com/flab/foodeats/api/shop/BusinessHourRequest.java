@@ -6,9 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.flab.foodeats.application.shop.StatusTarget;
+import com.flab.foodeats.application.shop.BusinessHourTarget;
 
-public class StatusRequest {
+public class BusinessHourRequest {
 
 	@NotNull(message = "Input Your OpenTime")
 	@JsonFormat(pattern = "kk:mm:ss")
@@ -19,11 +19,11 @@ public class StatusRequest {
 	@NotBlank(message = "Input Your closingDay")
 	private String closingDay;
 
-	public StatusRequest(){
+	public BusinessHourRequest(){
 
 	}
 
-	public StatusRequest(LocalTime openTime, LocalTime closeTime, String closingDay) {
+	public BusinessHourRequest(LocalTime openTime, LocalTime closeTime, String closingDay) {
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.closingDay = closingDay;
@@ -54,7 +54,7 @@ public class StatusRequest {
 	}
 
 
-	public StatusTarget toParam(Long shopId) {
-		return new StatusTarget(shopId, openTime, closeTime, closingDay);
+	public BusinessHourTarget toParam(Long shopId) {
+		return new BusinessHourTarget(shopId, openTime, closeTime, closingDay);
 	}
 }

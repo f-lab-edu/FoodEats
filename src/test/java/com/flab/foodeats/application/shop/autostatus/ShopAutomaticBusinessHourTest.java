@@ -2,19 +2,16 @@ package com.flab.foodeats.application.shop.autostatus;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.flab.foodeats.application.shop.StatusTarget;
-import com.flab.foodeats.domain.shop.Status;
+import com.flab.foodeats.domain.shop.BusinessHour;
 
-class ShopAutomaticStatusTest {
+class ShopAutomaticBusinessHourTest {
 
 	@Test
 	@DisplayName("OpenTime < CloseTime - OPEN")
@@ -69,9 +66,9 @@ class ShopAutomaticStatusTest {
 	void changeShopStatusAuto(){
 		LocalTime openTime = LocalTime.parse("12:03:02",  DateTimeFormatter.ofPattern("HH:mm:ss"));
 		LocalTime closeTime = LocalTime.parse("16:03:02",  DateTimeFormatter.ofPattern("HH:mm:ss"));
-		Status status = new Status(1L,openTime,closeTime,"NO","CLOSE");
+		BusinessHour businessHour = new BusinessHour(1L,openTime,closeTime,"NO","CLOSE");
 
-		boolean result = new ShopAutomaticStatus().changeShopStatusAuto(status);
+		boolean result = new ShopAutomaticStatus().changeShopStatusAuto(businessHour);
 		assertThat(result, is(false));
 	}
 }

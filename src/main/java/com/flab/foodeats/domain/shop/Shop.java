@@ -1,6 +1,6 @@
 package com.flab.foodeats.domain.shop;
 
-public class Essential {
+public class Shop {
 
 	private Long shopId;
 	private String category;
@@ -8,10 +8,10 @@ public class Essential {
 	private String location;
 	private String phone;
 
-	public Essential() {
+	public Shop() {
 	}
 
-	public Essential(Long shopId, String category, String brand, String location, String phone) {
+	public Shop(Long shopId, String category, String brand, String location, String phone) {
 		this.shopId = shopId;
 		this.category = category;
 		this.brand = brand;

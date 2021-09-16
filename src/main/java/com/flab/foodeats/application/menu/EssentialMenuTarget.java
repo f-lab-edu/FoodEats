@@ -1,7 +1,11 @@
 package com.flab.foodeats.application.menu;
 
+import com.flab.foodeats.domain.menu.Menu;
+
 public class EssentialMenuTarget {
 
+	private int shopId;
+	private int menuId;
 	private String menuName;
 	private int menuPrice;
 	private String menuConfiguration;
@@ -11,13 +15,33 @@ public class EssentialMenuTarget {
 	public EssentialMenuTarget() {
 	}
 
-	public EssentialMenuTarget(String menuName, int menuPrice, String menuConfiguration, String menuExplanation,
-		String menuGroup) {
+	public EssentialMenuTarget(int shopId, String menuName, int menuPrice, String menuConfiguration,
+		String menuExplanation, String menuGroup) {
+		this.shopId = shopId;
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
 		this.menuConfiguration = menuConfiguration;
 		this.menuExplanation = menuExplanation;
 		this.menuGroup = menuGroup;
+	}
+
+	public EssentialMenuTarget(int shopId, int menuId, String menuName, int menuPrice, String menuConfiguration,
+		String menuExplanation, String menuGroup) {
+		this.shopId = shopId;
+		this.menuId = menuId;
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
+		this.menuConfiguration = menuConfiguration;
+		this.menuExplanation = menuExplanation;
+		this.menuGroup = menuGroup;
+	}
+
+	public int getShopId() {
+		return shopId;
+	}
+
+	public int getMenuId() {
+		return menuId;
 	}
 
 	public String getMenuName() {
@@ -41,6 +65,6 @@ public class EssentialMenuTarget {
 	}
 
 	public Menu toEntity() {
-		return new Menu(menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
+		return new Menu(shopId, menuId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
 	}
 }

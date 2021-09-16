@@ -1,10 +1,8 @@
 package com.flab.foodeats.domain.menu;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Menu {
 
-	private int shopId;
+	private Long shopId;
 	private int menuId;
 	private String menuName;
 	private int menuPrice;
@@ -15,7 +13,10 @@ public class Menu {
 	public Menu() {
 	}
 
-	public Menu(String menuName, int menuPrice, String menuConfiguration, String menuExplanation, String menuGroup) {
+	public Menu(Long shopId, int menuId, String menuName, int menuPrice, String menuConfiguration,
+		String menuExplanation, String menuGroup) {
+		this.shopId = shopId;
+		this.menuId = menuId;
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
 		this.menuConfiguration = menuConfiguration;
@@ -31,7 +32,7 @@ public class Menu {
 		return menuGroup;
 	}
 
-	public int getShopId() {
+	public Long getShopId() {
 		return shopId;
 	}
 

@@ -1,55 +1,72 @@
 package com.flab.foodeats.application.menu.adapter;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.foodeats.api.menu.MenuCode;
 import com.flab.foodeats.application.menu.EssentialMenuTarget;
 import com.flab.foodeats.application.menu.port.MenuService;
+import com.flab.foodeats.common.error.exception.UnauthorizedException;
+import com.flab.foodeats.domain.menu.Menu;
+import com.flab.foodeats.infra.menu.MenuMapper;
+import com.flab.foodeats.infra.shop.ShopMapper;
+import com.flab.foodeats.infra.user.UserMapper;
 
 @Service
 public class MenuServiceImpl implements MenuService {
 
 	private final MenuMapper menuMapper;
+	private final ShopMapper shopMapper;
+	private final UserMapper userMapper;
 
-	public MenuServiceImpl(MenuMapper menuMapper) {
+	public MenuServiceImpl(MenuMapper menuMapper, ShopMapper shopMapper, UserMapper userMapper) {
 		this.menuMapper = menuMapper;
+		this.shopMapper = shopMapper;
+		this.userMapper = userMapper;
 	}
 
 	@Override
-	public void registerMenu(int shopId, EssentialMenuTarget target) {
-		List<Menu> menus = menuMapper.searchMenu(shopId);
-		checkIsDuplicateMenu(menus, target);
-		menuMapper.registerMenu(shopId, target.toEntity());
+	public void registerMenu(EssentialMenuTarget target, String userId) {
+		Long ownerShopId = target.getShopId();
+		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+
+		List<Menu> menus = menuMapper.searchMenu(target.getShopId());
+		checkIsExistMenu(menus, target);
+
+		menuMapper.registerMenu(target.toEntity());
 	}
 
 	@Override
-	public List<Menu> searchMenu(int shopId) {
-		List<Menu> menu = menuMapper.searchMenu(shopId).stream()
-			.sorted(Comparator.comparing(Menu::getMenuGroup))
-			.collect(Collectors.toList());
-		return menu;
+	public void modifyMenu(EssentialMenuTarget target, String userId) {
+		Long ownerShopId = target.getShopId();
+		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		menuMapper.modifyMenu(target.toEntity());
 	}
 
 	@Override
-	public void modifyMenu(int menuId, EssentialMenuTarget target) {
-		menuMapper.modifyMenu(menuId, target.toEntity());
-	}
-
-	@Override
-	public void deleteMenu(int menuId) {
-		menuMapper.deleteMenu(menuId);
+	public void deleteMenu(int shopId, int menuId, String userId) {
+		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		menuMapper.deleteMenu(shopId, menuId);
 	}
 	
-	private void checkIsDuplicateMenu(List<Menu> menus, EssentialMenuTarget target) {
+	private void checkIsExistMenu(List<Menu> menus, EssentialMenuTarget target) {
 		Optional<Menu> existMenu = menus.stream()
 			.filter(m -> m.getMenuName().equals(target.getMenuName()))
 			.findAny();
 
 		if (existMenu.isPresent()) {
-			throw new IllegalArgumentException("이미 등록되어 있는 메뉴");
+			throw new IllegalArgumentException(MenuCode.ALEADY_EXIST_MENU.getMessage());
+		}
+	}
+
+	private void checkIsAuthorizedUser(String requestedId, String userId) {
+		if (!requestedId.equals(userId)) {
+			throw new UnauthorizedException();
 		}
 	}
 }

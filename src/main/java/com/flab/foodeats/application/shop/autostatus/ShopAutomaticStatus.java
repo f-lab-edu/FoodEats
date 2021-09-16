@@ -2,18 +2,16 @@ package com.flab.foodeats.application.shop.autostatus;
 
 import java.time.LocalDateTime;
 
-import org.springframework.stereotype.Service;
-
-import com.flab.foodeats.domain.shop.Status;
+import com.flab.foodeats.domain.shop.BusinessHour;
 
 public class ShopAutomaticStatus {
 
-	public boolean changeShopStatusAuto(Status statusInfo) {
+	public boolean changeShopStatusAuto(BusinessHour businessHourInfo) {
 
 		LocalDateTime now = LocalDateTime.now();
 		int currentHour = now.getHour();
-		int shopOpenTime = statusInfo.getOpenTime().getHour();
-		int shopCloseTime = statusInfo.getCloseTime().getHour();
+		int shopOpenTime = businessHourInfo.getOpenTime().getHour();
+		int shopCloseTime = businessHourInfo.getCloseTime().getHour();
 
 		// ex) 13시 ~ 새벽 3시
 		if (shopOpenTime > shopCloseTime) {

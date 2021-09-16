@@ -1,16 +1,18 @@
-package com.flab.foodeats.domain.shop;
+package com.flab.foodeats.application.shop;
 
-public class Convenient {
+import com.flab.foodeats.domain.shop.ShopDelivery;
+
+public class ShopDeliveryTarget {
+
 	private Long shopId;
 	private String grade;
 	private String deliveryMethod;
 	private String shopPaymentMethod;
 
-	public Convenient(){
-
+	public ShopDeliveryTarget() {
 	}
 
-	public Convenient(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
+	public ShopDeliveryTarget(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
 		this.shopId = shopId;
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
@@ -47,5 +49,9 @@ public class Convenient {
 
 	public void setShopPaymentMethod(String shopPaymentMethod) {
 		this.shopPaymentMethod = shopPaymentMethod;
+	}
+
+	public ShopDelivery toEntity(){
+		return new ShopDelivery(shopId,grade,deliveryMethod,shopPaymentMethod);
 	}
 }

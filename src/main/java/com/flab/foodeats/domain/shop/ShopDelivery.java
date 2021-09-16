@@ -1,21 +1,16 @@
-package com.flab.foodeats.application.shop;
+package com.flab.foodeats.domain.shop;
 
-import javax.validation.constraints.NotBlank;
-
-import com.flab.foodeats.domain.shop.Convenient;
-import com.flab.foodeats.domain.shop.Essential;
-
-public class ConvenientTarget {
-
+public class ShopDelivery {
 	private Long shopId;
 	private String grade;
 	private String deliveryMethod;
 	private String shopPaymentMethod;
 
-	public ConvenientTarget() {
+	public ShopDelivery(){
+
 	}
 
-	public ConvenientTarget(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
+	public ShopDelivery(Long shopId, String grade, String deliveryMethod, String shopPaymentMethod) {
 		this.shopId = shopId;
 		this.grade = grade;
 		this.deliveryMethod = deliveryMethod;
@@ -52,9 +47,5 @@ public class ConvenientTarget {
 
 	public void setShopPaymentMethod(String shopPaymentMethod) {
 		this.shopPaymentMethod = shopPaymentMethod;
-	}
-
-	public Convenient toEntity(){
-		return new Convenient(shopId,grade,deliveryMethod,shopPaymentMethod);
 	}
 }

@@ -1,15 +1,12 @@
 package com.flab.foodeats.application.menu.port;
 
-import java.awt.*;
-import java.util.List;
+import com.flab.foodeats.application.menu.EssentialMenuTarget;
 
 public interface MenuService {
 
-	void registerMenu(int shopId, EssentialMenuTarget essentialMenuTarget);
+	void registerMenu(EssentialMenuTarget essentialMenuTarget, String userId);
 
-	List<Menu> searchMenu(int shopId);
+	void modifyMenu(EssentialMenuTarget essentialMenuTarget, String userId);
 
-	void modifyMenu(int menuId, EssentialMenuTarget essentialMenuTarget);
-
-	void deleteMenu(int menuId);
+	void deleteMenu(int shopId, int menuId, String UserId);
 }
