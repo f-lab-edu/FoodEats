@@ -31,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
 	public void registerMenu(EssentialMenuTarget target, String userId) {
 		Long ownerShopId = target.getShopId();
 		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
-		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 
 		List<Menu> menus = menuMapper.searchMenu(target.getShopId());
 		checkIsExistMenu(menus, target);
@@ -43,14 +43,14 @@ public class MenuServiceImpl implements MenuService {
 	public void modifyMenu(EssentialMenuTarget target, String userId) {
 		Long ownerShopId = target.getShopId();
 		String requestedOwnerId = userMapper.findMerchantByShopId(ownerShopId).getUserId();
-		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 		menuMapper.modifyMenu(target.toEntity());
 	}
 
 	@Override
-	public void deleteMenu(int shopId, int menuId, String userId) {
+	public void deleteMenu(Long shopId, Long menuId, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
-		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 		menuMapper.deleteMenu(shopId, menuId);
 	}
 	

@@ -54,7 +54,7 @@ public class ConsumerServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findConsumerById(userId);
+		return userMapper.findConsumerByUserId(userId);
 	}
 }
 

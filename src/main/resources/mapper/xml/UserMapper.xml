@@ -25,7 +25,7 @@
 
 
 
-    <resultMap type="User" id="UserSelect">
+    <resultMap type="com.flab.foodeats.domain.user.User" id="UserSelect">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>

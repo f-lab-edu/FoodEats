@@ -54,7 +54,7 @@ public class RiderServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findRiderById(userId);
+		return userMapper.findRiderByUserId(userId);
 	}
 
 }

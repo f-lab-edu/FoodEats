@@ -36,11 +36,11 @@ public class EssentialMenuRequest {
 		this.menuGroup = menuGroup;
 	}
 
-	public EssentialMenuTarget toParam(int shopId) {
+	public EssentialMenuTarget toParam(Long shopId) {
 		return new EssentialMenuTarget(shopId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
 	}
 
-	public EssentialMenuTarget toParam(int shopId, int menuId) {
+	public EssentialMenuTarget toParam(Long shopId, Long menuId) {
 		return new EssentialMenuTarget(shopId, menuId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
 	}
 

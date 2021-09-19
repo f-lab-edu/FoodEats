@@ -8,5 +8,5 @@ public interface MenuService {
 
 	void modifyMenu(EssentialMenuTarget essentialMenuTarget, String userId);
 
-	void deleteMenu(int shopId, int menuId, String UserId);
+	void deleteMenu(Long shopId, Long menuId, String UserId);
 }

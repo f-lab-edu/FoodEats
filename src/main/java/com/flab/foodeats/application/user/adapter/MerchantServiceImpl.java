@@ -54,6 +54,6 @@ public class MerchantServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findMerchantById(userId);
+		return userMapper.findMerchantByUserId(userId);
 	}
 }
