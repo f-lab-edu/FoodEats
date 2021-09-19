@@ -63,6 +63,12 @@ public class AuthInfo implements Serializable {
 		this.userType = userType;
 	}
 
+	public AuthInfo(Long id, String userId, UserType userType) {
+		this.id = id;
+		this.userId = userId;
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		return "AuthInfo{" +
