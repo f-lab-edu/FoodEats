@@ -2,20 +2,20 @@ package com.flab.foodeats.application.menu;
 
 public class OptionTarget {
 
-	private Long menuOptionId;
+	private long menuOptionId;
 	private String menuOptionName;
 	private int menuOptionPrice;
 
 	public OptionTarget() {
 	}
 
-	public OptionTarget(Long menuOptionId, String menuOptionName, int menuOptionPrice) {
+	public OptionTarget(long menuOptionId, String menuOptionName, int menuOptionPrice) {
 		this.menuOptionId = menuOptionId;
 		this.menuOptionName = menuOptionName;
 		this.menuOptionPrice = menuOptionPrice;
 	}
 
-	public Long getMenuOptionId() {
+	public long getMenuOptionId() {
 		return menuOptionId;
 	}
 
