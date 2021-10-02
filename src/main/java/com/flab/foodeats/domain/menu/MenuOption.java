@@ -3,21 +3,21 @@ package com.flab.foodeats.domain.menu;
 
 public class MenuOption {
 
-	private Long menuId;
-	private Long menuOptionId;
+	private long menuId;
+	private long menuOptionId;
 	private String menuOptionName;
 	private int menuOptionPrice;
 
 	public MenuOption() {
 	}
 
-	public MenuOption(Long menuId, String menuOptionName, int menuOptionPrice) {
+	public MenuOption(long menuId, String menuOptionName, int menuOptionPrice) {
 		this.menuId = menuId;
 		this.menuOptionName = menuOptionName;
 		this.menuOptionPrice = menuOptionPrice;
 	}
 
-	public MenuOption(Long menuId, Long menuOptionId, String menuOptionName, int menuOptionPrice) {
+	public MenuOption(long menuId, long menuOptionId, String menuOptionName, int menuOptionPrice) {
 		this.menuId = menuId;
 		this.menuOptionId = menuOptionId;
 		this.menuOptionName = menuOptionName;
@@ -29,11 +29,11 @@ public class MenuOption {
 		this.menuOptionPrice = menuOptionPrice;
 	}
 
-	public Long getMenuId() {
+	public long getMenuId() {
 		return menuId;
 	}
 
-	public Long getMenuOptionId() {
+	public long getMenuOptionId() {
 		return menuOptionId;
 	}
 
