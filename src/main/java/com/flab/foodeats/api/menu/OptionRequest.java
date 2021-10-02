@@ -32,11 +32,11 @@ public class OptionRequest {
 		return menuOptionPrice;
 	}
 	
-	public OptionTarget toParam(Long menuOptionId) {
+	public OptionTarget toParam(long menuOptionId) {
 		return new OptionTarget(menuOptionId, menuOptionName, menuOptionPrice);
 	}
 
-	public MenuOption toEntity(Long menuId) {
+	public MenuOption toEntity(long menuId) {
 		return new MenuOption(menuId, menuOptionName, menuOptionPrice);
 	}
 }
