@@ -2,8 +2,8 @@ package com.flab.foodeats.domain.menu;
 
 public class Menu {
 
-	private Long shopId;
-	private Long menuId;
+	private long shopId;
+	private long menuId;
 	private String menuName;
 	private int menuPrice;
 	private String menuConfiguration;
@@ -13,7 +13,7 @@ public class Menu {
 	public Menu() {
 	}
 
-	public Menu(Long shopId, Long menuId, String menuName, int menuPrice, String menuConfiguration,
+	public Menu(long shopId, long menuId, String menuName, int menuPrice, String menuConfiguration,
 		String menuExplanation, String menuGroup) {
 		this.shopId = shopId;
 		this.menuId = menuId;
@@ -24,11 +24,11 @@ public class Menu {
 		this.menuGroup = menuGroup;
 	}
 
-	public Long getShopId() {
+	public long getShopId() {
 		return shopId;
 	}
 
-	public Long getMenuId() {
+	public long getMenuId() {
 		return menuId;
 	}
 
