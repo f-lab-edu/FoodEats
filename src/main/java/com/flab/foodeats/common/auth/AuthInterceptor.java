@@ -2,22 +2,21 @@ package com.flab.foodeats.common.auth;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.flab.foodeats.common.response.ErrorUserCode;
-import com.flab.foodeats.common.util.SessionManager;
+import com.flab.foodeats.common.util.token.TokenService;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-	private final SessionManager sessionManager;
+	private final TokenService tokenService;
 
-	public AuthInterceptor(SessionManager sessionManager) {
-		this.sessionManager = sessionManager;
+	public AuthInterceptor(TokenService tokenService) {
+		this.tokenService = tokenService;
 	}
 
 	@Override
@@ -31,7 +30,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return true;
 		}
 
-		AuthInfo authInfo = getAuthInfo(request);
+		String header = request.getHeader(AuthConstants.AUTH_HEADER);
+		tokenService.validateHeader(header);
+
+		String token = tokenService.validateToken(header);
+		tokenService.validateTokenExpiration(token);
+
+		AuthInfo authInfo = tokenService.getAuthInfo(token);
 		validateRole(authRequired, authInfo);
 		AuthInfoAttributeUtils.setAuthInfoAttributes(request, authInfo);
 
@@ -44,15 +49,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		}
 	}
 
-
-	private AuthInfo getAuthInfo(HttpServletRequest request) throws Exception {
-		AuthInfo authInfo = sessionManager.getSession(request);
-		if (null == authInfo) {
-			throw new Exception(ErrorUserCode.SESSION_NO_AUTHORIZED.getMessage());
-		}
-		return authInfo;
-	}
-
 	private AuthRequired getAuthRequired(Object handler) {
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
 		return handlerMethod.getMethod().getAnnotation(AuthRequired.class);
@@ -62,6 +58,4 @@ public class AuthInterceptor implements HandlerInterceptor {
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
 		return handlerMethod.getMethod().getAnnotation(AuthUsed.class);
 	}
-
 }
-

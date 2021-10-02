@@ -19,10 +19,12 @@ import com.flab.foodeats.api.user.LoginUserRequest;
 import com.flab.foodeats.api.user.ModifyUserRequest;
 import com.flab.foodeats.api.user.RegisterUserRequest;
 import com.flab.foodeats.application.user.port.UserService;
+import com.flab.foodeats.common.auth.AuthConstants;
 import com.flab.foodeats.common.response.ApiResponse;
 import com.flab.foodeats.common.response.StatusCode;
 import com.flab.foodeats.common.response.SuccessUserCode;
 import com.flab.foodeats.common.util.SessionManager;
+import com.flab.foodeats.common.util.token.TokenUtils;
 import com.flab.foodeats.domain.user.UserType;
 import com.flab.foodeats.common.auth.AuthInfo;
 import com.flab.foodeats.common.auth.AuthRequired;
@@ -33,11 +35,11 @@ import com.flab.foodeats.common.auth.AuthUsed;
 public class ConsumerApi {
 
 	private final UserService userService;
-	private final SessionManager sessionManager;
+	private final TokenUtils tokenUtils;
 
-	public ConsumerApi(@Qualifier("consumerService") UserService userService, SessionManager sessionManager) {
+	public ConsumerApi(@Qualifier("consumerService") UserService userService, TokenUtils tokenUtils) {
 		this.userService = userService;
-		this.sessionManager = sessionManager;
+		this.tokenUtils = tokenUtils;
 	}
 
 	@PostMapping("/sign-up")
@@ -48,17 +50,17 @@ public class ConsumerApi {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpServletResponse response) {
+	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpServletResponse response)
+		throws Exception {
 		Long consumerId = userService.login(dto.toParam());
-		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage());
-		sessionManager.createSession(AuthInfo.consuemrOf(consumerId,dto.getUserId()), response);
+		String token = tokenUtils.createToken(AuthInfo.consuemrOf(consumerId, dto.getUserId()));
+		ApiResponse apiResponse = ApiResponse.responseData(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage(), token);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	@AuthRequired(role = UserType.CONSUMER)
 	@PostMapping("/logout")
 	public ResponseEntity<?> logoutConsumerUser(@AuthUsed AuthInfo authedLoginInfo, HttpServletRequest request) {
-		sessionManager.expire(request);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
