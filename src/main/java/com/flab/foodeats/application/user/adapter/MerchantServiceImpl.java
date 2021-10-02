@@ -33,7 +33,7 @@ public class MerchantServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long login(LoginUserTarget target) {
+	public long login(LoginUserTarget target) {
 		User merchantInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(merchantInfo);
 		errorCheck.validateLoginInfo(merchantInfo.getPassword(), target.toEntity().getPassword());
@@ -54,6 +54,6 @@ public class MerchantServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findMerchantById(userId);
+		return userMapper.findMerchantByUserId(userId);
 	}
 }

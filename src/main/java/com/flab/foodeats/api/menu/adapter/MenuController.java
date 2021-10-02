@@ -35,10 +35,10 @@ public class MenuController {
 	// 가맹점 메뉴 등록
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/{shopId}/menu")
-	public ResponseEntity<?> registerMenu(@PathVariable int shopId,
+	public ResponseEntity<?> registerMenu(@PathVariable long shopId,
 										  @Valid @RequestBody EssentialMenuRequest request,
 										  @AuthUsed AuthInfo authInfo) {
-		menuService.registerMenu(request.toParam(shopId), authInfo);
+		menuService.registerMenu(request.toParam(shopId), authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
 	}
@@ -46,10 +46,10 @@ public class MenuController {
 	// 메뉴 수정
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu/{menuId}")
-	public ResponseEntity<?> updateMenu(@PathVariable int shopId, @PathVariable int menuId,
+	public ResponseEntity<?> updateMenu(@PathVariable long shopId, @PathVariable long menuId,
 										@Valid @RequestBody EssentialMenuRequest request,
 										@AuthUsed AuthInfo authInfo) {
-		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo);
+		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
@@ -57,9 +57,9 @@ public class MenuController {
 	// 메뉴 삭제
 	@AuthRequired(role = UserType.MERCHANT)
 	@DeleteMapping("/{shopId}/menu/{menuId}")
-	public ResponseEntity<?> deleteMenu(@PathVariable int shopId, @PathVariable int menuId,
+	public ResponseEntity<?> deleteMenu(@PathVariable long shopId, @PathVariable long menuId,
 										@AuthUsed AuthInfo authInfo) {
-		menuService.deleteMenu(shopId, menuId, authInfo);
+		menuService.deleteMenu(shopId, menuId, authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_DELETE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}

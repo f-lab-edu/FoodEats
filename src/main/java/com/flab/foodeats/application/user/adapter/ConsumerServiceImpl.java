@@ -33,7 +33,7 @@ public class ConsumerServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long login(LoginUserTarget target) {
+	public long login(LoginUserTarget target) {
 		User consumerInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(consumerInfo);
 		errorCheck.validateLoginInfo(consumerInfo.getPassword(), target.toEntity().getPassword());
@@ -54,7 +54,7 @@ public class ConsumerServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findConsumerById(userId);
+		return userMapper.findConsumerByUserId(userId);
 	}
 }
 

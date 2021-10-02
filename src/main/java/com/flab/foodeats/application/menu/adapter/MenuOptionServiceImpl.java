@@ -5,12 +5,17 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.foodeats.api.menu.MenuCode;
 import com.flab.foodeats.api.menu.OptionRequest;
+import com.flab.foodeats.application.menu.OptionTarget;
 import com.flab.foodeats.application.menu.port.MenuOptionService;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.flab.foodeats.common.error.exception.UnauthorizedException;
 import com.flab.foodeats.domain.menu.MenuOption;
 import com.flab.foodeats.infra.menu.MenuOptionMapper;
 import com.flab.foodeats.infra.shop.ShopMapper;
+import com.flab.foodeats.infra.user.UserMapper;
 
 @Service
 @Transactional
@@ -25,9 +30,9 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void registerMenuOption(Long shopId, int menuId, List<OptionRequest> optionRequests, String userId) {
+	public void registerMenuOption(long shopId, long menuId, List<OptionRequest> optionRequests, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
-		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 
 		List<MenuOption> menuOptions = menuOptionMapper.searchMenuOption(menuId);
 		checkIsExistOption(optionRequests, menuOptions);
@@ -37,9 +42,9 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void updateMenuOption(Long shopId, OptionTarget optionTarget, AuthInfo authInfo) {
+	public void updateMenuOption(long shopId, OptionTarget optionTarget, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
-		checkIsAuthorizedUser(requestedOwnerId, authInfo.getUserId());
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 		
 		MenuOption option = menuOptionMapper.searchMenuOptionByOptionId(optionTarget.getMenuOptionId());
 		option.updateOption(optionTarget.getMenuOptionName(), optionTarget.getMenuOptionPrice());
@@ -47,8 +52,9 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void deleteMenuOption(Long shopId, int menuOptionId, String userId) {
-		checkIsAuthorizedUser(shopId, userId);
+	public void deleteMenuOption(long shopId, long menuOptionId, String userId) {
+		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
+		checkIsAuthorizedUser(requestedOwnerId, userId);
 		menuOptionMapper.deleteMenuOption(menuOptionId);
 	}
 

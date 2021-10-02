@@ -33,7 +33,7 @@ public class RiderServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long login(LoginUserTarget target) {
+	public long login(LoginUserTarget target) {
 		User riderInfo = getUserInfo(target.getUserId());
 		errorCheck.notExistUserInfo(riderInfo);
 		errorCheck.validateLoginInfo(riderInfo.getPassword(), target.toEntity().getPassword());
@@ -54,7 +54,7 @@ public class RiderServiceImpl implements UserService {
 	}
 
 	private User getUserInfo(String userId){
-		return userMapper.findRiderById(userId);
+		return userMapper.findRiderByUserId(userId);
 	}
 
 }

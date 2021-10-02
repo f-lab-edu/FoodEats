@@ -4,7 +4,7 @@
 
 <mapper namespace="com.flab.foodeats.infra.menu.MenuMapper">
 
-    <resultMap type="Menu" id="menuResult">
+    <resultMap type="com.flab.foodeats.domain.menu.Menu" id="menuResult">
         <result property="shopId" column="shop_id"/>
         <result property="menuId" column="menu_id"/>
         <result property="menuName" column="menu_name"/>
@@ -21,14 +21,20 @@
         #{menu.menuConfiguration}, #{menu.menuExplanation}, #{menu.menuGroup});
     </insert>
 
-    <update id="updateMenu">
+    <select id="searchMenu" parameterType="long" resultMap="menuResult">
+        SELECT *
+        FROM shop_menu_register
+        WHERE shop_id = #{shopId};
+    </select>
+
+    <update id="modifyMenu">
         UPDATE shop_menu_register
         SET menu_name = #{menu.menuName}, menu_price = #{menu.menuPrice}, menu_configuration = #{menu.menuConfiguration}
         , menu_explanation = #{menu.menuExplanation}, menu_group = #{menu.menuGroup}
         WHERE menu_id = #{menu.menuId};
     </update>
 
-    <delete id="deleteMenu" parameterType="int">
+    <delete id="deleteMenu" parameterType="long">
         DELETE
         FROM shop_menu_register
         WHERE menu_id = #{menuId};
