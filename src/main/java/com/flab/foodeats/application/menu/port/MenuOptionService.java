@@ -7,9 +7,9 @@ import com.flab.foodeats.application.menu.OptionTarget;
 
 public interface MenuOptionService {
 
-	void registerMenuOption(Long shopId, Long menuId, List<OptionRequest> optionRequests, String userId);
+	void registerMenuOption(long shopId, long menuId, List<OptionRequest> optionRequests, String userId);
 
-	void updateMenuOption(Long shopId, OptionTarget optionTarget, String userId);
+	void updateMenuOption(long shopId, OptionTarget optionTarget, String userId);
 
-	void deleteMenuOption(Long shopId, Long menuOptionId, String userId);
+	void deleteMenuOption(long shopId, long menuOptionId, String userId);
 }
