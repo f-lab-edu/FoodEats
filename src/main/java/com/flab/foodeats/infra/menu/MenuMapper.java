@@ -12,10 +12,10 @@ public interface MenuMapper {
 
 	void registerMenu(@Param("menu") Menu menu);
 
-	List<Menu> searchMenu(Long shopId);
+	List<Menu> searchMenu(long shopId);
 
 	void modifyMenu(@Param("menu")Menu menu);
 
-	void deleteMenu(Long shopId, Long menuId);
+	void deleteMenu(long shopId, long menuId);
 }
 
