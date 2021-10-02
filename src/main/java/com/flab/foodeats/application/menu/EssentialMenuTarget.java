@@ -4,8 +4,8 @@ import com.flab.foodeats.domain.menu.Menu;
 
 public class EssentialMenuTarget {
 
-	private Long shopId;
-	private Long menuId;
+	private long shopId;
+	private long menuId;
 	private String menuName;
 	private int menuPrice;
 	private String menuConfiguration;
@@ -15,7 +15,7 @@ public class EssentialMenuTarget {
 	public EssentialMenuTarget() {
 	}
 
-	public EssentialMenuTarget(Long shopId, String menuName, int menuPrice, String menuConfiguration,
+	public EssentialMenuTarget(long shopId, String menuName, int menuPrice, String menuConfiguration,
 		String menuExplanation, String menuGroup) {
 		this.shopId = shopId;
 		this.menuName = menuName;
@@ -25,7 +25,7 @@ public class EssentialMenuTarget {
 		this.menuGroup = menuGroup;
 	}
 
-	public EssentialMenuTarget(Long shopId, Long menuId, String menuName, int menuPrice, String menuConfiguration,
+	public EssentialMenuTarget(long shopId, long menuId, String menuName, int menuPrice, String menuConfiguration,
 		String menuExplanation, String menuGroup) {
 		this.shopId = shopId;
 		this.menuId = menuId;
@@ -36,11 +36,11 @@ public class EssentialMenuTarget {
 		this.menuGroup = menuGroup;
 	}
 
-	public Long getShopId() {
+	public long getShopId() {
 		return shopId;
 	}
 
-	public Long getMenuId() {
+	public long getMenuId() {
 		return menuId;
 	}
 
