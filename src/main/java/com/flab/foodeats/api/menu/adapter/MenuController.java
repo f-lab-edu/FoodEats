@@ -35,7 +35,7 @@ public class MenuController {
 	// 가맹점 메뉴 등록
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/{shopId}/menu")
-	public ResponseEntity<?> registerMenu(@PathVariable Long shopId,
+	public ResponseEntity<?> registerMenu(@PathVariable long shopId,
 										  @Valid @RequestBody EssentialMenuRequest request,
 										  @AuthUsed AuthInfo authInfo) {
 		menuService.registerMenu(request.toParam(shopId), authInfo.getUserId());
@@ -46,7 +46,7 @@ public class MenuController {
 	// 메뉴 수정
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu/{menuId}")
-	public ResponseEntity<?> updateMenu(@PathVariable Long shopId, @PathVariable Long menuId,
+	public ResponseEntity<?> updateMenu(@PathVariable long shopId, @PathVariable long menuId,
 										@Valid @RequestBody EssentialMenuRequest request,
 										@AuthUsed AuthInfo authInfo) {
 		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo.getUserId());
@@ -57,7 +57,7 @@ public class MenuController {
 	// 메뉴 삭제
 	@AuthRequired(role = UserType.MERCHANT)
 	@DeleteMapping("/{shopId}/menu/{menuId}")
-	public ResponseEntity<?> deleteMenu(@PathVariable Long shopId, @PathVariable Long menuId,
+	public ResponseEntity<?> deleteMenu(@PathVariable long shopId, @PathVariable long menuId,
 										@AuthUsed AuthInfo authInfo) {
 		menuService.deleteMenu(shopId, menuId, authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_DELETE_SUCCESS.getMessage());
