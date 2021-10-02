@@ -21,7 +21,7 @@
         #{menu.menuConfiguration}, #{menu.menuExplanation}, #{menu.menuGroup});
     </insert>
 
-    <select id="searchMenu" parameterType="Long" resultMap="menuResult">
+    <select id="searchMenu" parameterType="long" resultMap="menuResult">
         SELECT *
         FROM shop_menu_register
         WHERE shop_id = #{shopId};
@@ -34,7 +34,7 @@
         WHERE menu_id = #{menu.menuId};
     </update>
 
-    <delete id="deleteMenu" parameterType="Long">
+    <delete id="deleteMenu" parameterType="long">
         DELETE
         FROM shop_menu_register
         WHERE menu_id = #{menuId};
