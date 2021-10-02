@@ -12,11 +12,11 @@ public interface MenuOptionMapper {
 
 	void registerOption(@Param("menuOption") MenuOption menuOption);
 
-	List<MenuOption> searchMenuOption(Long menuId);
+	List<MenuOption> searchMenuOption(long menuId);
 
-	MenuOption searchMenuOptionByOptionId(Long menuOptionId);
+	MenuOption searchMenuOptionByOptionId(long menuOptionId);
 
 	void updateMenuOption(@Param("menuOption") MenuOption menuOption);
 
-	void deleteMenuOption(Long menuOptionId);
+	void deleteMenuOption(long menuOptionId);
 }
