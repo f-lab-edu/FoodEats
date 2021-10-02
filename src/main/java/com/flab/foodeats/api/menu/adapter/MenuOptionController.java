@@ -37,7 +37,7 @@ public class MenuOptionController {
 	// 특정 메뉴에 옵션 등록
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/{shopId}/menu-option/{menuId}")
-	public ResponseEntity<?> registerMenuOption(@PathVariable Long shopId, @PathVariable Long menuId,
+	public ResponseEntity<?> registerMenuOption(@PathVariable long shopId, @PathVariable long menuId,
 												@RequestBody @Valid List<OptionRequest> optionRequests,
 												@AuthUsed AuthInfo authInfo) {
 		menuOptionService.registerMenuOption(shopId, menuId, optionRequests, authInfo.getUserId());
@@ -48,7 +48,7 @@ public class MenuOptionController {
 	// 메뉴 옵션 수정
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu-option/{menuOptionId}")
-	public ResponseEntity<?> updateMenuOption(@PathVariable Long shopId, @PathVariable Long menuOptionId,
+	public ResponseEntity<?> updateMenuOption(@PathVariable long shopId, @PathVariable long menuOptionId,
 											  @RequestBody @Valid OptionRequest optionRequest,
 											  @AuthUsed AuthInfo authInfo) {
 		menuOptionService.updateMenuOption(shopId, optionRequest.toParam(menuOptionId), authInfo.getUserId());
@@ -59,7 +59,7 @@ public class MenuOptionController {
 	// 메뉴 옵션 삭제
 	@AuthRequired(role = UserType.MERCHANT)
 	@DeleteMapping("/{shopId}/menu-option/{menuOptionId}")
-	public ResponseEntity<?> deleteMenuOption(@PathVariable Long shopId, @PathVariable Long menuOptionId,
+	public ResponseEntity<?> deleteMenuOption(@PathVariable long shopId, @PathVariable long menuOptionId,
 											  @AuthUsed AuthInfo authInfo) {
 		menuOptionService.deleteMenuOption(shopId, menuOptionId, authInfo.getUserId());
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.OPTION_DELETE_SUCCESS.getMessage());
