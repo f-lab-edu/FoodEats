@@ -55,7 +55,7 @@
 
 
     <!-- 가맹점 조회 (By ID) / 가맹점-->
-    <select id="findMerchantByShopId" parameterType="Long" resultMap="UserSelect">
+    <select id="findMerchantByShopId" parameterType="long" resultMap="UserSelect">
         SELECT *
         FROM user_merchant_info
         WHERE id = #{shopId};
