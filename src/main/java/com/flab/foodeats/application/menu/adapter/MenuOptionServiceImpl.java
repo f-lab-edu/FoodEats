@@ -30,7 +30,7 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void registerMenuOption(Long shopId, Long menuId, List<OptionRequest> optionRequests, String userId) {
+	public void registerMenuOption(long shopId, long menuId, List<OptionRequest> optionRequests, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
 		checkIsAuthorizedUser(requestedOwnerId, userId);
 
@@ -42,7 +42,7 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void updateMenuOption(Long shopId, OptionTarget optionTarget, String userId) {
+	public void updateMenuOption(long shopId, OptionTarget optionTarget, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
 		checkIsAuthorizedUser(requestedOwnerId, userId);
 		
@@ -52,7 +52,7 @@ public class MenuOptionServiceImpl implements MenuOptionService {
 	}
 
 	@Override
-	public void deleteMenuOption(Long shopId, Long menuOptionId, String userId) {
+	public void deleteMenuOption(long shopId, long menuOptionId, String userId) {
 		String requestedOwnerId = userMapper.findMerchantByShopId(shopId).getUserId();
 		checkIsAuthorizedUser(requestedOwnerId, userId);
 		menuOptionMapper.deleteMenuOption(menuOptionId);
