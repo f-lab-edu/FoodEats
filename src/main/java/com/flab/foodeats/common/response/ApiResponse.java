@@ -6,18 +6,18 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiResponse<T> {
+public class ApiResponse<T,M> {
 
 	private StatusCode status;
 	private T message;
-	private T data;
+	private M data;
 
 	public ApiResponse(StatusCode status, T message) {
 		this.status = status;
 		this.message = message;
 	}
 
-	public ApiResponse(StatusCode status, T message, T data) {
+	public ApiResponse(StatusCode status, T message, M data) {
 		this.status = status;
 		this.message = message;
 		this.data = data;
@@ -39,11 +39,11 @@ public class ApiResponse<T> {
 		this.message = message;
 	}
 
-	public T getData() {
+	public M getData() {
 		return data;
 	}
 
-	public void setData(T data) {
+	public void setData(M data) {
 		this.data = data;
 	}
 
@@ -62,5 +62,6 @@ public class ApiResponse<T> {
 	public static ApiResponse responseData(StatusCode status, String message, String data) {
 		return new ApiResponse(status, message, data);
 	}
+
 
 }

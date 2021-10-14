@@ -18,6 +18,7 @@ import com.flab.foodeats.api.user.DeleteUserRequest;
 import com.flab.foodeats.api.user.LoginUserRequest;
 import com.flab.foodeats.api.user.ModifyUserRequest;
 import com.flab.foodeats.api.user.RegisterUserRequest;
+import com.flab.foodeats.application.user.LoginUserResponse;
 import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.auth.AuthConstants;
 import com.flab.foodeats.common.response.ApiResponse;
@@ -35,11 +36,10 @@ import com.flab.foodeats.common.auth.AuthUsed;
 public class ConsumerApi {
 
 	private final UserService userService;
-	private final TokenUtils tokenUtils;
 
-	public ConsumerApi(@Qualifier("consumerService") UserService userService, TokenUtils tokenUtils) {
+
+	public ConsumerApi(@Qualifier("consumerService") UserService userService) {
 		this.userService = userService;
-		this.tokenUtils = tokenUtils;
 	}
 
 	@PostMapping("/sign-up")
@@ -50,17 +50,16 @@ public class ConsumerApi {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto, HttpServletResponse response)
+	public ResponseEntity<?> loginUserInfo(@Valid @RequestBody LoginUserRequest dto)
 		throws Exception {
-		Long consumerId = userService.login(dto.toParam());
-		String token = tokenUtils.createToken(AuthInfo.consuemrOf(consumerId, dto.getUserId()));
-		ApiResponse apiResponse = ApiResponse.responseData(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage(), token);
+		LoginUserResponse loginResponse = userService.login(dto.toParam());
+		ApiResponse apiResponse = new ApiResponse(StatusCode.SUCCESS, SuccessUserCode.USER_LOGIN_SUCCESS.getMessage(), loginResponse);
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
 
 	@AuthRequired(role = UserType.CONSUMER)
 	@PostMapping("/logout")
-	public ResponseEntity<?> logoutConsumerUser(@AuthUsed AuthInfo authedLoginInfo, HttpServletRequest request) {
+	public ResponseEntity<?> logoutConsumerUser(@AuthUsed AuthInfo authedLoginInfo) {
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, SuccessUserCode.USER_LOGOUT_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
