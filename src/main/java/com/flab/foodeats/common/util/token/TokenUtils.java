@@ -7,6 +7,7 @@ import java.util.Map;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Component;
 import com.flab.foodeats.common.auth.AuthInfo;
+import com.flab.foodeats.common.response.ErrorUserCode;
 
 @Component
 public class TokenUtils {
@@ -17,13 +18,20 @@ public class TokenUtils {
 		this.hmacEncode = hmacEncode;
 	}
 
-	public String createToken(AuthInfo authInfo) throws Exception {
+	public String createToken(AuthInfo authInfo){
 
 		String encodedheader = createHeader();
 		String encodedpayload = createPayload(authInfo);
 		String signature = encodedheader + "." + encodedpayload;
-
-		String encodedSignature = hmacEncode.hmacAndBase64(HmacEncode.SECRET_KEY, signature, "HmacSHA256");
+		String encodedSignature = null;
+		
+		try{
+			
+			encodedSignature = hmacEncode.hmacAndBase64(HmacEncode.SECRET_KEY, signature, "HmacSHA256");
+			
+		}catch (Exception e){
+			new Exception(ErrorUserCode.JWT_ENCODER_FAIL.getMessage());
+		}
 		return encodedheader + "." + encodedpayload + "." + encodedSignature;
 	}
 
