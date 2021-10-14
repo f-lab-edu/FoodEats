@@ -21,17 +21,24 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    //implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'com.ibm.icu', name: 'icu4j', version: '4.6'
+
+    // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'net.minidev:json-smart:2.4.7'
+
+    // lombok
     compileOnly 'org.projectlombok:lombok'
+
+    // mysql
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

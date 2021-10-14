@@ -1,3 +1,4 @@
+/*
 package com.flab.foodeats.common.config;
 
 import org.springframework.context.annotation.Bean;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Deprecated
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -23,3 +25,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.headers().frameOptions().disable();
 	}
 }
+*/
