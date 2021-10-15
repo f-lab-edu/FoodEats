@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.example.redis3.common.AuthInfo;
+import com.flab.foodeats.common.auth.AuthInfo;
 
 @Configuration
 public class RedisSessionConfig {

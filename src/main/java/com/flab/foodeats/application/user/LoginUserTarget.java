@@ -10,7 +10,7 @@ public class LoginUserTarget {
 
 	public LoginUserTarget(String userId, String password) {
 		this.userId = userId;
-		this.password = Encryption.encoder(password);
+		this.password = password;
 	}
 
 	public String getUserId() {
