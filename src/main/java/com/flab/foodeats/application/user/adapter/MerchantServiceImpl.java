@@ -11,10 +11,12 @@ import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
 import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.auth.AuthInfo;
+
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.common.util.token.TokenUtils;
 import com.flab.foodeats.domain.user.Consumer;
 import com.flab.foodeats.domain.user.Merchant;
+
 import com.flab.foodeats.domain.user.User;
 import com.flab.foodeats.infra.user.MerchantRepository;
 import com.flab.foodeats.infra.user.UserMapper;
@@ -27,10 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MerchantServiceImpl implements UserService {
 
+
 	private final MerchantRepository merchantRepository;
 	private final TokenUtils tokenUtils;
-
-
 
 	@Override
 	public void registerUserInfo(RegisterUserTarget dto) {
@@ -44,11 +45,13 @@ public class MerchantServiceImpl implements UserService {
 
 	@Override
 	public LoginUserResponse login(LoginUserTarget target) {
+
 		Merchant merchantInfo = findByUserId(target.getUserId());
 		validateLoginInfo(merchantInfo.getPassword(), target.toEntity().getPassword());
 
 		String token = tokenUtils.createToken(AuthInfo.merchantOf(merchantInfo.getId(), merchantInfo.getUserId()));
 		return LoginUserResponse.ofMerchant(merchantInfo, token);
+
 	}
 
 	@Override
@@ -77,5 +80,6 @@ public class MerchantServiceImpl implements UserService {
 		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
+
 	}
 }

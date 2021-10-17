@@ -29,9 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RiderServiceImpl implements UserService {
 
+
 	private final RiderRepository riderRepository;
 	private final TokenUtils tokenUtils;
-
 
 	@Override
 	public void registerUserInfo(RegisterUserTarget dto) {
@@ -50,6 +50,7 @@ public class RiderServiceImpl implements UserService {
 
 		String token = tokenUtils.createToken(AuthInfo.merchantOf(riderInfo.getId(), riderInfo.getUserId()));
 		return LoginUserResponse.ofRider(riderInfo, token);
+
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class RiderServiceImpl implements UserService {
 
 	@Override
 	public void deleteUserInfo(DeleteUserTarget target) {
+
 		Rider rider = findByUserId(target.getUserId());
 		validateLoginInfo(rider.getPassword(), target.getPassword());
 		riderRepository.deleteById(rider.getId());
@@ -78,6 +80,6 @@ public class RiderServiceImpl implements UserService {
 		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
-	}
+
 
 }

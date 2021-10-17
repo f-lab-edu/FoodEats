@@ -14,6 +14,7 @@ import com.flab.foodeats.common.auth.AuthInfo;
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.common.util.token.TokenUtils;
 import com.flab.foodeats.domain.user.Consumer;
+
 import com.flab.foodeats.domain.user.User;
 import com.flab.foodeats.infra.user.ConsumerRepository;
 
@@ -23,12 +24,14 @@ import com.flab.foodeats.infra.user.ConsumerRepository;
 public class ConsumerServiceImpl implements UserService {
 
 
+
 	private final TokenUtils tokenUtils;
 	private final ConsumerRepository consumerRepository;
 
 	public ConsumerServiceImpl(TokenUtils tokenUtils, ConsumerRepository consumerRepository) {
 		this.tokenUtils = tokenUtils;
 		this.consumerRepository = consumerRepository;
+
 	}
 
 	@Override
@@ -80,6 +83,7 @@ public class ConsumerServiceImpl implements UserService {
 		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
+
 	}
 }
 
