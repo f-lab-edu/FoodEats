@@ -1,5 +1,8 @@
 package com.flab.foodeats.application.user;
 
+import com.flab.foodeats.domain.user.Consumer;
+import com.flab.foodeats.domain.user.Merchant;
+import com.flab.foodeats.domain.user.Rider;
 import com.flab.foodeats.domain.user.User;
 
 import lombok.Builder;
@@ -30,7 +33,33 @@ public class LoginUserResponse {
 		this.token = token;
 	}
 
-	public static LoginUserResponse of(User user, String token) {
+	public static LoginUserResponse ofConsumer(Consumer user, String token) {
+		return LoginUserResponse.builder()
+			.id(user.getId())
+			.userId(user.getUserId())
+			.password(user.getPassword())
+			.name(user.getName())
+			.email(user.getEmail())
+			.phone(user.getPhone())
+			.address(user.getAddress())
+			.token(token)
+			.build();
+	}
+
+	public static LoginUserResponse ofMerchant(Merchant user, String token) {
+		return LoginUserResponse.builder()
+			.id(user.getId())
+			.userId(user.getUserId())
+			.password(user.getPassword())
+			.name(user.getName())
+			.email(user.getEmail())
+			.phone(user.getPhone())
+			.address(user.getAddress())
+			.token(token)
+			.build();
+	}
+
+	public static LoginUserResponse ofRider(Rider user, String token) {
 		return LoginUserResponse.builder()
 			.id(user.getId())
 			.userId(user.getUserId())

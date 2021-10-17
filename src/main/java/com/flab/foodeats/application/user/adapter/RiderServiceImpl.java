@@ -11,57 +11,73 @@ import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
 import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.auth.AuthInfo;
+import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.common.util.token.TokenUtils;
+import com.flab.foodeats.domain.user.Consumer;
+import com.flab.foodeats.domain.user.Merchant;
+import com.flab.foodeats.domain.user.Rider;
 import com.flab.foodeats.domain.user.User;
+import com.flab.foodeats.infra.user.MerchantRepository;
+import com.flab.foodeats.infra.user.RiderRepository;
 import com.flab.foodeats.infra.user.UserMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
 @Qualifier("riderService")
+@RequiredArgsConstructor
 public class RiderServiceImpl implements UserService {
 
-	private final UserMapper userMapper;
-	private final ErrorCheck errorCheck;
+	private final RiderRepository riderRepository;
 	private final TokenUtils tokenUtils;
 
-	public RiderServiceImpl(UserMapper userMapper, ErrorCheck errorCheck,
-		TokenUtils tokenUtils) {
-		this.userMapper = userMapper;
-		this.errorCheck = errorCheck;
-		this.tokenUtils = tokenUtils;
-	}
 
 	@Override
 	public void registerUserInfo(RegisterUserTarget dto) {
-		User user = dto.toEntity();
-		errorCheck.alreadyExistUserInfo(getUserInfo(user.getUserId()));
-		userMapper.saveRider(user);
+		Rider rider = dto.toRider();
+		if (existsCheckByUserId(rider.getUserId()) == true) {
+			throw new NullPointerException(ErrorUserCode.ID_EXIST.getMessage());
+		}
+
+		riderRepository.save(rider);
 	}
 
 	@Override
 	public LoginUserResponse login(LoginUserTarget target) {
-		User riderInfo = getUserInfo(target.getUserId());
-		errorCheck.notExistUserInfo(riderInfo);
-		errorCheck.validateLoginInfo(riderInfo.getPassword(), target.toEntity().getPassword());
+		Rider riderInfo = findByUserId(target.getUserId());
+		validateLoginInfo(riderInfo.getPassword(), target.toEntity().getPassword());
+
 		String token = tokenUtils.createToken(AuthInfo.merchantOf(riderInfo.getId(), riderInfo.getUserId()));
-		return LoginUserResponse.of(riderInfo, token);
+		return LoginUserResponse.ofRider(riderInfo, token);
 	}
 
 	@Override
 	public void modifyUserInfo(ModifyUserTarget target) {
-		User user = target.toEntity();
-		userMapper.modifyRiderById(user);
+		Rider rider = target.toRider();
+		riderRepository.save(rider);
 	}
 
 	@Override
 	public void deleteUserInfo(DeleteUserTarget target) {
-		User user = getUserInfo(target.getUserId());
-		errorCheck.validateLoginInfo(user.getPassword(), target.getPassword());
-		userMapper.deleteRiderById(user.getUserId());
+		Rider rider = findByUserId(target.getUserId());
+		validateLoginInfo(rider.getPassword(), target.getPassword());
+		riderRepository.deleteById(rider.getId());
 	}
 
-	private User getUserInfo(String userId) {
-		return userMapper.findRiderByUserId(userId);
+	private Rider findByUserId(String userId) {
+		return riderRepository.findByUserId(userId)
+			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
+	}
+
+	private boolean existsCheckByUserId(String userId) {
+		return riderRepository.existsByUserId(userId);
+	}
+
+	public void validateLoginInfo(String getPasswordInDatabase, String getPasswordInEnteredInfo) {
+		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
+			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
+		}
 	}
 
 }

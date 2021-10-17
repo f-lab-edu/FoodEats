@@ -1,7 +1,8 @@
 package com.flab.foodeats.application.user;
 
-import com.flab.foodeats.common.Encryption;
-import com.flab.foodeats.domain.user.User;
+import com.flab.foodeats.domain.user.Consumer;
+import com.flab.foodeats.domain.user.Merchant;
+import com.flab.foodeats.domain.user.Rider;
 
 public class ModifyUserTarget {
 
@@ -52,7 +53,15 @@ public class ModifyUserTarget {
 		return address;
 	}
 
-	public User toEntity() {
-		return new User(id, userId, password, name, email, phone, address);
+	public Consumer toConsumer() {
+		return new Consumer(id, userId, password, name, email, phone, address);
+	}
+
+	public Merchant toMerchant() {
+		return new Merchant(id, userId, password, name, email, phone, address);
+	}
+
+	public Rider toRider() {
+		return new Rider(id, userId, password, name, email, phone, address);
 	}
 }

@@ -11,57 +11,75 @@ import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
 import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.auth.AuthInfo;
+import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.common.util.token.TokenUtils;
+import com.flab.foodeats.domain.user.Consumer;
 import com.flab.foodeats.domain.user.User;
-import com.flab.foodeats.infra.user.UserMapper;
+import com.flab.foodeats.infra.user.ConsumerRepository;
 
 @Service
 @Transactional
 @Qualifier("consumerService")
 public class ConsumerServiceImpl implements UserService {
 
-	private final UserMapper userMapper;
-	private final ErrorCheck errorCheck;
-	private final TokenUtils tokenUtils;
 
-	public ConsumerServiceImpl(UserMapper userMapper, ErrorCheck errorCheck,
-		TokenUtils tokenUtils) {
-		this.userMapper = userMapper;
-		this.errorCheck = errorCheck;
+	private final TokenUtils tokenUtils;
+	private final ConsumerRepository consumerRepository;
+
+	public ConsumerServiceImpl(TokenUtils tokenUtils, ConsumerRepository consumerRepository) {
 		this.tokenUtils = tokenUtils;
+		this.consumerRepository = consumerRepository;
 	}
 
 	@Override
 	public void registerUserInfo(RegisterUserTarget dto) {
-		User user = dto.toEntity();
-		errorCheck.alreadyExistUserInfo(getUserInfo(user.getUserId()));
-		userMapper.saveConsumer(user);
+		Consumer consuemr = dto.toConsumer();
+		if (existsCheckByUserId(consuemr.getUserId()) == true) {
+			throw new NullPointerException(ErrorUserCode.ID_EXIST.getMessage());
+		}
+
+		consumerRepository.save(consuemr);
 	}
 
 	@Override
 	public LoginUserResponse login(LoginUserTarget target) {
-		User consumerInfo = getUserInfo(target.getUserId());
-		errorCheck.notExistUserInfo(consumerInfo);
-		errorCheck.validateLoginInfo(consumerInfo.getPassword(), target.toEntity().getPassword());
+		Consumer consumerInfo = findByUserId(target.getUserId());
+		validateLoginInfo(consumerInfo.getPassword(), target.toEntity().getPassword());
+
 		String token = tokenUtils.createToken(AuthInfo.merchantOf(consumerInfo.getId(), consumerInfo.getUserId()));
-		return LoginUserResponse.of(consumerInfo, token);
+		return LoginUserResponse.ofConsumer(consumerInfo, token);
 	}
 
 	@Override
 	public void modifyUserInfo(ModifyUserTarget target) {
-		User user = target.toEntity();
-		userMapper.modifyConsumerById(user);
+		// 로그인한 유저의 NO와 ID를 가져옴
+		// no으로 바꿔야 할듯
+		// 한번에 일괄적 변경
+
+		Consumer consumer = target.toConsumer();
+		consumerRepository.save(consumer);
 	}
 
 	@Override
 	public void deleteUserInfo(DeleteUserTarget target) {
-		User user = getUserInfo(target.getUserId());
-		errorCheck.validateLoginInfo(user.getPassword(), target.getPassword());
-		userMapper.deleteConsumerById(user.getUserId());
+		Consumer consumer = findByUserId(target.getUserId());
+		validateLoginInfo(consumer.getPassword(), target.getPassword());
+		consumerRepository.deleteById(consumer.getId());
 	}
 
-	private User getUserInfo(String userId) {
-		return userMapper.findConsumerByUserId(userId);
+	private Consumer findByUserId(String userId) {
+		return consumerRepository.findByUserId(userId)
+			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
+	}
+
+	private boolean existsCheckByUserId(String userId) {
+		return consumerRepository.existsByUserId(userId);
+	}
+
+	public void validateLoginInfo(String getPasswordInDatabase, String getPasswordInEnteredInfo) {
+		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
+			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
+		}
 	}
 }
 
