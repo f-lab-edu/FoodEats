@@ -51,7 +51,13 @@ public class BusinessHourTarget {
 	}
 
 	public BusinessHour toEntity(){
-		return new BusinessHour(shopId,openTime,closeTime,closingDay,"Close");
+		return BusinessHour.builder()
+			.shopId(shopId)
+			.openTime(openTime)
+			.closeTime(closeTime)
+			.closingDay(closingDay)
+			.shopOpenStatus("Close")
+			.build();
 	}
 
 }
