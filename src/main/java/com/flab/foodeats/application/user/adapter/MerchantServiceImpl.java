@@ -11,56 +11,75 @@ import com.flab.foodeats.application.user.ModifyUserTarget;
 import com.flab.foodeats.application.user.RegisterUserTarget;
 import com.flab.foodeats.application.user.port.UserService;
 import com.flab.foodeats.common.auth.AuthInfo;
+
+import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.common.util.token.TokenUtils;
+import com.flab.foodeats.domain.user.Consumer;
+import com.flab.foodeats.domain.user.Merchant;
+
 import com.flab.foodeats.domain.user.User;
+import com.flab.foodeats.infra.user.MerchantRepository;
 import com.flab.foodeats.infra.user.UserMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
 @Qualifier("merchantService")
+@RequiredArgsConstructor
 public class MerchantServiceImpl implements UserService {
 
-	private UserMapper userMapper;
-	private ErrorCheck errorCheck;
-	private final TokenUtils tokenUtils;
 
-	public MerchantServiceImpl(UserMapper userMapper, ErrorCheck errorCheck,
-		TokenUtils tokenUtils) {
-		this.userMapper = userMapper;
-		this.errorCheck = errorCheck;
-		this.tokenUtils = tokenUtils;
-	}
+	private final MerchantRepository merchantRepository;
+	private final TokenUtils tokenUtils;
 
 	@Override
 	public void registerUserInfo(RegisterUserTarget dto) {
-		User user = dto.toEntity();
-		errorCheck.alreadyExistUserInfo(getUserInfo(user.getUserId()));
-		userMapper.saveMerchant(user);
+		Merchant merchant = dto.toMerchant();
+		if (existsCheckByUserId(merchant.getUserId()) == true) {
+			throw new NullPointerException(ErrorUserCode.ID_EXIST.getMessage());
+		}
+
+		merchantRepository.save(merchant);
 	}
 
 	@Override
 	public LoginUserResponse login(LoginUserTarget target) {
-		User merchantInfo = getUserInfo(target.getUserId());
-		errorCheck.notExistUserInfo(merchantInfo);
-		errorCheck.validateLoginInfo(merchantInfo.getPassword(), target.toEntity().getPassword());
+
+		Merchant merchantInfo = findByUserId(target.getUserId());
+		validateLoginInfo(merchantInfo.getPassword(), target.toEntity().getPassword());
+
 		String token = tokenUtils.createToken(AuthInfo.merchantOf(merchantInfo.getId(), merchantInfo.getUserId()));
-		return LoginUserResponse.of(merchantInfo, token);
+		return LoginUserResponse.ofMerchant(merchantInfo, token);
+
 	}
 
 	@Override
 	public void modifyUserInfo(ModifyUserTarget target) {
-		User user = target.toEntity();
-		userMapper.modifyMerchantById(user);
+		Merchant merchant = target.toMerchant();
+		merchantRepository.save(merchant);
 	}
 
 	@Override
 	public void deleteUserInfo(DeleteUserTarget target) {
-		User user = getUserInfo(target.getUserId());
-		errorCheck.validateLoginInfo(user.getPassword(), target.getPassword());
-		userMapper.deleteMerchantById(user.getUserId());
+		Merchant merchant = findByUserId(target.getUserId());
+		validateLoginInfo(merchant.getPassword(), target.getPassword());
+		merchantRepository.deleteById(merchant.getId());
 	}
 
-	private User getUserInfo(String userId) {
-		return userMapper.findMerchantByUserId(userId);
+	private Merchant findByUserId(String userId) {
+		return merchantRepository.findByUserId(userId)
+			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
+	}
+
+	private boolean existsCheckByUserId(String userId) {
+		return merchantRepository.existsByUserId(userId);
+	}
+
+	public void validateLoginInfo(String getPasswordInDatabase, String getPasswordInEnteredInfo) {
+		if (!getPasswordInDatabase.equals(getPasswordInEnteredInfo)) {
+			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
+		}
+
 	}
 }
