@@ -62,12 +62,6 @@ public class Shop {
 	@OneToMany(mappedBy = "shop")
 	private List<Menu> menuList = new ArrayList<>();
 
-	// @OneToOne(mappedBy = "businessHour")
-	// private BusinessHour businessHour;
-	//
-	// @OneToOne(mappedBy = "shopDelivery")
-	// private ShopDelivery shopDelivery;
-
 	public Shop() {
 	}
 
