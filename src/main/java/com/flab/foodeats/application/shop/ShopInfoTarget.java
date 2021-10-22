@@ -2,6 +2,11 @@ package com.flab.foodeats.application.shop;
 
 import com.flab.foodeats.domain.shop.Shop;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ShopInfoTarget {
 
 	private Long shopId;
@@ -21,47 +26,13 @@ public class ShopInfoTarget {
 		this.phone = phone;
 	}
 
-	public Long getShopId() {
-		return shopId;
-	}
-
-	public void setShopId(Long shopId) {
-		this.shopId = shopId;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public Shop toEntity() {
-		return new Shop(shopId, category, brand, location, phone);
+		return Shop.builder()
+			.shopId(shopId)
+			.category(category)
+			.brand(brand)
+			.location(location)
+			.phone(phone)
+			.build();
 	}
 }

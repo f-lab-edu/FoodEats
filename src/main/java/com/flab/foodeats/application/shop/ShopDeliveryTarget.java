@@ -52,6 +52,11 @@ public class ShopDeliveryTarget {
 	}
 
 	public ShopDelivery toEntity(){
-		return new ShopDelivery(shopId,grade,deliveryMethod,shopPaymentMethod);
+		return ShopDelivery.builder()
+			.shopId(shopId)
+			.grade(grade)
+			.deliveryMethod(deliveryMethod)
+			.shopPaymentMethod(shopPaymentMethod)
+			.build();
 	}
 }

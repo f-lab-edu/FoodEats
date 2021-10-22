@@ -54,7 +54,15 @@ public class RegisterUserTarget {
 	}
 
 	public Merchant toMerchant() {
-		return new Merchant(0L,userId, password, name, email, phone, address);
+		return Merchant.builder()
+			.id(0l)
+			.userId(userId)
+			.password(password)
+			.name(name)
+			.email(email)
+			.phone(phone)
+			.address(address)
+			.build();
 	}
 
 	public Rider toRider() {
