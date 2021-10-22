@@ -36,9 +36,9 @@ public class MenuController {
 	@AuthRequired(role = UserType.MERCHANT)
 	@PostMapping("/{shopId}/menu")
 	public ResponseEntity<?> registerMenu(@PathVariable long shopId,
-										  @Valid @RequestBody EssentialMenuRequest request,
-										  @AuthUsed AuthInfo authInfo) {
-		menuService.registerMenu(request.toParam(shopId), authInfo.getUserId());
+		@Valid @RequestBody EssentialMenuRequest request,
+		@AuthUsed AuthInfo authInfo) {
+		menuService.registerMenu(request.toParam(shopId),authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_REGISTER_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
 	}
@@ -47,9 +47,9 @@ public class MenuController {
 	@AuthRequired(role = UserType.MERCHANT)
 	@PutMapping("/{shopId}/menu/{menuId}")
 	public ResponseEntity<?> updateMenu(@PathVariable long shopId, @PathVariable long menuId,
-										@Valid @RequestBody EssentialMenuRequest request,
-										@AuthUsed AuthInfo authInfo) {
-		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo.getUserId());
+		@Valid @RequestBody EssentialMenuRequest request,
+		@AuthUsed AuthInfo authInfo) {
+		menuService.modifyMenu(request.toParam(shopId, menuId), authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_UPDATE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
@@ -58,8 +58,8 @@ public class MenuController {
 	@AuthRequired(role = UserType.MERCHANT)
 	@DeleteMapping("/{shopId}/menu/{menuId}")
 	public ResponseEntity<?> deleteMenu(@PathVariable long shopId, @PathVariable long menuId,
-										@AuthUsed AuthInfo authInfo) {
-		menuService.deleteMenu(shopId, menuId, authInfo.getUserId());
+		@AuthUsed AuthInfo authInfo) {
+		menuService.deleteMenu(shopId, menuId, authInfo);
 		ApiResponse apiResponse = ApiResponse.responseMessage(StatusCode.SUCCESS, MenuCode.MENU_DELETE_SUCCESS.getMessage());
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
