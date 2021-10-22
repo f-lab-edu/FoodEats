@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import com.flab.foodeats.application.menu.OptionTarget;
 import com.flab.foodeats.domain.menu.MenuOption;
 
+import lombok.Getter;
+
+@Getter
 public class OptionRequest {
 
 	@NotBlank(message = "Input Option Name")
@@ -19,24 +22,20 @@ public class OptionRequest {
 	public OptionRequest() {
 	}
 
-	public OptionRequest(String menuOptionName, int menuOptionPrice) {
-		this.menuOptionName = menuOptionName;
-		this.menuOptionPrice = menuOptionPrice;
-	}
-
-	public String getMenuOptionName() {
-		return menuOptionName;
-	}
-
-	public int getMenuOptionPrice() {
-		return menuOptionPrice;
-	}
-	
-	public OptionTarget toParam(long menuOptionId) {
-		return new OptionTarget(menuOptionId, menuOptionName, menuOptionPrice);
+	public OptionTarget toModifyParam(long menuOptionId, long menuId) {
+		return OptionTarget.builder()
+			.menuOptionId(menuOptionId)
+			.menuId(menuId)
+			.menuOptionName(menuOptionName)
+			.menuOptionPrice(menuOptionPrice)
+			.build();
 	}
 
 	public MenuOption toEntity(long menuId) {
-		return new MenuOption(menuId, menuOptionName, menuOptionPrice);
+		return MenuOption.builder()
+			.menuId(menuId)
+			.menuOptionName(menuOptionName)
+			.menuOptionPrice(menuOptionPrice)
+			.build();
 	}
 }
