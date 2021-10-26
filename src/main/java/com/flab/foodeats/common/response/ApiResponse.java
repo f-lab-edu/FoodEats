@@ -59,9 +59,11 @@ public class ApiResponse<T,M> {
 		return new ApiResponse(status, message);
 	}
 
-	public static ApiResponse responseData(StatusCode status, String message, String data) {
+	// public static ApiResponse responseData(StatusCode status, String message, String data) {
+	// 	return new ApiResponse(status, message, data);
+	// }
+	public static ApiResponse responseData(StatusCode status, String message, Object data) {
 		return new ApiResponse(status, message, data);
 	}
-
 
 }
