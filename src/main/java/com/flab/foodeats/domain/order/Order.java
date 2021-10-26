@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.flab.foodeats.api.order.RegisterOrderRequest;
+import com.flab.foodeats.domain.menu.Menu;
+import com.flab.foodeats.domain.shop.Shop;
 import com.flab.foodeats.domain.user.Consumer;
 import com.flab.foodeats.domain.user.Merchant;
 
@@ -42,13 +45,13 @@ public class Order {
 	// https://www.google.com/search?q=Type+definition+error%3A+%5Bsimple+type%2C+class+org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor%5D%3B+nested+exception+is+com.fasterxml.jackson.databind.exc.InvalidDefinitionException%3A+No+serializer+found+for+class+org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor+and+no+properties+discovered+to+create+BeanSerializer+(to+avoid+exception%2C+disable+SerializationFeature.FAIL_ON_EMPTY_BEANS)+(through+reference+chain%3A+com.flab.foodeats.common.response.ApiResponse%5B%5C%22data%5C%22%5D-%3Ecom.flab.foodeats.api.order.FindAllOrderResponse%5B%5C%22orderList%5C%22%5D-%3Ejava.util.ArrayList%5B0%5D-%3Ecom.flab.foodeats.domain.order.Order%5B%5C%22merchantInfo%5C%22%5D-%3Ecom.flab.foodeats.domain.user.Merchant%24HibernateProxy%24ukqfm0Y8%5B%5C%22hibernateLazyInitializer%5C%22%5D)&oq=Type+definition+error%3A+%5Bsimple+type%2C+class+org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor%5D%3B+nested+exception+is+com.fasterxml.jackson.databind.exc.InvalidDefinitionException%3A+No+serializer+found+for+class+org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor+and+no+properties+discovered+to+create+BeanSerializer+(to+avoid+exception%2C+disable+SerializationFeature.FAIL_ON_EMPTY_BEANS)+(through+reference+chain%3A+com.flab.foodeats.common.response.ApiResponse%5B%5C%22data%5C%22%5D-%3Ecom.flab.foodeats.api.order.FindAllOrderResponse%5B%5C%22orderList%5C%22%5D-%3Ejava.util.ArrayList%5B0%5D-%3Ecom.flab.foodeats.domain.order.Order%5B%5C%22merchantInfo%5C%22%5D-%3Ecom.flab.foodeats.domain.user.Merchant%24HibernateProxy%24ukqfm0Y8%5B%5C%22hibernateLazyInitializer%5C%22%5D)&aqs=chrome..69i57.3604j0j4&sourceid=chrome&ie=UTF-8
 
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "consumer_info")
 	private Consumer consumerInfo;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "merchant_info")
-	private Merchant merchantInfo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "shop_no")
+	private Shop shopInfo;
 
 	@Embedded
 	@AttributeOverride(name = "menuNo", column = @Column(name = "first_munu_no", nullable = false))
@@ -89,15 +92,6 @@ public class Order {
 	}
 
 
-
-	// public void changeUserNo(Long userNo) {
-	// 	this.userNo = userNo;
-	// }
-	//
-	// public void changeShopNo(Long shopNo) {
-	// 	this.shopNo = shopNo;
-	// }
-
 	public void changeOrderMenu(OrderMenu orderMenu) {
 		this.orderMenu = orderMenu;
 	}
@@ -118,7 +112,7 @@ public class Order {
 		this.consumerInfo = consumerInfo;
 	}
 
-	public void setMerchantInfo(Merchant merchantInfo) {
-		this.merchantInfo = merchantInfo;
+	public void setShopInfo(Shop shopInfo) {
+		this.shopInfo = shopInfo;
 	}
 }
