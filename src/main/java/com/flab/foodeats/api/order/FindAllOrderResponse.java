@@ -30,9 +30,9 @@ public class FindAllOrderResponse {
 			MenuListOfResponse menuListOfResponse = MenuListOfResponse.builder()
 				.orderNo(orderList.get(i).getOrderNo())
 
-				.merchantNo(orderList.get(i).getMerchantInfo().getId())
-				.merchantId(orderList.get(i).getMerchantInfo().getUserId())
-				.merchantName(orderList.get(i).getMerchantInfo().getName())
+				.shopNo(orderList.get(i).getShopInfo().getShopId())
+				.shopBrand(orderList.get(i).getShopInfo().getBrand())
+				.shopCategory(orderList.get(i).getShopInfo().getCategory())
 
 				.orderMenu(orderList.get(i).getOrderMenu())
 				.orderMenu1(orderList.get(i).getOrderMenu1())

@@ -25,10 +25,9 @@ public class FindOrderResponse {
 	private String consumerId;
 	private String consumerName;
 
-	private long merchantNo;
-	private String merchantId;
-	private String merchantName;
-
+	private long shopNo;
+	private String shopBrand;
+	private String shopCategory;
 
 	public static FindOrderResponse of(Order order) {
 		return FindOrderResponse.builder()
@@ -43,10 +42,10 @@ public class FindOrderResponse {
 			.consumerId(order.getConsumerInfo().getUserId())
 			.consumerName(order.getConsumerInfo().getName())
 
-			.merchantNo(order.getMerchantInfo().getId())
-			.merchantId(order.getMerchantInfo().getUserId())
-			.merchantName(order.getMerchantInfo().getName())
+			.shopNo(order.getShopInfo().getShopId())
+			.shopBrand(order.getShopInfo().getBrand())
+			.shopCategory(order.getShopInfo().getCategory())
 			.build();
 	}
-
 }
+

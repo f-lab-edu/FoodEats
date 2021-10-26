@@ -2,6 +2,7 @@ package com.flab.foodeats.application.order.adapter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,14 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.flab.foodeats.api.order.FindAllOrderResponse;
 import com.flab.foodeats.api.order.FindOrderResponse;
 import com.flab.foodeats.api.order.MenuOptionListOfRequest;
+import com.flab.foodeats.api.order.RegisterOrderRequest;
 import com.flab.foodeats.application.order.RegisterOrderTarget;
 import com.flab.foodeats.application.order.port.OrderService;
 import com.flab.foodeats.common.response.ErrorUserCode;
 import com.flab.foodeats.domain.order.Order;
 import com.flab.foodeats.domain.order.OrderMenu;
+import com.flab.foodeats.domain.shop.Shop;
 import com.flab.foodeats.domain.user.Consumer;
 import com.flab.foodeats.domain.user.Merchant;
 import com.flab.foodeats.infra.order.OrderRepository;
+import com.flab.foodeats.infra.shop.ShopRepository;
 import com.flab.foodeats.infra.user.ConsumerRepository;
 import com.flab.foodeats.infra.user.MerchantRepository;
 
@@ -29,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
-	private final MerchantRepository merchantRepository;
+	private final ShopRepository shopRepository;
 	private final ConsumerRepository consumerRepository;
 
 	@Override
@@ -40,13 +44,13 @@ public class OrderServiceImpl implements OrderService {
 
 
 		// todo. merchant > shop 변환환
-		Merchant merchant = merchantRepository.findById(target.getShopNo())
+		Shop shop = shopRepository.findById(target.getShopNo())
 			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
 
 
 		Order order = new Order();
 		order.setConsumerInfo(consumer);
-		order.setMerchantInfo(merchant);
+		order.setShopInfo(shop);
 		int totalOrderPrice = saveOrderList(order, target);
 		order.changeTotalPrice(totalOrderPrice);
 

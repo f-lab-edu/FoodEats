@@ -18,9 +18,9 @@ public class MenuListOfResponse {
 
 	private Long orderNo;
 
-	private long merchantNo;
-	private String merchantId;
-	private String merchantName;
+	private long shopNo;
+	private String shopBrand;
+	private String shopCategory;
 
 	private OrderMenu orderMenu;
 	private OrderMenu orderMenu1;
