@@ -65,6 +65,14 @@ public class EssentialMenuTarget {
 	}
 
 	public Menu toEntity() {
-		return new Menu(shopId, menuId, menuName, menuPrice, menuConfiguration, menuExplanation, menuGroup);
+		return Menu.builder()
+			.shopId(shopId)
+			.menuId(0l)
+			.menuName(menuName)
+			.menuPrice(menuPrice)
+			.menuConfiguration(menuConfiguration)
+			.menuExplanation(menuExplanation)
+			.menuGroup(menuGroup)
+			.build();
 	}
 }

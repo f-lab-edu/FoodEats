@@ -81,5 +81,5 @@ public class RiderServiceImpl implements UserService {
 			throw new IllegalArgumentException(ErrorUserCode.PASSWORD_NOT_MATCH.getMessage());
 		}
 
-
+	}
 }

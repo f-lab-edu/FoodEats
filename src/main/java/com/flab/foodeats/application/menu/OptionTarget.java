@@ -1,29 +1,24 @@
 package com.flab.foodeats.application.menu;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class OptionTarget {
 
 	private long menuOptionId;
+	private long menuId;
 	private String menuOptionName;
 	private int menuOptionPrice;
 
 	public OptionTarget() {
 	}
 
-	public OptionTarget(long menuOptionId, String menuOptionName, int menuOptionPrice) {
+	@Builder
+	public OptionTarget(long menuOptionId, long menuId, String menuOptionName, int menuOptionPrice) {
 		this.menuOptionId = menuOptionId;
+		this.menuId = menuId;
 		this.menuOptionName = menuOptionName;
 		this.menuOptionPrice = menuOptionPrice;
-	}
-
-	public long getMenuOptionId() {
-		return menuOptionId;
-	}
-
-	public String getMenuOptionName() {
-		return menuOptionName;
-	}
-
-	public int getMenuOptionPrice() {
-		return menuOptionPrice;
 	}
 }

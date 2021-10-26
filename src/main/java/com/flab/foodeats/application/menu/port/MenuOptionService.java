@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.flab.foodeats.api.menu.OptionRequest;
 import com.flab.foodeats.application.menu.OptionTarget;
+import com.flab.foodeats.common.auth.AuthInfo;
 
 public interface MenuOptionService {
 
-	void registerMenuOption(long shopId, long menuId, List<OptionRequest> optionRequests, String userId);
+	void registerMenuOption(long shopId, long menuId, OptionRequest optionRequests, AuthInfo authInfo);
 
-	void updateMenuOption(long shopId, OptionTarget optionTarget, String userId);
+	void updateMenuOption(long shopId, OptionTarget optionTarget,AuthInfo authInfo);
 
-	void deleteMenuOption(long shopId, long menuOptionId, String userId);
+	void deleteMenuOption(long shopId, long menuOptionId,AuthInfo authInfo);
 }
