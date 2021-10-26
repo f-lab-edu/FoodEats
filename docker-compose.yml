@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:1.21.0
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - foodeats1
+      - foodeats2
+
+  foodeats1:
+    image: foodeats
+    ports:
+      - "8080:8080"
+
+  foodeats2:
+    image: foodeats
+    ports:
+      - "8081:8080"
+
+  redis:
+    image: redis:6.2.4
+    ports:
+      - "6379:6379"
+
+
