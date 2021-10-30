@@ -1,5 +1,7 @@
 package com.flab.foodeats.api.order;
 
+import java.util.List;
+
 import com.flab.foodeats.domain.order.OrderMenu;
 
 import lombok.AllArgsConstructor;
@@ -22,8 +24,7 @@ public class MenuListOfResponse {
 	private String shopBrand;
 	private String shopCategory;
 
-	private OrderMenu orderMenu;
-	private OrderMenu orderMenu1;
+	private List<OrderMenu> orderMenu;
 	private int totalPrice;
 	private String orderStatus;
 
