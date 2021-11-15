@@ -36,8 +36,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @ToString
-@AllArgsConstructor
-@Builder
+// @AllArgsConstructor
 public class Order{
 
 	@Id
@@ -63,10 +62,21 @@ public class Order{
 	@Column(name = "total_price")
 	private int totalPrice;
 
-	@Column(name = "order_status",nullable = false, insertable = false, columnDefinition = "boolean default true")
+	@Column(name = "order_status")
 	private Boolean orderStatus;
 
+	@Builder
+	public Order(Long orderNo, Consumer consumerInfo, Shop shopInfo,
+		List<OrderMenu> orderMenuList, Timestamp orderTime, int totalPrice, Boolean orderStatus) {
 
+		this.orderNo = orderNo;
+		this.consumerInfo = consumerInfo;
+		this.shopInfo = shopInfo;
+		this.orderMenuList = orderMenuList;
+		this.orderTime = orderTime;
+		this.totalPrice = totalPrice;
+		this.orderStatus = orderStatus == null ? true : orderStatus;
+	}
 
 	// @DynamicInsert vs @PrePersist
 	// https://dotoridev.tistory.com/6

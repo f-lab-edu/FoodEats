@@ -58,13 +58,16 @@ public class OrderServiceImpl implements OrderService {
 			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
 
 		// Order 설정
-		Order order = new Order();
-		order.setConsumerInfo(consumer);
-		order.setShopInfo(shop);
+
+		Order order = Order.builder()
+			.consumerInfo(consumer)
+			.shopInfo(shop)
+			.build();
 
 		int totalOrderPrice = saveOrderList(order, target);
 
 		order.changeTotalPrice(totalOrderPrice);
+
 
 		Order responseOrderInfo = orderRepository.save(order);
 
@@ -96,7 +99,6 @@ public class OrderServiceImpl implements OrderService {
 
 		}
 
-
 		// OrderItem 설정
 		OrderItem orderItem = OrderItem.builder()
 			.shopInfo(shop)
@@ -104,6 +106,7 @@ public class OrderServiceImpl implements OrderService {
 			.totalPrice(totalOrderItemPrice)
 			.build();
 		orderItemRepository.save(orderItem);
+
 
 		return FindOrderResponse.of(responseOrderInfo);
 	}
