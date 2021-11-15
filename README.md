@@ -1,11 +1,13 @@
-# FoodEats
-(배달 커머스 앱) 배달의 민족을 모티브로한 배달 서비스 클론 어플입니다.
+#  🛵 FoodEats 🛵 
+
+### FoodEats는? 🚀
+FoodEats는 배달 앱 서비스입니다. 소비자,가맹주,라이더를 대상으로 서비스를 제공하며 배달주문,점포관리,라이더 배차에 대한 서비스를 제공받을수 있는 서비스입니다.
 
 
-# 개요
+### FoodEats의 학습목적은 다음과 같아요! 🚀
 저희는 최근 배달의 민족이라는 어플을 많이 사용하고 있습니다. 배달의 민족은 이벤트를 진행할 경우 분당 100만건 이상의 트래픽이 들어온다고 합니다. 저희는 백엔드를 공부하며 "어떻게 수많은 트래픽을 견디면서 정상적인 서비스를 유지할 수 있을까?"에 대해 관심을 가지게 되었습니다. 저희는 트래픽을 관리할 수 있는 방법과 여러 사용자로부터 발생하는 수많은 데이터는 어떻게 보관하고 있는지에 대해 학습하고자 하였습니다. FoodEats 프로젝트는 이러한 학습 목표를 가지고 배달의 민족을 모티브로 프로젝트를 진행하고 있습니다.
 
-# 중점과제
+### FoodEats을 개발하며 중점과제는 다음과 같아요! 🚀
 * 클린코드를 작성하기 위해 지속적으로 리팩토링
 * 객체지향 개념을 이해하고 코드에 적용하기 위해 노력
 * 이유와 근거가 명확한 기술을 사용
@@ -16,21 +18,17 @@
 * 대용량 트래픽 상황을 가정하고 서버 성능을 개선하기 위해 노력
 
 
-# 기술스택
-* Java 11
-* Spring Boot
-* Spring MVC
-* Spring Security
-* MySQL
-* MyBatis / JPA
-* Docker
-* JUnit
-* Redis
-* Jenkins
-* Session / JWT / OAuth 
-* AWS RDS / AWS EC2
 
-# 협업도구
+### FoodEats의 기술스택은? 🚀
+- Java, Gradle
+- Spring Boot (with JPA, MyBatis)
+- Spring Security (with JWT & Session 로그인)
+- MySQL(Aurora), Redis
+- AWS (EC2, RDS, S3), Firebase, Elastic APM
+- Git, Docker, Jenkins
+- Junit (단위테스트, 통합테스트)
+
+### 협업방식은 다음과 같습니다! 🚀 
 * 코딩컨벤션
     * 네이버 코딩 컨베션 규칙 사용
     * 자바 코딩 컨벤션 규칙 준수
@@ -38,10 +36,17 @@
     
 * Git Branch
     * Github Flow 사용
-    
+  
+* 슬랙, 구글밋
+    * 매일 스터디 진행
+    * 프로젝트 회의 및 회고
+    * 알고리즘 및 다양한 주제를 함께 공부
+  
+### FoodEats 개발자 🚀
+👊 Backend Team 👊
+[진은수](https://github.com/Maestro6788) : ensu6788@gmail.com
+[양유석](https://github.com/yusok7) : yusok846@gmail.com
 
 
-# 프로젝트 전체 구성도
-![image](https://user-images.githubusercontent.com/83272619/122491715-76c33400-d01f-11eb-8e15-741439787008.png)
-
+페어프로그래밍을 통해 함께 공부하였습니다. 프로젝트를 하며 실력있는 개발자가 되기위한 학습을 목적으로 프로젝트에 임하였습니다. 역할을 나누어 기능을 개발하기 보다는 하나의 기능을 함께 개발하고 서로가 구현한 방식을 설명하고 코드리뷰통해 함께 성장하는 것을 목표로 하였습니다.  
 
