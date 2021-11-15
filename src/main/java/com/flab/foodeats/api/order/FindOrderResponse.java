@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class FindOrderResponse {
 
 	private long orderNo;
-	private String orderStatus;
+	private boolean orderStatus;
 	private int orderPrice;
 
 	private List<OrderMenu> orderMenu;

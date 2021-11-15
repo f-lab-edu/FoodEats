@@ -26,6 +26,6 @@ public class MenuListOfResponse {
 
 	private List<OrderMenu> orderMenu;
 	private int totalPrice;
-	private String orderStatus;
+	private boolean orderStatus;
 
 }
