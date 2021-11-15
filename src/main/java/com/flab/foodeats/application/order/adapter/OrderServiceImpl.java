@@ -16,12 +16,16 @@ import com.flab.foodeats.api.order.RegisterOrderRequest;
 import com.flab.foodeats.application.order.RegisterOrderTarget;
 import com.flab.foodeats.application.order.port.OrderService;
 import com.flab.foodeats.common.response.ErrorUserCode;
+import com.flab.foodeats.domain.menu.Menu;
+import com.flab.foodeats.domain.menu.MenuOption;
 import com.flab.foodeats.domain.order.Order;
+import com.flab.foodeats.domain.order.OrderItem;
 import com.flab.foodeats.domain.order.OrderMenu;
 import com.flab.foodeats.domain.order.OrderMenuOption;
 import com.flab.foodeats.domain.shop.Shop;
 import com.flab.foodeats.domain.user.Consumer;
 import com.flab.foodeats.domain.user.Merchant;
+import com.flab.foodeats.infra.order.OrderItemRepository;
 import com.flab.foodeats.infra.order.OrderMenuOptionRepository;
 import com.flab.foodeats.infra.order.OrderMenuRepository;
 import com.flab.foodeats.infra.order.OrderRepository;
@@ -37,6 +41,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
+	private final OrderItemRepository orderItemRepository;
 	private final OrderMenuRepository orderMenuRepository;
 	private final OrderMenuOptionRepository orderMenuOptionRepository;
 
@@ -49,17 +54,56 @@ public class OrderServiceImpl implements OrderService {
 		Consumer consumer = consumerRepository.findById(target.getUserNo())
 			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
 
-		// todo. merchant > shop 변환환
 		Shop shop = shopRepository.findById(target.getShopNo())
 			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ID_NOT_EXIST.getMessage()));
 
+		// Order 설정
 		Order order = new Order();
 		order.setConsumerInfo(consumer);
 		order.setShopInfo(shop);
+
 		int totalOrderPrice = saveOrderList(order, target);
+
 		order.changeTotalPrice(totalOrderPrice);
 
 		Order responseOrderInfo = orderRepository.save(order);
+
+
+		// OrderItem 가격 설정
+		int totalOrderItemPrice = 0;
+		for (int i = 0 ; i < responseOrderInfo.getShopInfo().getMenuList().size() ; i++){
+			Menu menu = responseOrderInfo.getShopInfo().getMenuList().get(i);
+
+			for (int j = 0 ; j < target.getOrderRequestList().size() ; j++){
+				if (menu.getMenuId().equals(target.getOrderRequestList().get(j).getMenuNo())){
+					totalOrderItemPrice += menu.getMenuPrice();
+
+					for (int optionMenuIndex = 0; optionMenuIndex < target.getOrderRequestList().get(j).getMenuOptionListOfRequest().size() ; optionMenuIndex++){
+						for (int targetOptionMenuIndex = 0; targetOptionMenuIndex < menu.getMenuOptions().size() ; targetOptionMenuIndex++){
+							MenuOptionListOfRequest targetMenuOption = target.getOrderRequestList().get(j).getMenuOptionListOfRequest().get(optionMenuIndex);
+							MenuOption menuOption = menu.getMenuOptions().get(targetOptionMenuIndex);
+							if (targetMenuOption.getMenuOptionNo() == menuOption.getMenuOptionNo()){
+								totalOrderItemPrice += menuOption.getMenuOptionPrice();
+							}
+
+						}
+
+					}
+
+				}
+			}
+
+
+		}
+
+
+		// OrderItem 설정
+		OrderItem orderItem = OrderItem.builder()
+			.shopInfo(shop)
+			.order(responseOrderInfo)
+			.totalPrice(totalOrderItemPrice)
+			.build();
+		orderItemRepository.save(orderItem);
 
 		return FindOrderResponse.of(responseOrderInfo);
 	}
@@ -69,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = orderRepository.findById(orderId)
 			.orElseThrow(() -> new NullPointerException(ErrorUserCode.ORDER_INFO_NOT_EXIST.getMessage()));
 
-		order.setOrderStatus("cancle");
+		order.setOrderStatus(false);
 		orderRepository.save(order);
 	}
 
